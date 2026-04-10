@@ -2,6 +2,19 @@
 //const currentScreen = ; //Para controlar la axcepción del sidebar.
 //Controlar filtros del mapa.
 
+// Registro del Service Worker
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/sw.js')
+      .then((registration) => {
+        console.log('ServiceWorker registrado:', registration.scope);
+      })
+      .catch((error) => {
+        console.error('Error al registrar el ServiceWorker:', error);
+      });
+  });
+}
+
 // Configuración global de la aplicación (se guarda en localStorage)
 const appConfig = {
   defaults: {
