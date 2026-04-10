@@ -1,389 +1,614 @@
 {
   "type": "FeatureCollection",
   "features": [
-
-    {"type": "Feature", "properties": {
-      "clase": "espacio",
-      "nombre": "Aula Magna",
-      "descrip": "Aula principal para conferencias y eventos.",
-      "tipo": "aula",
-      "planta": "baja",
-      "edificio": "Facultad de Medicina",
-      "campus": "Cádiz",
-      "idnum": "01010101",
-      "favourite": false
-    }, "geometry": {"type": "Point", "coordinates": [-6.2984, 36.5305]}},
-
-    {"type": "Feature", "properties": {
-      "clase": "espacio",
-      "nombre": "Aseos Planta Baja",
-      "descrip": "Aseos públicos cerca del hall principal.",
-      "tipo": "aseo",
-      "planta": "baja",
-      "edificio": "Facultad de Medicina",
-      "campus": "Cádiz",
-      "idnum": "01010102",
-      "favourite": false
-    }, "geometry": {"type": "Point", "coordinates": [-6.2985, 36.5306]}},
-
-    {"type": "Feature", "properties": {
-      "clase": "espacio",
-      "nombre": "Delegación de Estudiantes de Medicina",
-      "descrip": "Oficina de representación estudiantil.",
-      "tipo": "repre",
-      "planta": "baja",
-      "edificio": "Facultad de Medicina",
-      "campus": "Cádiz",
-      "idnum": "01010103",
-      "favourite": false
-    }, "geometry": {"type": "Point", "coordinates": [-6.2983, 36.5304]}},
-
-    {"type": "Feature", "properties": {
-      "clase": "espacio",
-      "nombre": "Aula 101",
-      "descrip": "Aula para clases teóricas.",
-      "tipo": "aula",
-      "planta": "1",
-      "edificio": "Facultad de Medicina",
-      "campus": "Cádiz",
-      "idnum": "01010201",
-      "favourite": false
-    }, "geometry": {"type": "Point", "coordinates": [-6.2986, 36.5307]}},
-
-    {"type": "Feature", "properties": {
-      "clase": "espacio",
-      "nombre": "Laboratorio de Anatomía",
-      "descrip": "Laboratorio equipado para prácticas de anatomía.",
-      "tipo": "lab",
-      "planta": "1",
-      "edificio": "Facultad de Medicina",
-      "campus": "Cádiz",
-      "idnum": "01010202",
-      "favourite": false
-    }, "geometry": {"type": "Point", "coordinates": [-6.2987, 36.5308]}},
-
-    {"type": "Feature", "properties": {
-      "clase": "espacio",
-      "nombre": "Aula 1",
-      "descrip": "Aula para clases de grado en Humanidades.",
-      "tipo": "aula",
-      "planta": "baja",
-      "edificio": "Facultad de Filosofía y Letras",
-      "campus": "Cádiz",
-      "idnum": "01020101",
-      "favourite": false
-    }, "geometry": {"type": "Point", "coordinates": [-6.2950, 36.5320]}},
-
-    {"type": "Feature", "properties": {
-      "clase": "espacio",
-      "nombre": "Biblioteca de Humanidades",
-      "descrip": "Biblioteca especializada en filosofía, literatura y arte.",
-      "tipo": "biblio",
-      "planta": "baja",
-      "edificio": "Facultad de Filosofía y Letras",
-      "campus": "Cádiz",
-      "idnum": "01020102",
-      "favourite": false
-    }, "geometry": {"type": "Point", "coordinates": [-6.2951, 36.5321]}},
-
-    {"type": "Feature", "properties": {
-      "clase": "espacio",
-      "nombre": "Cafetería Central",
-      "descrip": "Cafetería con zona de descanso y terraza.",
-      "tipo": "cafete",
-      "planta": "baja",
-      "edificio": "Facultad de Filosofía y Letras",
-      "campus": "Cádiz",
-      "idnum": "01020103",
-      "favourite": false
-    }, "geometry": {"type": "Point", "coordinates": [-6.2952, 36.5322]}},
-
-    {"type": "Feature", "properties": {
-      "clase": "espacio",
-      "nombre": "Aula 201",
-      "descrip": "Aula para seminarios y clases prácticas.",
-      "tipo": "aula",
-      "planta": "1",
-      "edificio": "Facultad de Filosofía y Letras",
-      "campus": "Cádiz",
-      "idnum": "01020201",
-      "favourite": false
-    }, "geometry": {"type": "Point", "coordinates": [-6.2953, 36.5323]}},
-
-    {"type": "Feature", "properties": {
-      "clase": "espacio",
-      "nombre": "Zona de Descanso",
-      "descrip": "Área con sofás y mesas para descanso y estudio informal.",
-      "tipo": "descanso",
-      "planta": "1",
-      "edificio": "Facultad de Filosofía y Letras",
-      "campus": "Cádiz",
-      "idnum": "01020202",
-      "favourite": false
-    }, "geometry": {"type": "Point", "coordinates": [-6.2954, 36.5324]}},
-
-    {"type": "Feature", "properties": {
-      "clase": "espacio",
-      "nombre": "Aula 001",
-      "descrip": "Aula para clases de ingeniería.",
-      "tipo": "aula",
-      "planta": "baja",
-      "edificio": "Escuela Superior de Ingeniería (ESI)",
-      "campus": "Puerto Real",
-      "idnum": "02010101",
-      "favourite": false
-    }, "geometry": {"type": "Point", "coordinates": [-6.2025, 36.5290]}},
-
-    {"type": "Feature", "properties": {
-      "clase": "espacio",
-      "nombre": "Cafetería ESI",
-      "descrip": "Cafetería con zona de descanso y máquinas de vending.",
-      "tipo": "cafete",
-      "planta": "baja",
-      "edificio": "Escuela Superior de Ingeniería (ESI)",
-      "campus": "Puerto Real",
-      "idnum": "02010102",
-      "favourite": false
-    }, "geometry": {"type": "Point", "coordinates": [-6.2028, 36.5295]}},
-
-    {"type": "Feature", "properties": {
-      "clase": "espacio",
-      "nombre": "Laboratorio de Informática",
-      "descrip": "Laboratorio con equipos informáticos para prácticas de programación.",
-      "tipo": "lab",
-      "planta": "1",
-      "edificio": "Escuela Superior de Ingeniería (ESI)",
-      "campus": "Puerto Real",
-      "idnum": "02010201",
-      "favourite": false
-    }, "geometry": {"type": "Point", "coordinates": [-6.2029, 36.5296]}},
-
-    {"type": "Feature", "properties": {
-      "clase": "espacio",
-      "nombre": "Zona de Descanso ESI",
-      "descrip": "Área con sofás y mesas para descanso entre clases.",
-      "tipo": "descanso",
-      "planta": "1",
-      "edificio": "Escuela Superior de Ingeniería (ESI)",
-      "campus": "Puerto Real",
-      "idnum": "02010202",
-      "favourite": false
-    }, "geometry": {"type": "Point", "coordinates": [-6.2030, 36.5297]}},
-
-    {"type": "Feature", "properties": {
-      "clase": "espacio",
-      "nombre": "FC5",
-      "descrip": "Aula para clases de física y matemáticas.",
-      "tipo": "aula",
-      "planta": "baja",
-      "edificio": "Facultad de Ciencias",
-      "campus": "Puerto Real",
-      "idnum": "02020101",
-      "favourite": false
-    }, "geometry": {"type": "Point", "coordinates": [-6.2041, 36.5301]}},
-
-    {"type": "Feature", "properties": {
-      "clase": "espacio",
-      "nombre": "FC8",
-      "descrip": "Aula para clases de química y biología.",
-      "tipo": "aula",
-      "planta": "baja",
-      "edificio": "Facultad de Ciencias",
-      "campus": "Puerto Real",
-      "idnum": "02020102",
-      "favourite": false
-    }, "geometry": {"type": "Point", "coordinates": [-6.2040, 36.5300]}},
-
-    {"type": "Feature", "properties": {
-      "clase": "espacio",
-      "nombre": "Laboratorio de Química",
-      "descrip": "Laboratorio equipado para prácticas de química orgánica e inorgánica.",
-      "tipo": "lab",
-      "planta": "1",
-      "edificio": "Facultad de Ciencias",
-      "campus": "Puerto Real",
-      "idnum": "02020201",
-      "favourite": false
-    }, "geometry": {"type": "Point", "coordinates": [-6.2042, 36.5302]}},
-
-    {"type": "Feature", "properties": {
-      "clase": "espacio",
-      "nombre": "Biblioteca de Ciencias",
-      "descrip": "Biblioteca con recursos para estudiantes de ciencias experimentales.",
-      "tipo": "biblio",
-      "planta": "1",
-      "edificio": "Facultad de Ciencias",
-      "campus": "Puerto Real",
-      "idnum": "02020202",
-      "favourite": false
-    }, "geometry": {"type": "Point", "coordinates": [-6.2043, 36.5303]}},
-
-    {"type": "Feature", "properties": {
-      "clase": "espacio",
-      "nombre": "Aula Magna Derecho",
-      "descrip": "Aula principal para clases magistrales y eventos académicos.",
-      "tipo": "aula",
-      "planta": "baja",
-      "edificio": "Facultad de Derecho",
-      "campus": "Jerez",
-      "idnum": "03010101",
-      "favourite": false
-    }, "geometry": {"type": "Point", "coordinates": [-6.1350, 36.6850]}},
-
-    {"type": "Feature", "properties": {
-      "clase": "espacio",
-      "nombre": "Biblioteca Jurídica",
-      "descrip": "Biblioteca especializada en derecho, legislación y jurisprudencia.",
-      "tipo": "biblio",
-      "planta": "baja",
-      "edificio": "Facultad de Derecho",
-      "campus": "Jerez",
-      "idnum": "03010102",
-      "favourite": false
-    }, "geometry": {"type": "Point", "coordinates": [-6.1351, 36.6851]}},
-
-    {"type": "Feature", "properties": {
-      "clase": "espacio",
-      "nombre": "Aula 101 Derecho",
-      "descrip": "Aula para clases de derecho civil y penal.",
-      "tipo": "aula",
-      "planta": "1",
-      "edificio": "Facultad de Derecho",
-      "campus": "Jerez",
-      "idnum": "03010201",
-      "favourite": false
-    }, "geometry": {"type": "Point", "coordinates": [-6.1352, 36.6852]}},
-
-    {"type": "Feature", "properties": {
-      "clase": "espacio",
-      "nombre": "Despacho Decanato",
-      "descrip": "Despacho del decano y secretaría académica.",
-      "tipo": "despacho",
-      "planta": "1",
-      "edificio": "Facultad de Derecho",
-      "campus": "Jerez",
-      "idnum": "03010202",
-      "favourite": false
-    }, "geometry": {"type": "Point", "coordinates": [-6.1353, 36.6853]}},
-
-    {"type": "Feature", "properties": {
-      "clase": "espacio",
-      "nombre": "Aula 1",
-      "descrip": "Aula para clases de comunicación audiovisual.",
-      "tipo": "aula",
-      "planta": "baja",
-      "edificio": "Facultad de Ciencias Sociales y de la Comunicación",
-      "campus": "Jerez",
-      "idnum": "03020101",
-      "favourite": false
-    }, "geometry": {"type": "Point", "coordinates": [-6.1360, 36.6860]}},
-
-    {"type": "Feature", "properties": {
-      "clase": "espacio",
-      "nombre": "Salón de Actos",
-      "descrip": "Salón para eventos, conferencias y proyecciones.",
-      "tipo": "salon",
-      "planta": "baja",
-      "edificio": "Facultad de Ciencias Sociales y de la Comunicación",
-      "campus": "Jerez",
-      "idnum": "03020102",
-      "favourite": false
-    }, "geometry": {"type": "Point", "coordinates": [-6.1361, 36.6861]}},
-
-    {"type": "Feature", "properties": {
-      "clase": "espacio",
-      "nombre": "Aula 1 Enfermería",
-      "descrip": "Aula para clases teóricas de enfermería.",
-      "tipo": "aula",
-      "planta": "baja",
-      "edificio": "Facultad de Enfermería",
-      "campus": "Bahía de Algeciras",
-      "idnum": "04010101",
-      "favourite": false
-    }, "geometry": {"type": "Point", "coordinates": [-5.4500, 36.1300]}},
-
-    {"type": "Feature", "properties": {
-      "clase": "espacio",
-      "nombre": "Laboratorio de Simulación Clínica",
-      "descrip": "Laboratorio equipado para prácticas de simulación clínica.",
-      "tipo": "lab",
-      "planta": "baja",
-      "edificio": "Facultad de Enfermería",
-      "campus": "Bahía de Algeciras",
-      "idnum": "04010102",
-      "favourite": false
-    }, "geometry": {"type": "Point", "coordinates": [-5.4501, 36.1301]}},
-
-    {"type": "Feature", "properties": {
-      "clase": "espacio",
-      "nombre": "Aula 201 Enfermería",
-      "descrip": "Aula para seminarios y talleres prácticos.",
-      "tipo": "aula",
-      "planta": "1",
-      "edificio": "Facultad de Enfermería",
-      "campus": "Bahía de Algeciras",
-      "idnum": "04010201",
-      "favourite": false
-    }, "geometry": {"type": "Point", "coordinates": [-5.4502, 36.1302]}},
-
-    {"type": "Feature", "properties": {
-      "clase": "espacio",
-      "nombre": "Parada de Autobús Enfermería",
-      "descrip": "Parada de autobús urbano cerca de la facultad.",
-      "tipo": "transporte",
-      "planta": "1",
-      "edificio": "Facultad de Enfermería",
-      "campus": "Bahía de Algeciras",
-      "idnum": "04010202",
-      "favourite": false
-    }, "geometry": {"type": "Point", "coordinates": [-5.4503, 36.1303]}},
-
-    {"type": "Feature", "properties": {
-      "clase": "espacio",
-      "nombre": "Aula 1",
-      "descrip": "Aula para clases de ingeniería industrial.",
-      "tipo": "aula",
-      "planta": "baja",
-      "edificio": "Escuela Técnica Superior de Ingeniería de Algeciras (ETSIA)",
-      "campus": "Bahía de Algeciras",
-      "idnum": "04020101",
-      "favourite": false
-    }, "geometry": {"type": "Point", "coordinates": [-5.4500, 36.1300]}},
-
-    {"type": "Feature", "properties": {
-      "clase": "espacio",
-      "nombre": "Parada de Autobús",
-      "descrip": "Parada de autobús urbano cerca de la escuela.",
-      "tipo": "transporte",
-      "planta": "baja",
-      "edificio": "Escuela Técnica Superior de Ingeniería de Algeciras (ETSIA)",
-      "campus": "Bahía de Algeciras",
-      "idnum": "04020102",
-      "favourite": false
-    }, "geometry": {"type": "Point", "coordinates": [-5.4501, 36.1301]}},
-
-    {"type": "Feature", "properties": {
-      "clase": "espacio",
-      "nombre": "Laboratorio de Mecánica",
-      "descrip": "Laboratorio para prácticas de mecánica.",
-      "tipo": "lab",
-      "planta": "1",
-      "edificio": "Escuela Técnica Superior de Ingeniería de Algeciras (ETSIA)",
-      "campus": "Bahía de Algeciras",
-      "idnum": "04020201",
-      "favourite": false
-    }, "geometry": {"type": "Point", "coordinates": [-5.4502, 36.1302]}},
-
-    {"type": "Feature", "properties": {
-      "clase": "espacio",
-      "nombre": "Zona de Descanso ETSIA",
-      "descrip": "Área con sofás y mesas para descanso.",
-      "tipo": "descanso",
-      "planta": "1",
-      "edificio": "Escuela Técnica Superior de Ingeniería de Algeciras (ETSIA)",
-      "campus": "Bahía de Algeciras",
-      "idnum": "04020202",
-      "favourite": false
-    }, "geometry": {"type": "Point", "coordinates": [-5.4503, 36.1303]}}
+    {
+      "type": "Feature",
+      "properties": {
+        "clase": "espacio",
+        "nombre": "Cafetería de la ETSIA",
+        "descrip": "",
+        "enlace": "",
+        "tipo": "cafete",
+        "planta": "baja",
+        "edificio": "Escuela Técnica Superior de Ingeniería de Algeciras (ETSIA)",
+        "campus": "Bahía de Algeciras",
+        "idnum": "229100501"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -5.453441,
+          36.136672
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "clase": "espacio",
+        "nombre": "Gran Teatro Falla",
+        "descrip": "Aquí se celebra el COAC",
+        "enlace": "",
+        "tipo": "salon",
+        "planta": "baja",
+        "edificio": "Desconocido",
+        "campus": "Cádiz",
+        "idnum": "000101002"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -6.302357,
+          36.53383
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "clase": "espacio",
+        "nombre": "Facultad de Enfermería y Fisioterapia ",
+        "descrip": "",
+        "enlace": "",
+        "tipo": "despacho",
+        "planta": "baja",
+        "edificio": "Facultad de Enfermería y Fisioterapia",
+        "campus": "Cádiz",
+        "idnum": "035100601"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -6.278477,
+          36.508256
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "clase": "espacio",
+        "nombre": "AC5",
+        "descrip": "",
+        "enlace": "",
+        "tipo": "emergencia",
+        "planta": "baja",
+        "edificio": "Aulario Norte del Campus de Puerto Real",
+        "campus": "Puerto Real",
+        "idnum": "303100901"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -6.213475,
+          36.529834
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "clase": "espacio",
+        "nombre": "Biblioteca del Campus de Puerto Real",
+        "descrip": "",
+        "enlace": "",
+        "tipo": "biblio",
+        "planta": "baja",
+        "edificio": "Biblioteca del Campus de Puerto Real",
+        "campus": "Puerto Real",
+        "idnum": "307100401"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -6.212781,
+          36.528491
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "clase": "espacio",
+        "nombre": "Complejo Deportivo del Campus de Puerto Real",
+        "descrip": "",
+        "enlace": "",
+        "tipo": "lab",
+        "planta": "baja",
+        "edificio": "Complejo Deportivo del Campus de Puerto Real",
+        "campus": "Puerto Real",
+        "idnum": "312100701"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -6.210603,
+          36.528661
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "clase": "espacio",
+        "nombre": "Cafetería de la ESI",
+        "descrip": "",
+        "enlace": "",
+        "tipo": "cafete",
+        "planta": "1",
+        "edificio": "Escuela Superior de Ingeniería (ESI)",
+        "campus": "Puerto Real",
+        "idnum": "328000501"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -6.201605,
+          36.537417
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "clase": "espacio",
+        "nombre": "Dirección de la ESI",
+        "descrip": "",
+        "enlace": "",
+        "tipo": "unidad",
+        "planta": "1",
+        "edificio": "Escuela Superior de Ingeniería (ESI)",
+        "campus": "Puerto Real",
+        "idnum": "328001201"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -6.201557,
+          36.53753
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "clase": "espacio",
+        "nombre": "Pasillo",
+        "descrip": "",
+        "enlace": "",
+        "tipo": "emergencia",
+        "planta": "baja",
+        "edificio": "Escuela Superior de Ingeniería (ESI)",
+        "campus": "Puerto Real",
+        "idnum": "328100901"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -6.201603,
+          36.537509
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "clase": "espacio",
+        "nombre": "Salón de Actos de la ESI",
+        "descrip": "",
+        "enlace": "",
+        "tipo": "salon",
+        "planta": "baja",
+        "edificio": "Escuela Superior de Ingeniería (ESI)",
+        "campus": "Puerto Real",
+        "idnum": "328101001"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -6.201655,
+          36.537263
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "clase": "espacio",
+        "nombre": "Punto del Consorcio",
+        "descrip": "Punto de recarga de tarjetas del Consorcio de Transportes",
+        "enlace": "",
+        "tipo": "transporte",
+        "planta": "baja",
+        "edificio": "Escuela Superior de Ingeniería (ESI)",
+        "campus": "Puerto Real",
+        "idnum": "328101101"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -6.201586,
+          36.537414
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "clase": "espacio",
+        "nombre": "Punto de carga de VE de la ESI",
+        "descrip": "",
+        "enlace": "",
+        "tipo": "transporte",
+        "planta": "baja",
+        "edificio": "Escuela Superior de Ingeniería (ESI)",
+        "campus": "Puerto Real",
+        "idnum": "328101102"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -6.201761,
+          36.536456
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "clase": "espacio",
+        "nombre": "Aparcamiento de bicicletas",
+        "descrip": "",
+        "enlace": "",
+        "tipo": "transporte",
+        "planta": "baja",
+        "edificio": "Escuela Superior de Ingeniería (ESI)",
+        "campus": "Puerto Real",
+        "idnum": "328101103"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -6.20274,
+          36.537599
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "clase": "espacio",
+        "nombre": "Decanato de la Facultad de Ciencias",
+        "descrip": "",
+        "enlace": "",
+        "tipo": "unidad",
+        "planta": "1",
+        "edificio": "Facultad de Ciencias",
+        "campus": "Puerto Real",
+        "idnum": "330001201"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -6.211921,
+          36.531806
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "clase": "espacio",
+        "nombre": "Cuarto de baño",
+        "descrip": "",
+        "enlace": "",
+        "tipo": "aseo",
+        "planta": "baja",
+        "edificio": "Facultad de Ciencias",
+        "campus": "Puerto Real",
+        "idnum": "330100201"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -6.211698,
+          36.530925
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "clase": "espacio",
+        "nombre": "Cuarto de baño",
+        "descrip": "",
+        "enlace": "",
+        "tipo": "aseo",
+        "planta": "baja",
+        "edificio": "Facultad de Ciencias",
+        "campus": "Puerto Real",
+        "idnum": "330100202"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -6.211184,
+          36.531239
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "clase": "espacio",
+        "nombre": "FC4",
+        "descrip": "Aula de docencia teórica",
+        "enlace": "",
+        "tipo": "aula",
+        "planta": "baja",
+        "edificio": "Facultad de Ciencias",
+        "campus": "Puerto Real",
+        "idnum": "330100301"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -6.211713,
+          36.531177
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "clase": "espacio",
+        "nombre": "FC11",
+        "descrip": "Aula de docencia teórica",
+        "enlace": "",
+        "tipo": "aula",
+        "planta": "baja",
+        "edificio": "Facultad de Ciencias",
+        "campus": "Puerto Real",
+        "idnum": "330100302"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -6.211348,
+          36.531144
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "clase": "espacio",
+        "nombre": "FC9",
+        "descrip": "Aula de docencia teórica",
+        "enlace": "",
+        "tipo": "aula",
+        "planta": "baja",
+        "edificio": "Facultad de Ciencias",
+        "campus": "Puerto Real",
+        "idnum": "330100303"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -6.211229,
+          36.531193
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "clase": "espacio",
+        "nombre": "FC7",
+        "descrip": "Aula de docencia teórica",
+        "enlace": "",
+        "tipo": "aula",
+        "planta": "baja",
+        "edificio": "Facultad de Ciencias",
+        "campus": "Puerto Real",
+        "idnum": "330100304"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -6.211238,
+          36.531156
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "clase": "espacio",
+        "nombre": "Sala de estudio de la Facultad de Ciencias",
+        "descrip": "",
+        "enlace": "",
+        "tipo": "biblio",
+        "planta": "baja",
+        "edificio": "Facultad de Ciencias",
+        "campus": "Puerto Real",
+        "idnum": "330100401"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -6.211197,
+          36.531177
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "clase": "espacio",
+        "nombre": "Sala de estudio",
+        "descrip": "",
+        "enlace": "",
+        "tipo": "biblio",
+        "planta": "baja",
+        "edificio": "Facultad de Ciencias",
+        "campus": "Puerto Real",
+        "idnum": "330100402"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -6.211248,
+          36.531158
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "clase": "espacio",
+        "nombre": "Fuente de agua",
+        "descrip": "",
+        "enlace": "",
+        "tipo": "cafete",
+        "planta": "baja",
+        "edificio": "Facultad de Ciencias",
+        "campus": "Puerto Real",
+        "idnum": "330100501"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -6.211168,
+          36.531241
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "clase": "espacio",
+        "nombre": "Fuente de agua",
+        "descrip": "",
+        "enlace": "",
+        "tipo": "cafete",
+        "planta": "baja",
+        "edificio": "Facultad de Ciencias",
+        "campus": "Puerto Real",
+        "idnum": "330100502"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -6.212052,
+          36.531812
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "clase": "espacio",
+        "nombre": "FC5",
+        "descrip": "",
+        "enlace": "",
+        "tipo": "emergencia",
+        "planta": "baja",
+        "edificio": "Facultad de Ciencias",
+        "campus": "Puerto Real",
+        "idnum": "330100901"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -6.211435,
+          36.530919
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "clase": "espacio",
+        "nombre": "Sala de Grados 1",
+        "descrip": "",
+        "enlace": "",
+        "tipo": "salon",
+        "planta": "baja",
+        "edificio": "Facultad de Ciencias",
+        "campus": "Puerto Real",
+        "idnum": "330101001"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -6.211507,
+          36.531128
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "clase": "espacio",
+        "nombre": "Punto de carga de VE",
+        "descrip": "Punto de carga de vehículo eléctrico",
+        "enlace": "",
+        "tipo": "transporte",
+        "planta": "baja",
+        "edificio": "Facultad de Ciencias",
+        "campus": "Puerto Real",
+        "idnum": "330101101"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -6.210778,
+          36.531213
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "clase": "espacio",
+        "nombre": "Sala de Grados 2",
+        "descrip": "",
+        "enlace": "",
+        "tipo": "salon",
+        "planta": "sótano",
+        "edificio": "Facultad de Ciencias",
+        "campus": "Puerto Real",
+        "idnum": "330111001"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -6.211702,
+          36.53117
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "clase": "espacio",
+        "nombre": "Cafetería de la Facultad de Ciencias de la Educación",
+        "descrip": "",
+        "enlace": "",
+        "tipo": "cafete",
+        "planta": "baja",
+        "edificio": "Facultad de Ciencias de la Educación",
+        "campus": "Puerto Real",
+        "idnum": "331100501"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -6.214531,
+          36.52837
+        ]
+      }
+    }
   ]
 }
