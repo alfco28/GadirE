@@ -1,4 +1,4 @@
-# <div align="center">GadirE: Mapa Interactivo de la Universidad de Cádiz</div>
+# <div align="center">GadirE: mapa interactivo de la Universidad de Cádiz</div>
 
 > *GadirE* es una iniciativa del Consejo de Estudiantes para ofrecer un mapa interactivo de la Universidad de Cádiz al completo. Este mapa está hecho por estudiantes y está optimizado para ser usado desde un navegador de escritorio hasta una aplicación móvil.
 
