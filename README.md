@@ -30,8 +30,8 @@ La aplicación está disponible para cualquier dispositivo y sistema operativo p
 
 Puedes contribuir al mapa de diferentes formas:
 
-- [Reportar la falta de un lugar](https://docs.google.com/forms/d/e/1FAIpQLSdgbuxXkLoHbwkBDh5i6TF-OzIHC7WK_Y6LDy4tCTiSR3Sg5Q/viewform?usp=dialog)
-- [Reportar un error en un lugar](https://docs.google.com/forms/d/e/1FAIpQLSdEZjtvKMVmpLC3zcajTqxQdqtVs6yuITLAooP6FPez8nhKoQ/viewform?usp=dialog)
+- [Reportar la falta de un lugar](https://docs.google.com/forms/d/e/1FAIpQLSdgbuxXkLoHbwkBDh5i6TF-OzIHC7WK_Y6LDy4tCTiSR3Sg5Q/viewform?usp=dialog).
+- [Reportar un error en un lugar](https://docs.google.com/forms/d/e/1FAIpQLSdEZjtvKMVmpLC3zcajTqxQdqtVs6yuITLAooP6FPez8nhKoQ/viewform?usp=dialog).
 - Cualquier otra aportación, como informar de otros errores o sugerir mejoras, podéis hacerla poniéndoos en contacto con la Dirección de Transformación Digital e Innovación en [t.digital.ceuca@uca.es](mailto:t.digital.ceuca@uca.es).
 
 ---
