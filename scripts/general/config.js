@@ -316,6 +316,10 @@ function savePersonalData() {
   };
 
   localStorage.setItem('personal_data', JSON.stringify(personalData));
+
+  window.dispatchEvent(new CustomEvent('personalDataUpdated', {
+    detail: personalData
+  }));
 }
 
 personalDataInputs.name.addEventListener('input', savePersonalData);

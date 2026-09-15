@@ -1,5 +1,18 @@
 document.addEventListener('DOMContentLoaded', cargarHomeTiles);
 
+function updatePersonalDataTile(name) {
+    const tile = document.getElementById('tile-0');
+    const text = tile?.querySelector('.home-tile-text');
+
+    if (text) {
+        text.textContent = name || '';
+    }
+}
+
+window.addEventListener('personalDataUpdated', event => {
+    updatePersonalDataTile(event.detail.name);
+});
+
 async function cargarHomeTiles() {
     try {
         const response = await fetch('/config/univ.json');
@@ -45,7 +58,13 @@ async function cargarHomeTiles() {
 
             const text = document.createElement('span');
             text.className = 'home-tile-text';
-            text.textContent = tileConfig.text || '';
+            const savedPersonalData = JSON.parse(
+                localStorage.getItem('personal_data') || '{}'
+            );
+
+            text.textContent = tileConfig.id === 'tile-0'
+                ? savedPersonalData.name || ''
+                : tileConfig.text || '';
 
             content.appendChild(text);
 
