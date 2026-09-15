@@ -112,3 +112,10 @@
   font-size: 1rem;
   font-weight: 600;
 }
+
+#tile-0 .home-tile-image {
+  width: min(70%, 240px);
+  height: auto;
+  max-height: 140px;
+  object-fit: contain;
+}

@@ -13,6 +13,30 @@ window.addEventListener('personalDataUpdated', event => {
     updatePersonalDataTile(event.detail.name);
 });
 
+window.addEventListener('personalDataUpdated', event => {
+    const tile = document.getElementById('tile-0');
+    const content = tile?.querySelector('.home-tile-content');
+
+    if (!content || !event.detail.photo) {
+        return;
+    }
+
+    const currentImage = content.querySelector('.home-tile-image');
+
+    if (currentImage) {
+        currentImage.src = event.detail.photo;
+        return;
+    }
+
+    const image = document.createElement('img');
+    image.src = event.detail.photo;
+    image.alt = 'Imagen personal';
+    image.className = 'home-tile-image';
+
+    const currentIcon = content.querySelector('.home-tile-icon');
+    currentIcon?.replaceWith(image);
+});
+
 async function cargarHomeTiles() {
     try {
         const response = await fetch('/config/univ.json');
@@ -41,9 +65,17 @@ async function cargarHomeTiles() {
 
             content.replaceChildren();
 
-            if (tileConfig.image) {
+            const savedPersonalData = JSON.parse(
+                localStorage.getItem('personal_data') || '{}'
+            );
+
+            const tilePhoto = tileConfig.id === 'tile-0'
+                ? savedPersonalData.photo
+                : tileConfig.image;
+
+            if (tilePhoto) {
                 const image = document.createElement('img');
-                image.src = tileConfig.image;
+                image.src = tilePhoto;
                 image.alt = tileConfig.alt || tileConfig.text || '';
                 image.className = 'home-tile-image';
 
@@ -58,9 +90,6 @@ async function cargarHomeTiles() {
 
             const text = document.createElement('span');
             text.className = 'home-tile-text';
-            const savedPersonalData = JSON.parse(
-                localStorage.getItem('personal_data') || '{}'
-            );
 
             text.textContent = tileConfig.id === 'tile-0'
                 ? savedPersonalData.name || ''

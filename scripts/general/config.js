@@ -286,8 +286,39 @@ document.getElementById('enable-push-notifications').checked = appConfig.get('en
 document.getElementById('toggle-notification-filters').checked = appConfig.get('showNotificationFilters');
 
 // Guardar personal data en Local Storage
+function compressImage(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+
+    reader.onload = event => {
+      const image = new Image();
+
+      image.onload = () => {
+        const maxSize = 600;
+        const scale = Math.min(maxSize / image.width, maxSize / image.height, 1);
+
+        const canvas = document.createElement('canvas');
+        canvas.width = image.width * scale;
+        canvas.height = image.height * scale;
+
+        const context = canvas.getContext('2d');
+        context.drawImage(image, 0, 0, canvas.width, canvas.height);
+
+        resolve(canvas.toDataURL('image/jpeg', 0.6));
+      };
+
+      image.onerror = reject;
+      image.src = event.target.result;
+    };
+
+    reader.onerror = reject;
+    reader.readAsDataURL(file);
+  });
+}
+
 const personalDataInputs = {
   name: document.getElementById('personal-data-name'),
+  photo: document.getElementById('personal-data-photo'),
   allowAccessToLocation: document.getElementById('personal-data-allow-location'),
   barCode: document.getElementById('personal-data-bar-code'),
   includeMyPersonalDataWhenExportingCurrentConfiguration: document.getElementById(
@@ -306,13 +337,19 @@ personalDataInputs.barCode.value = savedPersonalData.barCode || '';
 personalDataInputs.includeMyPersonalDataWhenExportingCurrentConfiguration.checked =
   savedPersonalData.includeMyPersonalDataWhenExportingCurrentConfiguration || false;
 
-function savePersonalData() {
+function savePersonalData(updatedValues = {}) {
+  const savedData = JSON.parse(
+    localStorage.getItem('personal_data') || '{}'
+  );
+
   const personalData = {
+    ...savedData,
     name: personalDataInputs.name.value,
     allowAccessToLocation: personalDataInputs.allowAccessToLocation.checked,
     barCode: personalDataInputs.barCode.value,
     includeMyPersonalDataWhenExportingCurrentConfiguration:
-      personalDataInputs.includeMyPersonalDataWhenExportingCurrentConfiguration.checked
+      personalDataInputs.includeMyPersonalDataWhenExportingCurrentConfiguration.checked,
+    ...updatedValues
   };
 
   localStorage.setItem('personal_data', JSON.stringify(personalData));
@@ -321,6 +358,17 @@ function savePersonalData() {
     detail: personalData
   }));
 }
+
+personalDataInputs.photo.addEventListener('change', async event => {
+  const file = event.target.files[0];
+
+  if (!file) {
+    return;
+  }
+
+  const photo = await compressImage(file);
+  savePersonalData({ photo });
+});
 
 personalDataInputs.name.addEventListener('input', savePersonalData);
 personalDataInputs.allowAccessToLocation.addEventListener('change', savePersonalData);
