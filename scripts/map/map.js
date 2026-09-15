@@ -243,7 +243,7 @@ function initMap() {
     zoomControl: false,
   }).setView([36.5297, -6.2118], 16);
 
-  /* //Ahora Carto requiere API key
+  /* //Ahora CARTO requiere API key
   L.tileLayer(
     'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
     maxZoom:20, attribution: 'Map data from <a href="https://openstreetmap.org/copyright">OpenStreetMap</a>. © <a href="https://carto.com/about-carto/">rastertiles/voyager</a>'
@@ -542,7 +542,7 @@ function shareMarker(url, title) {
     // Usa la Web Share API si está disponible (móviles y algunos navegadores de escritorio)
     navigator.share({
       title: title,
-      text: `Mira este lugar en el CEUCAtlas: ${title}`,
+      text: `Mira este lugar en GadirE: ${title}`,
       url: url,
     })
   } else {
@@ -557,6 +557,6 @@ function copyToClipboard(text) {
   navigator.clipboard.writeText(text).then(() => {
     console.log("Enlace copiado al portapapeles");
   }).catch(err => {
-    console.error("Error al copiar al portapapeles:", err);
+    console.error("Error al copiar al portapapeles: ", err);
   });
 }
