@@ -1,4 +1,133 @@
 {
+    "homeTiles": [
+        {
+            "id": "tile-0",
+            "image": null,
+            "icon": "fa-regular fa-image",
+            "text": "Lorem ipsum 0",
+            "alt": "Lorem ipsum 0"
+        },
+        {
+            "id": "tile-1",
+            "image": "/assets/agenda.webp",
+            "icon": null,
+            "text": "Lorem ipsum 1",
+            "alt": "Lorem ipsum 1"
+        },
+        {
+            "id": "tile-2",
+            "image": null,
+            "icon": "fa-regular fa-image",
+            "text": "Lorem ipsum 2",
+            "alt": "Lorem ipsum 2"
+        },
+        {
+            "id": "tile-3",
+            "image": null,
+            "icon": "fa-regular fa-image",
+            "text": "Lorem ipsum 3",
+            "alt": "Lorem ipsum 3"
+        },
+        {
+            "id": "tile-4",
+            "image": null,
+            "icon": "fa-regular fa-image",
+            "text": "Lorem ipsum 4",
+            "alt": "Lorem ipsum 4"
+        },
+        {
+            "id": "tile-5",
+            "image": null,
+            "icon": "fa-regular fa-image",
+            "text": "Lorem ipsum 5",
+            "alt": "Lorem ipsum 5"
+        },
+        {
+            "id": "tile-6",
+            "image": null,
+            "icon": "fa-regular fa-image",
+            "text": "Lorem ipsum 6",
+            "alt": "Lorem ipsum 6"
+        },
+        {
+            "id": "tile-7",
+            "image": null,
+            "icon": "fa-regular fa-image",
+            "text": "Lorem ipsum 7",
+            "alt": "Lorem ipsum 7"
+        },
+        {
+            "id": "tile-8",
+            "image": null,
+            "icon": "fa-regular fa-image",
+            "text": "Lorem ipsum 8",
+            "alt": "Lorem ipsum 8"
+        },
+        {
+            "id": "tile-9",
+            "image": null,
+            "icon": "fa-regular fa-image",
+            "text": "Lorem ipsum 9",
+            "alt": "Lorem ipsum 9"
+        },
+        {
+            "id": "tile-10",
+            "image": null,
+            "icon": "fa-regular fa-image",
+            "text": "Lorem ipsum 10",
+            "alt": "Lorem ipsum 10"
+        },
+        {
+            "id": "tile-11",
+            "image": null,
+            "icon": "fa-regular fa-image",
+            "text": "Lorem ipsum 11",
+            "alt": "Lorem ipsum 11"
+        },
+        {
+            "id": "tile-12",
+            "image": null,
+            "icon": "fa-regular fa-image",
+            "text": "Lorem ipsum 12",
+            "alt": "Lorem ipsum 12"
+        },
+        {
+            "id": "tile-13",
+            "image": null,
+            "icon": "fa-regular fa-image",
+            "text": "Lorem ipsum 13",
+            "alt": "Lorem ipsum 13"
+        },
+        {
+            "id": "tile-14",
+            "image": null,
+            "icon": "fa-regular fa-image",
+            "text": "Lorem ipsum 14",
+            "alt": "Lorem ipsum 14"
+        },
+        {
+            "id": "tile-15",
+            "image": null,
+            "icon": "fa-regular fa-image",
+            "text": "Lorem ipsum 15",
+            "alt": "Lorem ipsum 15"
+        },
+        {
+            "id": "tile-16",
+            "image": null,
+            "icon": "fa-regular fa-image",
+            "text": "Lorem ipsum 16",
+            "alt": "Lorem ipsum 16"
+        },
+        {
+            "id": "tile-17",
+            "image": null,
+            "icon": "fa-regular fa-image",
+            "text": "Lorem ipsum 17",
+            "alt": "Lorem ipsum 17"
+        }
+    ],
+    
     "calendars": {
         "byTheme": {
             "Representación Estudiantil": [
