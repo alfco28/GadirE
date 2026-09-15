@@ -19,130 +19,130 @@
         {
             "id": "tile-2",
             "image": null,
-            "icon": "fa-regular fa-image",
-            "text": "Lorem ipsum 2",
-            "alt": "Lorem ipsum 2",
-            "url": "https://www.uca.es"
+            "icon": "fa-solid fa-bus-simple",
+            "text": "Autobuses Cádiz",
+            "alt": "Autobuses Cádiz",
+            "url": "https://cmtbc.es"
         },
         {
             "id": "tile-3",
             "image": null,
-            "icon": "fa-regular fa-image",
-            "text": "Lorem ipsum 3",
-            "alt": "Lorem ipsum 3",
-            "url": "https://www.uca.es"
+            "icon": "fa-solid fa-bus-simple",
+            "text": "Autobuses Algeciras",
+            "alt": "Autobuses Algeciras",
+            "url": "https://ctmcg.es"
         },
         {
             "id": "tile-4",
             "image": null,
-            "icon": "fa-regular fa-image",
-            "text": "Lorem ipsum 4",
-            "alt": "Lorem ipsum 4",
-            "url": "https://www.uca.es"
+            "icon": "fa-solid fa-train-tram",
+            "text": "Cercanías Cádiz",
+            "alt": "Cercanías Cádiz",
+            "url": "https://www.renfe.com/es/es/cercanias/cercanias-cadiz/horarios#/buscar"
         },
         {
             "id": "tile-5",
             "image": null,
-            "icon": "fa-regular fa-image",
-            "text": "Lorem ipsum 5",
-            "alt": "Lorem ipsum 5",
-            "url": "https://www.uca.es"
+            "icon": "fa-solid fa-utensils",
+            "text": "Menú Cafetería",
+            "alt": "Menú Cafetería",
+            "url": "https://whatsapp.com/channel/0029VaO77mU4inoxDO786w3v"
         },
         {
             "id": "tile-6",
             "image": null,
-            "icon": "fa-regular fa-image",
-            "text": "Lorem ipsum 6",
-            "alt": "Lorem ipsum 6",
-            "url": "https://www.uca.es"
+            "icon": "fa-solid fa-book",
+            "text": "Biblioteca",
+            "alt": "Biblioteca",
+            "url": "https://biblioteca.uca.es"
         },
         {
             "id": "tile-7",
             "image": null,
-            "icon": "fa-regular fa-image",
-            "text": "Lorem ipsum 7",
-            "alt": "Lorem ipsum 7",
-            "url": "https://www.uca.es"
+            "icon": "fa-solid fa-chalkboard-user",
+            "text": "Campus Virtual",
+            "alt": "Campus Virtual",
+            "url": "https://campusvirtual.uca.es"
         },
         {
             "id": "tile-8",
             "image": null,
-            "icon": "fa-regular fa-image",
-            "text": "Lorem ipsum 8",
-            "alt": "Lorem ipsum 8",
-            "url": "https://www.uca.es"
+            "icon": "fa-solid fa-user-graduate",
+            "text": "Portal de Servicios",
+            "alt": "Portal de Servicios",
+            "url": "https://portalservicios.uca.es"
         },
         {
             "id": "tile-9",
             "image": null,
-            "icon": "fa-regular fa-image",
-            "text": "Lorem ipsum 9",
-            "alt": "Lorem ipsum 9",
-            "url": "https://www.uca.es"
+            "icon": "fa-regular fa-comments",
+            "text": "Grupos WhatsApp",
+            "alt": "Grupos WhatsApp",
+            "url": "https://ceuca.uca.es/internas/grupos-de-whatsapp/"
         },
         {
             "id": "tile-10",
             "image": null,
-            "icon": "fa-regular fa-image",
-            "text": "Lorem ipsum 10",
-            "alt": "Lorem ipsum 10",
-            "url": "https://www.uca.es"
+            "icon": "fa-solid fa-circle-info",
+            "text": "Oficina del Estudiante",
+            "alt": "Oficina del Estudiante",
+            "url": "https://oficinadelestudiante.uca.es"
         },
         {
             "id": "tile-11",
             "image": null,
-            "icon": "fa-regular fa-image",
-            "text": "Lorem ipsum 11",
-            "alt": "Lorem ipsum 11",
-            "url": "https://www.uca.es"
+            "icon": "fa-regular fa-building-circle-check",
+            "text": "Reserva de Espacios",
+            "alt": "Reserva de Espacios",
+            "url": "https://sire.uca.es"
         },
         {
             "id": "tile-12",
             "image": null,
-            "icon": "fa-regular fa-image",
-            "text": "Lorem ipsum 12",
-            "alt": "Lorem ipsum 12",
-            "url": "https://www.uca.es"
+            "icon": "fa-solid fa-file-signature",
+            "text": "CAU",
+            "alt": "CAU",
+            "url": "https://cau.uca.es"
         },
         {
             "id": "tile-13",
             "image": null,
-            "icon": "fa-regular fa-image",
-            "text": "Lorem ipsum 13",
-            "alt": "Lorem ipsum 13",
-            "url": "https://www.uca.es"
+            "icon": "fa-regular fa-thumbs-up",
+            "text": "BAU",
+            "alt": "BAU",
+            "url": "https://bau.uca.es"
         },
         {
             "id": "tile-14",
             "image": null,
-            "icon": "fa-regular fa-image",
-            "text": "Lorem ipsum 14",
-            "alt": "Lorem ipsum 14",
-            "url": "https://www.uca.es"
+            "icon": "fa-solid fa-person-running",
+            "text": "Área de Deportes",
+            "alt": "Área de Deportes",
+            "url": "https://deportes.uca.es"
         },
         {
             "id": "tile-15",
             "image": null,
-            "icon": "fa-regular fa-image",
-            "text": "Lorem ipsum 15",
-            "alt": "Lorem ipsum 15",
-            "url": "https://www.uca.es"
+            "icon": "fa-regular fa-address-book",
+            "text": "Directorio",
+            "alt": "Directorio",
+            "url": "https://directorio.uca.es"
         },
         {
             "id": "tile-16",
             "image": null,
-            "icon": "fa-regular fa-image",
-            "text": "Lorem ipsum 16",
-            "alt": "Lorem ipsum 16",
-            "url": "https://www.uca.es"
+            "icon": "fa-regular fa-calendar-plus",
+            "text": "Cita Previa",
+            "alt": "Cita Previa",
+            "url": "https://ciges.uca.es"
         },
         {
             "id": "tile-17",
             "image": null,
-            "icon": "fa-regular fa-image",
-            "text": "Lorem ipsum 17",
-            "alt": "Lorem ipsum 17",
-            "url": "https://www.uca.es"
+            "icon": "fa-solid fa-hand-holding-heart",
+            "text": "SAP",
+            "alt": "SAP",
+            "url": "https://sap.uca.es"
         }
     ],
     
