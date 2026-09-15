@@ -1,5 +1,44 @@
 document.addEventListener('DOMContentLoaded', cargarHomeTiles);
 
+function getPersonalData() {
+    return JSON.parse(localStorage.getItem('personal_data') || '{}');
+}
+
+function escapeHtml(value) {
+    const element = document.createElement('div');
+    element.textContent = value;
+    return element.innerHTML;
+}
+
+function openPersonalDataModal() {
+    const personalData = getPersonalData();
+    const name = personalData.name || 'Sin nombre';
+    const barCode = personalData.barCode || '';
+
+    if (!barCode) {
+        openMW(
+            'Datos personales',
+            `<p>${escapeHtml(name)}</p>
+             <p>No hay ningún código de barras guardado.</p>`
+        );
+        return;
+    }
+
+    openMW(
+        'Datos personales',
+        `<p>${escapeHtml(name)}</p>
+         <svg id="personal-barcode"></svg>`
+    );
+
+    JsBarcode('#personal-barcode', barCode, {
+        format: 'CODE128',
+        displayValue: true,
+        width: 2,
+        height: 80,
+        margin: 10
+    });
+}
+
 function updatePersonalDataTile(name) {
     const tile = document.getElementById('tile-0');
     const text = tile?.querySelector('.home-tile-text');
@@ -97,16 +136,28 @@ async function cargarHomeTiles() {
 
             content.appendChild(text);
 
-            if (tileConfig.url) {
+            if (tileConfig.id === 'tile-0') {
+                tile.setAttribute('role', 'button');
+                tile.setAttribute('tabindex', '0');
+                        
+                tile.addEventListener('click', openPersonalDataModal);
+                        
+                tile.addEventListener('keydown', event => {
+                    if (event.key === 'Enter' || event.key === ' ') {
+                        event.preventDefault();
+                        openPersonalDataModal();
+                    }
+                });
+            } else if (tileConfig.url) {
                 tile.setAttribute('role', 'link');
                 tile.setAttribute('tabindex', '0');
-
+            
                 const redirectToTileUrl = () => {
                     window.location.assign(tileConfig.url);
                 };
-        
+            
                 tile.addEventListener('click', redirectToTileUrl);
-        
+            
                 tile.addEventListener('keydown', event => {
                     if (event.key === 'Enter' || event.key === ' ') {
                         event.preventDefault();
