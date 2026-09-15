@@ -284,3 +284,42 @@ document.getElementById('pagInicio').value = appConfig.get('homePage');
 document.getElementById('localeLang').value = appConfig.get('localeLang');
 document.getElementById('enable-push-notifications').checked = appConfig.get('enablePushNotifications');
 document.getElementById('toggle-notification-filters').checked = appConfig.get('showNotificationFilters');
+
+// Guardar personal data en Local Storage
+const personalDataInputs = {
+  name: document.getElementById('personal-data-name'),
+  allowAccessToLocation: document.getElementById('personal-data-allow-location'),
+  barCode: document.getElementById('personal-data-bar-code'),
+  includeMyPersonalDataWhenExportingCurrentConfiguration: document.getElementById(
+    'personal-data-include-in-export'
+  )
+};
+
+const savedPersonalData = JSON.parse(
+  localStorage.getItem('personal_data') || '{}'
+);
+
+personalDataInputs.name.value = savedPersonalData.name || '';
+personalDataInputs.allowAccessToLocation.checked =
+  savedPersonalData.allowAccessToLocation || false;
+personalDataInputs.barCode.value = savedPersonalData.barCode || '';
+personalDataInputs.includeMyPersonalDataWhenExportingCurrentConfiguration.checked =
+  savedPersonalData.includeMyPersonalDataWhenExportingCurrentConfiguration || false;
+
+function savePersonalData() {
+  const personalData = {
+    name: personalDataInputs.name.value,
+    allowAccessToLocation: personalDataInputs.allowAccessToLocation.checked,
+    barCode: personalDataInputs.barCode.value,
+    includeMyPersonalDataWhenExportingCurrentConfiguration:
+      personalDataInputs.includeMyPersonalDataWhenExportingCurrentConfiguration.checked
+  };
+
+  localStorage.setItem('personal_data', JSON.stringify(personalData));
+}
+
+personalDataInputs.name.addEventListener('input', savePersonalData);
+personalDataInputs.allowAccessToLocation.addEventListener('change', savePersonalData);
+personalDataInputs.barCode.addEventListener('input', savePersonalData);
+personalDataInputs.includeMyPersonalDataWhenExportingCurrentConfiguration
+  .addEventListener('change', savePersonalData);
