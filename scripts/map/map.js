@@ -243,9 +243,18 @@ function initMap() {
     zoomControl: false,
   }).setView([36.5297, -6.2118], 16);
 
+  /* //Ahora Carto requiere API key
   L.tileLayer(
-    'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',
-    { maxZoom:20, attribution:'Map data from <a href="https://openstreetmap.org/copyright">OpenStreetMap</a>. © <a href="https://carto.com/about-carto/">rastertiles/voyager</a>' }
+    'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+    maxZoom:20, attribution: 'Map data from <a href="https://openstreetmap.org/copyright">OpenStreetMap</a>. © <a href="https://carto.com/about-carto/">rastertiles/voyager</a>'
+    }
+  ).addTo(map);
+  */
+
+  L.tileLayer(
+    'https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; Map data from <a href="https://openstreetmap.org/copyright">OpenStreetMap</a>.'
+    }
   ).addTo(map);
 
   // ================= CAPAS PERSISTENTES =================
