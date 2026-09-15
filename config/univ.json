@@ -5,126 +5,144 @@
             "image": null,
             "icon": "fa-regular fa-image",
             "text": "Lorem ipsum 0",
-            "alt": "Lorem ipsum 0"
+            "alt": "Lorem ipsum 0",
+            "url": "https://www.uca.es"
         },
         {
             "id": "tile-1",
             "image": "/assets/agenda.webp",
             "icon": null,
             "text": "Lorem ipsum 1",
-            "alt": "Lorem ipsum 1"
+            "alt": "Lorem ipsum 1",
+            "url": "https://www.uca.es"
         },
         {
             "id": "tile-2",
             "image": null,
             "icon": "fa-regular fa-image",
             "text": "Lorem ipsum 2",
-            "alt": "Lorem ipsum 2"
+            "alt": "Lorem ipsum 2",
+            "url": "https://www.uca.es"
         },
         {
             "id": "tile-3",
             "image": null,
             "icon": "fa-regular fa-image",
             "text": "Lorem ipsum 3",
-            "alt": "Lorem ipsum 3"
+            "alt": "Lorem ipsum 3",
+            "url": "https://www.uca.es"
         },
         {
             "id": "tile-4",
             "image": null,
             "icon": "fa-regular fa-image",
             "text": "Lorem ipsum 4",
-            "alt": "Lorem ipsum 4"
+            "alt": "Lorem ipsum 4",
+            "url": "https://www.uca.es"
         },
         {
             "id": "tile-5",
             "image": null,
             "icon": "fa-regular fa-image",
             "text": "Lorem ipsum 5",
-            "alt": "Lorem ipsum 5"
+            "alt": "Lorem ipsum 5",
+            "url": "https://www.uca.es"
         },
         {
             "id": "tile-6",
             "image": null,
             "icon": "fa-regular fa-image",
             "text": "Lorem ipsum 6",
-            "alt": "Lorem ipsum 6"
+            "alt": "Lorem ipsum 6",
+            "url": "https://www.uca.es"
         },
         {
             "id": "tile-7",
             "image": null,
             "icon": "fa-regular fa-image",
             "text": "Lorem ipsum 7",
-            "alt": "Lorem ipsum 7"
+            "alt": "Lorem ipsum 7",
+            "url": "https://www.uca.es"
         },
         {
             "id": "tile-8",
             "image": null,
             "icon": "fa-regular fa-image",
             "text": "Lorem ipsum 8",
-            "alt": "Lorem ipsum 8"
+            "alt": "Lorem ipsum 8",
+            "url": "https://www.uca.es"
         },
         {
             "id": "tile-9",
             "image": null,
             "icon": "fa-regular fa-image",
             "text": "Lorem ipsum 9",
-            "alt": "Lorem ipsum 9"
+            "alt": "Lorem ipsum 9",
+            "url": "https://www.uca.es"
         },
         {
             "id": "tile-10",
             "image": null,
             "icon": "fa-regular fa-image",
             "text": "Lorem ipsum 10",
-            "alt": "Lorem ipsum 10"
+            "alt": "Lorem ipsum 10",
+            "url": "https://www.uca.es"
         },
         {
             "id": "tile-11",
             "image": null,
             "icon": "fa-regular fa-image",
             "text": "Lorem ipsum 11",
-            "alt": "Lorem ipsum 11"
+            "alt": "Lorem ipsum 11",
+            "url": "https://www.uca.es"
         },
         {
             "id": "tile-12",
             "image": null,
             "icon": "fa-regular fa-image",
             "text": "Lorem ipsum 12",
-            "alt": "Lorem ipsum 12"
+            "alt": "Lorem ipsum 12",
+            "url": "https://www.uca.es"
         },
         {
             "id": "tile-13",
             "image": null,
             "icon": "fa-regular fa-image",
             "text": "Lorem ipsum 13",
-            "alt": "Lorem ipsum 13"
+            "alt": "Lorem ipsum 13",
+            "url": "https://www.uca.es"
         },
         {
             "id": "tile-14",
             "image": null,
             "icon": "fa-regular fa-image",
             "text": "Lorem ipsum 14",
-            "alt": "Lorem ipsum 14"
+            "alt": "Lorem ipsum 14",
+            "url": "https://www.uca.es"
         },
         {
             "id": "tile-15",
             "image": null,
             "icon": "fa-regular fa-image",
             "text": "Lorem ipsum 15",
-            "alt": "Lorem ipsum 15"
+            "alt": "Lorem ipsum 15",
+            "url": "https://www.uca.es"
         },
         {
             "id": "tile-16",
             "image": null,
             "icon": "fa-regular fa-image",
             "text": "Lorem ipsum 16",
-            "alt": "Lorem ipsum 16"
+            "alt": "Lorem ipsum 16",
+            "url": "https://www.uca.es"
         },
         {
             "id": "tile-17",
             "image": null,
             "icon": "fa-regular fa-image",
             "text": "Lorem ipsum 17",
-            "alt": "Lorem ipsum 17"
+            "alt": "Lorem ipsum 17",
+            "url": "https://www.uca.es"
         }
     ],
     
