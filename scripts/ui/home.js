@@ -15,26 +15,29 @@ function openPersonalDataModal() {
     const name = personalData.name || 'Sin nombre';
     const barCode = personalData.barCode || '';
 
-    if (!barCode) {
-        openMW(
-            name,
-            `<p>No hay ningún código de barras guardado.</p>`
-        );
-        return;
-    }
-
+    const photo = personalData.photo
+        ? `<img class="personal-data-photo" src="${personalData.photo}" alt="Imagen personal">`
+        : '';
+    
     openMW(
         name,
-        `<svg id="personal-barcode"></svg>`
+        `<div class="personal-data-modal">
+            ${photo}
+            ${barCode
+                ? '<svg id="personal-barcode"></svg>'
+                : '<p>No hay ningún código de barras guardado.</p>'}
+        </div>`
     );
 
-    JsBarcode('#personal-barcode', barCode, {
-        format: 'CODE128',
-        displayValue: true,
-        width: 2,
-        height: 80,
-        margin: 10
-    });
+    if (barCode) {
+        JsBarcode('#personal-barcode', barCode, {
+            format: 'CODE128',
+            displayValue: true,
+            width: 2,
+            height: 80,
+            margin: 10
+        });
+    }
 }
 
 function updatePersonalDataTile(name) {

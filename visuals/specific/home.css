@@ -113,9 +113,36 @@
   font-weight: 600;
 }
 
+#tile-0 .home-tile-content {
+  flex-direction: row;
+  justify-content: flex-start;
+  text-align: left;
+}
+
 #tile-0 .home-tile-image {
-  width: min(70%, 240px);
+  width: 64px;
+  height: 64px;
+  flex: 0 0 64px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.personal-data-modal {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  text-align: center;
+}
+
+.personal-data-photo {
+  width: 120px;
+  height: 120px;
+  border-radius: 0;
+  object-fit: cover;
+}
+
+#personal-barcode {
+  max-width: 100%;
   height: auto;
-  max-height: 140px;
-  object-fit: contain;
 }
