@@ -17,17 +17,15 @@ function openPersonalDataModal() {
 
     if (!barCode) {
         openMW(
-            'Datos personales',
-            `<p>${escapeHtml(name)}</p>
-             <p>No hay ningún código de barras guardado.</p>`
+            name,
+            `<p>No hay ningún código de barras guardado.</p>`
         );
         return;
     }
 
     openMW(
-        'Datos personales',
-        `<p>${escapeHtml(name)}</p>
-         <svg id="personal-barcode"></svg>`
+        name,
+        `<svg id="personal-barcode"></svg>`
     );
 
     JsBarcode('#personal-barcode', barCode, {
