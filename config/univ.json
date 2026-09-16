@@ -91,7 +91,7 @@
         {
             "id": "tile-11",
             "image": null,
-            "icon": "fa-regular fa-building-circle-check",
+            "icon": "fa-solid fa-building-circle-check",
             "text": "Reserva de Espacios",
             "alt": "Reserva de Espacios",
             "url": "https://sire.uca.es"
