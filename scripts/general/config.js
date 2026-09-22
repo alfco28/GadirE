@@ -319,7 +319,6 @@ function compressImage(file) {
 const personalDataInputs = {
   name: document.getElementById('personal-data-name'),
   photo: document.getElementById('personal-data-photo'),
-  allowAccessToLocation: document.getElementById('personal-data-allow-location'),
   barCode: document.getElementById('personal-data-bar-code'),
   includeMyPersonalDataWhenExportingCurrentConfiguration: document.getElementById(
     'personal-data-include-in-export'
@@ -331,8 +330,6 @@ const savedPersonalData = JSON.parse(
 );
 
 personalDataInputs.name.value = savedPersonalData.name || '';
-personalDataInputs.allowAccessToLocation.checked =
-  savedPersonalData.allowAccessToLocation || false;
 personalDataInputs.barCode.value = savedPersonalData.barCode || '';
 personalDataInputs.includeMyPersonalDataWhenExportingCurrentConfiguration.checked =
   savedPersonalData.includeMyPersonalDataWhenExportingCurrentConfiguration || false;
@@ -345,7 +342,6 @@ function savePersonalData(updatedValues = {}) {
   const personalData = {
     ...savedData,
     name: personalDataInputs.name.value,
-    allowAccessToLocation: personalDataInputs.allowAccessToLocation.checked,
     barCode: personalDataInputs.barCode.value,
     includeMyPersonalDataWhenExportingCurrentConfiguration:
       personalDataInputs.includeMyPersonalDataWhenExportingCurrentConfiguration.checked,
@@ -371,7 +367,33 @@ personalDataInputs.photo.addEventListener('change', async event => {
 });
 
 personalDataInputs.name.addEventListener('input', savePersonalData);
-personalDataInputs.allowAccessToLocation.addEventListener('change', savePersonalData);
+
+function requestLocationPermission() {
+  if (!navigator.geolocation) {
+    alert('Tu navegador no soporta la geolocalización.');
+    return;
+  }
+
+  navigator.geolocation.getCurrentPosition(
+    () => {
+      alert(
+        'Permiso ya concedido.'
+      );
+    },
+    () => {
+      alert(
+        'No se ha concedido permiso para acceder a tu ubicación. ' +
+        'Puedes cambiarlo desde los permisos del navegador.'
+      );
+    }
+  );
+}
+
+const requestLocationAccess = document.getElementById(
+  't-settings-privacy-requestAccessToLocation'
+);
+
+requestLocationAccess.addEventListener('click', requestLocationPermission);
 personalDataInputs.barCode.addEventListener('input', savePersonalData);
 personalDataInputs.includeMyPersonalDataWhenExportingCurrentConfiguration
   .addEventListener('change', savePersonalData);

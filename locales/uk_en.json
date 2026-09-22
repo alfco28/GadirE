@@ -11,7 +11,7 @@
     "t-settings-privacy-cookies": "Cookies",
     "t-settings-privacy-cookiesPolicy": "Cookies policy",
     "t-settings-privacy-privacyPolicy": "Privacy policy",
-    "t-settings-privacy-allowAccessToLocation": "Allow access to location",
+    "t-settings-privacy-requestAccessToLocation": "Allow access to location",
     "t-settings-privacy-name": "Name",
     "t-settings-privacy-photo": "Photo",
     "t-settings-privacy-barCode": "Bar code",

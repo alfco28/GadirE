@@ -29,3 +29,8 @@
 .two-sided-opt input {
   margin-left: auto;
 }
+
+/* Específico */
+#t-settings-privacy-requestAccessToLocation {
+  cursor: pointer;
+}
