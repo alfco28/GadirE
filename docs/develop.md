@@ -41,7 +41,7 @@ Los marcadores se agrupan en capas por tipo. Actualizar filtros no recrea los ma
 Las claves actuales de `localStorage` son:
 
 - `gadire_state`: preferencias generales.
-- `personal_data`: nombre, foto comprimida, código de barras y preferencias relacionadas.
+- `personal_data`: nombre, apellidos, centro, campus, foto comprimida, código de barras y preferencias relacionadas.
 - `calendarSelections`: selección de calendarios.
 - `feedSelections`: selección de feeds.
 

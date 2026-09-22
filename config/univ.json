@@ -145,6 +145,32 @@
             "url": "https://sap.uca.es"
         }
     ],
+
+    "centres": [
+        "Escuela de Doctorado",
+        "Escuela de Ingeniería Naval y Oceánica",
+        "Escuela de Ingenierías Marina, Náutica y Radioelectrónica",
+        "Escuela Internacional de Doctorado en Estudios del Mar",
+        "Escuela Superior de Ingeniería",
+        "Escuela Técnica Superior de Ingeniería de Algeciras",
+        "Facultad de Ciencias",
+        "Facultad de Ciencias de la Educación",
+        "Facultad de Ciencias del Mar y Ambientales",
+        "Facultad de Ciencias del Trabajo",
+        "Facultad de Ciencias Económicas y Empresariales",
+        "Facultad de Ciencias Sociales y de la Comunicación",
+        "Facultad de Derecho",
+        "Facultad de Enfermería",
+        "Facultad de Enfermería y Fisioterapia",
+        "Facultad de Filosfía y Letras",
+        "Facultad de Medicina"
+    ],
+    "campus": [
+        "Bahía de Algeciras",
+        "Cádiz",
+        "Jerez",
+        "Puerto Real"
+    ],
     
     "calendars": {
         "byTheme": {

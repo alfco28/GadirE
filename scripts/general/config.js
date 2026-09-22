@@ -318,21 +318,59 @@ function compressImage(file) {
 
 const personalDataInputs = {
   name: document.getElementById('personal-data-name'),
+  surnames: document.getElementById('personal-data-surnames'),
+  centre: document.getElementById('personal-data-centre'),
+  campus: document.getElementById('personal-data-campus'),
   photo: document.getElementById('personal-data-photo'),
   barCode: document.getElementById('personal-data-bar-code'),
-  includeMyPersonalDataWhenExportingCurrentConfiguration: document.getElementById(
-    'personal-data-include-in-export'
-  )
+  includeMyPersonalDataWhenExportingCurrentConfiguration: document.getElementById('personal-data-include-in-export')
 };
+
+function populatePersonalDataSelect(select, values, savedValue) {
+  select.replaceChildren();
+
+  const defaultOption = document.createElement('option');
+  defaultOption.value = '';
+  defaultOption.textContent = 'Seleccionar';
+  select.appendChild(defaultOption);
+
+  values.forEach(value => {
+    const option = document.createElement('option');
+    option.value = value;
+    option.textContent = value;
+    select.appendChild(option);
+  });
+
+  select.value = values.includes(savedValue) ? savedValue : '';
+}
 
 const savedPersonalData = JSON.parse(
   localStorage.getItem('personal_data') || '{}'
 );
 
 personalDataInputs.name.value = savedPersonalData.name || '';
+personalDataInputs.surnames.value = savedPersonalData.surnames || '';
 personalDataInputs.barCode.value = savedPersonalData.barCode || '';
-personalDataInputs.includeMyPersonalDataWhenExportingCurrentConfiguration.checked =
-  savedPersonalData.includeMyPersonalDataWhenExportingCurrentConfiguration || false;
+personalDataInputs.includeMyPersonalDataWhenExportingCurrentConfiguration.checked = savedPersonalData.includeMyPersonalDataWhenExportingCurrentConfiguration || false;
+
+fetch('/config/univ.json')
+  .then(response => response.json())
+  .then(universityData => {
+    populatePersonalDataSelect(
+      personalDataInputs.centre,
+      universityData.centres,
+      savedPersonalData.centre
+    );
+
+    populatePersonalDataSelect(
+      personalDataInputs.campus,
+      universityData.campus,
+      savedPersonalData.campus
+    );
+  })
+  .catch(error => {
+    console.error('No se pudieron cargar centros y campus:', error);
+  });
 
 function savePersonalData(updatedValues = {}) {
   const savedData = JSON.parse(
@@ -342,11 +380,26 @@ function savePersonalData(updatedValues = {}) {
   const personalData = {
     ...savedData,
     name: personalDataInputs.name.value,
+    surnames: personalDataInputs.surnames.value,
     barCode: personalDataInputs.barCode.value,
     includeMyPersonalDataWhenExportingCurrentConfiguration:
-      personalDataInputs.includeMyPersonalDataWhenExportingCurrentConfiguration.checked,
+      personalDataInputs
+        .includeMyPersonalDataWhenExportingCurrentConfiguration
+        .checked,
     ...updatedValues
   };
+
+  if (personalDataInputs.centre.value) {
+    personalData.centre = personalDataInputs.centre.value;
+  } else {
+    delete personalData.centre;
+  }
+
+  if (personalDataInputs.campus.value) {
+    personalData.campus = personalDataInputs.campus.value;
+  } else {
+    delete personalData.campus;
+  }
 
   localStorage.setItem('personal_data', JSON.stringify(personalData));
 
@@ -367,6 +420,9 @@ personalDataInputs.photo.addEventListener('change', async event => {
 });
 
 personalDataInputs.name.addEventListener('input', savePersonalData);
+personalDataInputs.surnames.addEventListener('input', savePersonalData);
+personalDataInputs.centre.addEventListener('change', savePersonalData);
+personalDataInputs.campus.addEventListener('change', savePersonalData);
 
 function requestLocationPermission() {
   if (!navigator.geolocation) {

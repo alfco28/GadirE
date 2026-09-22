@@ -2,7 +2,7 @@
 
 ## Datos personales
 
-El nombre, la fotografía, el código de barras y las preferencias relacionadas se guardan en el `localStorage` del navegador bajo `personal_data`. No existe una cuenta de usuario ni un servidor propio que sincronice esos datos.
+El nombre, los apellidos, el centro, el campus, la fotografía, el código de barras y las preferencias relacionadas se guardan en el `localStorage` del navegador bajo `personal_data`. No existe una cuenta de usuario ni un servidor propio que sincronice esos datos.
 
 La fotografía se reduce y se convierte a una cadena JPEG antes de guardarse localmente. Los datos pueden desaparecer si el usuario borra los datos del sitio, cambia de navegador o utiliza otro dispositivo.
 
