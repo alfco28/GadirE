@@ -28,6 +28,11 @@ Third-party components and their licenses:
 - Fuse.js (Apache-2.0 License)
   [Full license text](https://github.com/krisk/Fuse/blob/main/LICENSE)
 
+- Marked v18.0.13 (MIT License)
+  Copyright (c) 2018+, MarkedJS.
+  Copyright (c) 2011-2018, Christopher Jeffrey.
+  [Full license text](https://marked.js.org/license)
+
 - Font Awesome (CC BY 4.0 License)
   [Full license text](https://fontawesome.com/license/free)
 
