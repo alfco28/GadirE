@@ -13,7 +13,7 @@ fetch('/config/univ.json')
     })
     .catch(error => console.error('Error al cargar el JSON:', error));
 
-import ICAL from "https://unpkg.com/ical.js/dist/ical.min.js";
+import ICAL from "/libraries/icaljs/ical.min.js";
 
 // Función para parsear ICS y obtener eventos
 function parseICS(icsData) {
