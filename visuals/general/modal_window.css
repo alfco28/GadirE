@@ -47,10 +47,78 @@
 }
 
 /* PARA CONFIGURACIÓN > SOBRE GADIRE */
-.text-document-content {
-    margin: 0;
-    white-space: pre-wrap;
+.markdown-content {
+    line-height: 1.6;
     overflow-wrap: anywhere;
-    font-family: inherit;
-    line-height: 1.5;
+}
+
+.markdown-content > :first-child {
+    margin-top: 0;
+}
+
+.markdown-content > :last-child {
+    margin-bottom: 0;
+}
+
+.markdown-content h1,
+.markdown-content h2,
+.markdown-content h3,
+.markdown-content h4 {
+    line-height: 1.25;
+    margin: 1.25rem 0 0.75rem;
+}
+
+.markdown-content h1 {
+    font-size: 1.6rem;
+}
+
+.markdown-content h2 {
+    font-size: 1.3rem;
+}
+
+.markdown-content h3 {
+    font-size: 1.1rem;
+}
+
+.markdown-content p {
+    margin: 0 0 1rem;
+}
+
+.markdown-content ul,
+.markdown-content ol {
+    margin: 0 0 1rem;
+    padding-left: 1.5rem;
+}
+
+.markdown-content li {
+    margin-bottom: 0.4rem;
+}
+
+.markdown-content blockquote {
+    margin: 1rem 0;
+    padding: 0.5rem 1rem;
+    border-left: 4px solid var(--color-enfasis);
+    background-color: var(--color-fondo-elementos);
+    color: var(--color-texto-secundario);
+}
+
+.markdown-content a {
+    color: var(--color-enfasis);
+    overflow-wrap: anywhere;
+}
+
+.markdown-content hr {
+    margin: 1.25rem 0;
+    border: 0;
+    border-top: 1px solid var(--color-borde-flotante);
+}
+
+.markdown-content pre {
+    max-width: 100%;
+    overflow-x: auto;
+    white-space: pre-wrap;
+}
+
+.markdown-content code {
+    overflow-wrap: anywhere;
 }

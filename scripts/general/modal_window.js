@@ -63,13 +63,13 @@ topicSubscription.addEventListener("click", () => {
 });
 
 // PARA CONFIGURACIÓN > SOBRE GADIRE
-async function openTextDocumentModal(trigger, filePath) {
+async function openMarkdownDocumentModal(trigger, filePath) {
     const response = await fetch(filePath);
-    const text = await response.text();
+    const markdown = await response.text();
 
-    const content = document.createElement("pre");
-    content.className = "text-document-content";
-    content.textContent = text;
+    const content = document.createElement("article");
+    content.className = "markdown-content";
+    content.innerHTML = marked.parse(markdown);
 
     openMW(trigger.textContent.trim(), content);
 }
@@ -87,13 +87,13 @@ const contributeTrigger = document.getElementById(
 );
 
 gadireTrigger.addEventListener("click", () => {
-    openTextDocumentModal(gadireTrigger, "/README.md");
+    openMarkdownDocumentModal(gadireTrigger, "/README.md");
 });
 
 softwareTrigger.addEventListener("click", () => {
-    openTextDocumentModal(softwareTrigger, "/LICENSE");
+    openMarkdownDocumentModal(softwareTrigger, "/LICENSE");
 });
 
 contributeTrigger.addEventListener("click", () => {
-    openTextDocumentModal(contributeTrigger, "/CONTRIBUTING.md");
+    openMarkdownDocumentModal(contributeTrigger, "/CONTRIBUTING.md");
 });
