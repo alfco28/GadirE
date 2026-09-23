@@ -61,3 +61,19 @@ calendarSubscription.addEventListener("click", () => {
 topicSubscription.addEventListener("click", () => {
     openMW(topicSubscription.textContent.trim(), feedOptions);
 });
+
+// PARA CONFIGURACIÓN > SOBRE GADIRE > SOFTWARE
+const softwareTrigger = document.getElementById(
+    "t-settings-aboutGadirE-software"
+);
+
+softwareTrigger.addEventListener("click", async () => {
+    const response = await fetch("/LICENSE");
+    const licenseText = await response.text();
+
+    const content = document.createElement("pre");
+    content.className = "license-content";
+    content.textContent = licenseText;
+
+    openMW(softwareTrigger.textContent.trim(), content);
+});

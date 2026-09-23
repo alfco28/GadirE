@@ -45,3 +45,12 @@
 .modal-trigger {
     cursor: pointer;
 }
+
+/* PARA CONFIGURACIÓN > SOBRE GADIRE > SOFTWARE */
+.license-content {
+    margin: 0;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+    font-family: inherit;
+    line-height: 1.5;
+}
