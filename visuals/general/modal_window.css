@@ -46,8 +46,8 @@
     cursor: pointer;
 }
 
-/* PARA CONFIGURACIÓN > SOBRE GADIRE > SOFTWARE */
-.license-content {
+/* PARA CONFIGURACIÓN > SOBRE GADIRE */
+.text-document-content {
     margin: 0;
     white-space: pre-wrap;
     overflow-wrap: anywhere;

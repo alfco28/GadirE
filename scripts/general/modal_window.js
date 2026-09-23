@@ -62,18 +62,30 @@ topicSubscription.addEventListener("click", () => {
     openMW(topicSubscription.textContent.trim(), feedOptions);
 });
 
-// PARA CONFIGURACIÓN > SOBRE GADIRE > SOFTWARE
+// PARA CONFIGURACIÓN > SOBRE GADIRE
+async function openTextDocumentModal(trigger, filePath) {
+    const response = await fetch(filePath);
+    const text = await response.text();
+
+    const content = document.createElement("pre");
+    content.className = "text-document-content";
+    content.textContent = text;
+
+    openMW(trigger.textContent.trim(), content);
+}
+
 const softwareTrigger = document.getElementById(
     "t-settings-aboutGadirE-software"
 );
 
-softwareTrigger.addEventListener("click", async () => {
-    const response = await fetch("/LICENSE");
-    const licenseText = await response.text();
+const contributeTrigger = document.getElementById(
+    "t-settings-aboutGadirE-contribute"
+);
 
-    const content = document.createElement("pre");
-    content.className = "license-content";
-    content.textContent = licenseText;
+softwareTrigger.addEventListener("click", () => {
+    openTextDocumentModal(softwareTrigger, "/LICENSE");
+});
 
-    openMW(softwareTrigger.textContent.trim(), content);
+contributeTrigger.addEventListener("click", () => {
+    openTextDocumentModal(contributeTrigger, "/CONTRIBUTING.md");
 });
