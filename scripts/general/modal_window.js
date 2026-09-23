@@ -74,6 +74,10 @@ async function openTextDocumentModal(trigger, filePath) {
     openMW(trigger.textContent.trim(), content);
 }
 
+const gadireTrigger = document.getElementById(
+    "t-settings-aboutGadirE-GadirE"
+);
+
 const softwareTrigger = document.getElementById(
     "t-settings-aboutGadirE-software"
 );
@@ -81,6 +85,10 @@ const softwareTrigger = document.getElementById(
 const contributeTrigger = document.getElementById(
     "t-settings-aboutGadirE-contribute"
 );
+
+gadireTrigger.addEventListener("click", () => {
+    openTextDocumentModal(gadireTrigger, "/README.md");
+});
 
 softwareTrigger.addEventListener("click", () => {
     openTextDocumentModal(softwareTrigger, "/LICENSE");
