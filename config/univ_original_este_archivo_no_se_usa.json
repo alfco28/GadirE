@@ -1,0 +1,427 @@
+{
+    "homeTiles": [
+        {
+            "id": "tile-0",
+            "image": null,
+            "icon": "fa-regular fa-image",
+            "text": "Lorem ipsum 0",
+            "alt": "Lorem ipsum 0",
+            "url": "https://www.uca.es"
+        },
+        {
+            "id": "tile-1",
+            "image": "/assets/logo_ceuca.webp",
+            "icon": null,
+            "text": "Lorem ipsum 1",
+            "alt": "Lorem ipsum 1",
+            "url": "https://www.uca.es"
+        },
+        {
+            "id": "tile-2",
+            "image": null,
+            "icon": "fa-solid fa-bus-simple",
+            "text": "Autobuses Cádiz",
+            "alt": "Autobuses Cádiz",
+            "url": "https://cmtbc.es"
+        },
+        {
+            "id": "tile-3",
+            "image": null,
+            "icon": "fa-solid fa-bus-simple",
+            "text": "Autobuses Algeciras",
+            "alt": "Autobuses Algeciras",
+            "url": "https://ctmcg.es"
+        },
+        {
+            "id": "tile-4",
+            "image": null,
+            "icon": "fa-solid fa-train-tram",
+            "text": "Cercanías Cádiz",
+            "alt": "Cercanías Cádiz",
+            "url": "https://www.renfe.com/es/es/cercanias/cercanias-cadiz/horarios#/buscar"
+        },
+        {
+            "id": "tile-5",
+            "image": null,
+            "icon": "fa-solid fa-utensils",
+            "text": "Menú Cafetería",
+            "alt": "Menú Cafetería",
+            "url": "https://whatsapp.com/channel/0029VaO77mU4inoxDO786w3v"
+        },
+        {
+            "id": "tile-6",
+            "image": null,
+            "icon": "fa-solid fa-book",
+            "text": "Biblioteca",
+            "alt": "Biblioteca",
+            "url": "https://biblioteca.uca.es"
+        },
+        {
+            "id": "tile-7",
+            "image": null,
+            "icon": "fa-solid fa-chalkboard-user",
+            "text": "Campus Virtual",
+            "alt": "Campus Virtual",
+            "url": "https://campusvirtual.uca.es"
+        },
+        {
+            "id": "tile-8",
+            "image": null,
+            "icon": "fa-solid fa-user-graduate",
+            "text": "Portal de Servicios",
+            "alt": "Portal de Servicios",
+            "url": "https://portalservicios.uca.es"
+        },
+        {
+            "id": "tile-9",
+            "image": null,
+            "icon": "fa-regular fa-comments",
+            "text": "Grupos WhatsApp",
+            "alt": "Grupos WhatsApp",
+            "url": "https://ceuca.uca.es/internas/grupos-de-whatsapp/"
+        },
+        {
+            "id": "tile-10",
+            "image": null,
+            "icon": "fa-solid fa-circle-info",
+            "text": "Oficina del Estudiante",
+            "alt": "Oficina del Estudiante",
+            "url": "https://oficinadelestudiante.uca.es"
+        },
+        {
+            "id": "tile-11",
+            "image": null,
+            "icon": "fa-solid fa-building-circle-check",
+            "text": "Reserva de Espacios",
+            "alt": "Reserva de Espacios",
+            "url": "https://sire.uca.es"
+        },
+        {
+            "id": "tile-12",
+            "image": null,
+            "icon": "fa-solid fa-file-signature",
+            "text": "CAU",
+            "alt": "CAU",
+            "url": "https://cau.uca.es"
+        },
+        {
+            "id": "tile-13",
+            "image": null,
+            "icon": "fa-regular fa-thumbs-up",
+            "text": "BAU",
+            "alt": "BAU",
+            "url": "https://bau.uca.es"
+        },
+        {
+            "id": "tile-14",
+            "image": null,
+            "icon": "fa-solid fa-person-running",
+            "text": "Área de Deportes",
+            "alt": "Área de Deportes",
+            "url": "https://deportes.uca.es"
+        },
+        {
+            "id": "tile-15",
+            "image": null,
+            "icon": "fa-regular fa-address-book",
+            "text": "Directorio",
+            "alt": "Directorio",
+            "url": "https://directorio.uca.es"
+        },
+        {
+            "id": "tile-16",
+            "image": null,
+            "icon": "fa-regular fa-calendar-plus",
+            "text": "Cita Previa",
+            "alt": "Cita Previa",
+            "url": "https://ciges.uca.es"
+        },
+        {
+            "id": "tile-17",
+            "image": null,
+            "icon": "fa-solid fa-hand-holding-heart",
+            "text": "SAP",
+            "alt": "SAP",
+            "url": "https://sap.uca.es"
+        }
+    ],
+
+    "centres": [
+        "Escuela de Doctorado",
+        "Escuela de Ingeniería Naval y Oceánica",
+        "Escuela de Ingenierías Marina, Náutica y Radioelectrónica",
+        "Escuela Internacional de Doctorado en Estudios del Mar",
+        "Escuela Superior de Ingeniería",
+        "Escuela Técnica Superior de Ingeniería de Algeciras",
+        "Facultad de Ciencias",
+        "Facultad de Ciencias de la Educación",
+        "Facultad de Ciencias del Mar y Ambientales",
+        "Facultad de Ciencias del Trabajo",
+        "Facultad de Ciencias Económicas y Empresariales",
+        "Facultad de Ciencias Sociales y de la Comunicación",
+        "Facultad de Derecho",
+        "Facultad de Enfermería",
+        "Facultad de Enfermería y Fisioterapia",
+        "Facultad de Filosfía y Letras",
+        "Facultad de Medicina"
+    ],
+    "campus": [
+        "Bahía de Algeciras",
+        "Cádiz",
+        "Jerez",
+        "Puerto Real"
+    ],
+    
+    "calendars": {
+        "byTheme": {
+            "Representación Estudiantil": [
+                {
+                    "id": "cal1",
+                    "name": "Agenda pública del Presidente del CEUCA",
+                    "path": "/data/agenda_publica_presidencia_CEUCA.ics",
+                    "checked": true
+                }
+            ],
+            "Festivos": [
+                {
+                    "id": "cal2",
+                    "name": "Festivos España",
+                    "path": "/data/festivos_Espana.ics",
+                    "checked": true
+                }
+            ]
+        }
+    },
+    "feeds": {
+        "byTheme": {
+            "Representación Estudiantil": [
+                {
+                    "id": "feed0",
+                    "name": "CEUCA",
+                    "url": "https://ceuca.uca.es/feed",
+                    "checked": true
+                }
+            ],
+            "Centros": [
+                {
+                    "id": "feed3",
+                    "name": "Escuela de Doctorado",
+                    "url": "https://escueladoctoral.uca.es/feed",
+                    "checked": false
+                },
+                {
+                    "id": "feed4",
+                    "name": "Escuela de Ingeniería Naval y Oceánica",
+                    "url": "https://navales.uca.es/feed",
+                    "checked": false
+                },
+                {
+                    "id": "feed5",
+                    "name": "Escuela de Ingenierías Marina, Náutica y Radioelectrónica",
+                    "url": "https://nauticas.uca.es/feed",
+                    "checked": false
+                },
+                {
+                    "id": "feed6",
+                    "name": "Escuela Internacional de Doctorado en Estudios del Mar",
+                    "url": "https://eidemar.uca.es/feed",
+                    "checked": false
+                },
+                {
+                    "id": "feed2",
+                    "name": "Escuela Superior de Ingeniería",
+                    "url": "https://esingenieria.uca.es/feed",
+                    "checked": false
+                },
+                {
+                    "id": "feed7",
+                    "name": "Escuela Técnica Superior de Ingeniería de Algeciras",
+                    "url": "https://etsingenieria.uca.es/feed",
+                    "checked": false
+                },
+                {
+                    "id": "feed1",
+                    "name": "Facultad de Ciencias",
+                    "url": "https://ciencias.uca.es/feed",
+                    "checked": false
+                },
+                {
+                    "id": "feed8",
+                    "name": "Facultad de Ciencias de la Educación",
+                    "url": "https://educacion.uca.es/feed",
+                    "checked": false
+                },
+                {
+                    "id": "feed9",
+                    "name": "Facultad de Ciencias del Mar y Ambientales",
+                    "url": "https://ccmaryambientales.uca.es/feed",
+                    "checked": false
+                },
+                {
+                    "id": "feed10",
+                    "name": "Facultad de Ciencias del Trabajo",
+                    "url": "https://cctrabajo.uca.es/feed",
+                    "checked": false
+                },
+                {
+                    "id": "feed11",
+                    "name": "Facultad de Ciencias Económicas y Empresariales",
+                    "url": "https://economicas.uca.es/feed",
+                    "checked": false
+                },
+                {
+                    "id": "feed12",
+                    "name": "Facultad de Ciencias Sociales y de la Comunicación",
+                    "url": "https://ccsociales.uca.es/feed",
+                    "checked": false
+                },
+                {
+                    "id": "feed13",
+                    "name": "Facultad de Derecho",
+                    "url": "https://derecho.uca.es/feed",
+                    "checked": false
+                },
+                {
+                    "id": "feed14",
+                    "name": "Facultad de Enfermería",
+                    "url": "https://enfalgeciras.uca.es/feed",
+                    "checked": false
+                },
+                {
+                    "id": "feed15",
+                    "name": "Facultad de Enfermería y Fisioterapia",
+                    "url": "https://enfermeriayfisioterapia.uca.es/feed",
+                    "checked": false
+                },
+                {
+                    "id": "feed16",
+                    "name": "Facultad de Filosfía y Letras",
+                    "url": "https://filosofia.uca.es/feed",
+                    "checked": false
+                },
+                {
+                    "id": "feed17",
+                    "name": "Facultad de Medicina",
+                    "url": "https://medicina.uca.es/feed",
+                    "checked": false
+                }
+            ],
+            "Equipo de Gobierno": [
+                {
+                    "id": "feed-rector",
+                    "name": "Rector",
+                    "url": "https://rector.uca.es/feed",
+                    "checked": true
+                },
+                {
+                    "id": "feed-VR-prof",
+                    "name": "Vicerrectorado de Profesorado",
+                    "url": "https://profesorado.uca.es/feed",
+                    "checked": false
+                },
+                {
+                    "id": "feed-VR-investigacion",
+                    "name": "Vicerrectorado de Investigación y Transferencia",
+                    "url": "https://investigacionytransferencia.uca.es/feed",
+                    "checked": false
+                },
+                {
+                    "id": "feed-VR-transf-dig",
+                    "name": "Vicerrectorado de Transformación para la Universidad Digital",
+                    "url": "https://transformaciondigital.uca.es/feed",
+                    "checked": true
+                },
+                {
+                    "id": "feed-VR-titulos",
+                    "name": "Vicerrectorado de Títulos y Calidad",
+                    "url": "https://titulosycalidad.uca.es/feed",
+                    "checked": false
+                },
+                {
+                    "id": "feed-VR-estudiantes",
+                    "name": "Vicerrectorado de Estudiantes",
+                    "url": "https://estudiantes.uca.es/feed",
+                    "checked": true
+                },
+                {
+                    "id": "feed-VR-internacionalizacion",
+                    "name": "Vicerrectorado de Internacionalización",
+                    "url": "https://internacionalizacion.uca.es/feed",
+                    "checked": true
+                },
+                {
+                    "id": "feed-VR-sostenibilidad",
+                    "name": "Vicerrectorado de Sostenibilidad y Cultura",
+                    "url": "https://vrcultura.uca.es/feed",
+                    "checked": true
+                },
+                {
+                    "id": "feed-VR-emprendimiento",
+                    "name": "Vicerrectorado de Emprendimiento y Empleabilidad",
+                    "url": "https://emprendimientoyempleabilidad.uca.es/feed",
+                    "checked": false
+                },
+                {
+                    "id": "feed-VR-salud",
+                    "name": "Vicerrectorado de Ciencias de la Salud y Bienestar de la Comunidad Universitaria",
+                    "url": "https://saludybienestar.uca.es/feed",
+                    "checked": true
+                },
+                {
+                    "id": "feed-VR-infraestructuras",
+                    "name": "Vicerrectorado de Infraestructuras",
+                    "url": "https://infraestructurasypatrimonio.uca.es/feed",
+                    "checked": false
+                },
+                {
+                    "id": "feed-VR-algeciras",
+                    "name": "Vicerrectorado del Campus Bahía de Algeciras",
+                    "url": "https://algeciras.uca.es/feed",
+                    "checked": false
+                },
+                {
+                    "id": "feed-DR-jerez",
+                    "name": "Delegación del Rector para el Campus de Jerez",
+                    "url": "https://jerez.uca.es/feed",
+                    "checked": false
+                },
+                {
+                    "id": "feed-DG-rels-institucionales",
+                    "name": "Dirección General de Relaciones Institucionales",
+                    "url": "https://relacionesinstitucionales.uca.es/feed",
+                    "checked": false
+                },
+                {
+                    "id": "feed-DG-comunicacion",
+                    "name": "Dirección General de Comunicación Estratégica",
+                    "url": "https://comunicacionestrategica.uca.es/feed",
+                    "checked": false
+                },
+                {
+                    "id": "feed-DG-igualdad",
+                    "name": "Dirección General de Igualdad",
+                    "url": "https://dgigualdad.uca.es/feed",
+                    "checked": false
+                },
+                {
+                    "id": "feed-DG-diversidad",
+                    "name": "Dirección General de Diversidad",
+                    "url": "https://diversidad.uca.es/feed",
+                    "checked": false
+                },
+                {
+                    "id": "feed-secretaria-general",
+                    "name": "Secretaría General",
+                    "url": "https://secretariageneral.uca.es/feed",
+                    "checked": false
+                },
+                {
+                    "id": "feed-gerencia",
+                    "name": "Gerencia",
+                    "url": "https://gerencia.uca.es/feed",
+                    "checked": false
+                }
+            ]
+        }
+    }
+}

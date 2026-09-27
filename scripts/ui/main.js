@@ -11,8 +11,19 @@ const homeScreen = document.getElementById('home-screen');
 const notificationsScreen = document.getElementById('notifications-screen');
 const settingsScreen = document.getElementById('settings-screen');
 
+// Helper
+function clearHomeTileFrame() {
+  const frameContainer = document.getElementById('home-tile-frame-container');
+
+  // Quitar el iframe detiene sus scripts y libera el documento cargado.
+  frameContainer?.replaceChildren();
+}
+
 // Función para ocultar todas las pantallas
 function hideAllScreens() {
+  // El mapa también debe descargar cualquier HTML de tile que siga abierto.
+  clearHomeTileFrame();
+
   const background = document.getElementById('fullscreen-background');
   const screens = document.querySelectorAll('.fullscreen-content');
 
@@ -64,114 +75,108 @@ function setActiveIcon(activeIcon) {
   updateTitleBar(activeIcon);
 }
 
-// Eventos para los iconos del dock
-homeIcon.addEventListener('click', () => {
+function showFullscreenScreen(screen, activeIcon, title, showBackButton) {
+  // Conserva el iframe solo mientras su pantalla siga siendo la activa.
+  if (screen.id !== 'home-tile-screen') {
+    clearHomeTileFrame();
+  }
+
   const background = document.getElementById('fullscreen-background');
+  const titleBar = document.getElementById('title-bar');
+
   background.classList.remove('hidden');
   background.classList.add('visible');
 
-  const notifications = document.getElementById('notifications-screen');
-  notifications.classList.remove('visible');
-  notifications.classList.add('hidden');
+  // Mantiene una sola pantalla visible, incluidas las tiles personalizadas.
+  document.querySelectorAll('.fullscreen-content').forEach(candidate => {
+    const isActive = candidate === screen;
+    candidate.classList.toggle('visible', isActive);
+    candidate.classList.toggle('hidden', !isActive);
+  });
 
-  const settings = document.getElementById('settings-screen');
-  settings.classList.remove('visible');
-  settings.classList.add('hidden');
-
-  const calendar = document.getElementById('calendar-screen');
-  calendar.classList.remove('visible');
-  calendar.classList.add('hidden');
-
-  const home = document.getElementById('home-screen');
-  home.classList.remove('hidden');
-  home.classList.add('visible');
-        
-  setActiveIcon(homeIcon);
   document.querySelector('.dock').classList.add('fullscreen');
-  document.querySelector('.title-bar').classList.add('fullscreen');
+  titleBar.classList.add('fullscreen');
+  backToHomeIcon.hidden = !showBackButton;
+
+  setActiveIcon(activeIcon);
+  titleBar.textContent = title;
+}
+
+// Eventos para los iconos del dock
+homeIcon.addEventListener('click', () => {
+  showFullscreenScreen(
+    homeScreen,
+    homeIcon,
+    getTranslation('t-home-title'),
+    false
+  );
 });
 
 calendarIcon.addEventListener('click', () => {
-  const background = document.getElementById('fullscreen-background');
-  background.classList.remove('hidden');
-  background.classList.add('visible');
-
-  const notifications = document.getElementById('notifications-screen');
-  notifications.classList.remove('visible');
-  notifications.classList.add('hidden');
-
-  const home = document.getElementById('home-screen');
-  home.classList.remove('visible');
-  home.classList.add('hidden');
-
-  const settings = document.getElementById('settings-screen');
-  settings.classList.remove('visible');
-  settings.classList.add('hidden');
-
-  const calendar = document.getElementById('calendar-screen');
-  calendar.classList.remove('hidden');
-  calendar.classList.add('visible');
-
-  setActiveIcon(calendarIcon);
-  document.querySelector('.dock').classList.add('fullscreen');
-  document.querySelector('.title-bar').classList.add('fullscreen');
+  showFullscreenScreen(
+    document.getElementById('calendar-screen'),
+    calendarIcon,
+    getTranslation('t-calendar-title'),
+    false
+  );
 });
 
 notificationsIcon.addEventListener('click', () => {
-  const background = document.getElementById('fullscreen-background');
-  background.classList.remove('hidden');
-  background.classList.add('visible');
-
-  const home = document.getElementById('home-screen');
-  home.classList.remove('visible');
-  home.classList.add('hidden');
-
-  const settings = document.getElementById('settings-screen');
-  settings.classList.remove('visible');
-  settings.classList.add('hidden');
-
-  const calendar = document.getElementById('calendar-screen');
-  calendar.classList.remove('visible');
-  calendar.classList.add('hidden');
-
   cargarFeedsSeleccionados();
-  const notifications = document.getElementById('notifications-screen');
-  notifications.classList.remove('hidden');
-  notifications.classList.add('visible');
-
-  setActiveIcon(notificationsIcon);
-  document.querySelector('.dock').classList.add('fullscreen');
-  document.querySelector('.title-bar').classList.add('fullscreen');
+  showFullscreenScreen(
+    notificationsScreen,
+    notificationsIcon,
+    getTranslation('t-notifications-title'),
+    false
+  );
 });
 
 settingsIcon.addEventListener('click', () => {
-  const home = document.getElementById('home-screen');
-  home.classList.remove('visible');
-  home.classList.add('hidden');
-
-  const settings = document.getElementById('settings-screen');
-  settings.classList.remove('hidden');
-  settings.classList.add('visible');
-
-  updateTitleBar(settingsIcon);
+  showFullscreenScreen(
+    settingsScreen,
+    settingsIcon,
+    getTranslation('t-settings-title'),
+    true
+  );
 });
 
 backToHomeIcon.addEventListener('click', () => {
-  const settings = document.getElementById('settings-screen');
-  settings.classList.remove('visible');
-  settings.classList.add('hidden');
+  // Al salir, elimina el iframe para detener su contenido JavaScript.
+  document
+    .getElementById('home-tile-frame-container')
+    .replaceChildren();
 
-  const home = document.getElementById('home-screen');
-  home.classList.remove('hidden');
-  home.classList.add('visible');
-
-  updateTitleBar(homeIcon);
+  showFullscreenScreen(
+    homeScreen,
+    homeIcon,
+    getTranslation('t-home-title'),
+    false
+  );
 });
 
 mapIcon.addEventListener('click', () => {
   hideAllScreens();
   setActiveIcon(mapIcon);
 });
+
+// Función para que home.js pueda abrir una tile a pantalla completa
+window.openHomeTileScreen = function (frame, fallbackTitle) {
+  const frameContainer = document.getElementById('home-tile-frame-container');
+  const screen = document.getElementById('home-tile-screen');
+
+  // Reemplaza solo el iframe anterior; conserva header y footer.
+  frameContainer.replaceChildren(frame);
+
+  showFullscreenScreen(screen, homeIcon, fallbackTitle, true);
+
+  frame.addEventListener('load', () => {
+    const htmlTitle = frame.contentDocument?.title.trim();
+
+    if (htmlTitle && frame.parentElement === frameContainer) {
+      document.getElementById('title-bar').textContent = htmlTitle;
+    }
+  });
+};
 
 // Página de inicio
 setActiveIcon(mapIcon);

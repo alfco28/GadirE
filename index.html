@@ -193,6 +193,17 @@
 
     <!-- Pantallas completas -->
     <div id="fullscreen-background" class="fullscreen-background">
+      <div class="top-left-icon-fs elemento-flotante" id="back-to-home" hidden>
+        <i class="fas fa-angle-left"></i>
+      </div>
+
+      <!-- Pantalla para el HTML fullscreen configurado en una home tile. -->
+      <div id="home-tile-screen" class="fullscreen-content hidden">
+        <div class="fullscreen-header"></div>
+        <div id="home-tile-frame-container"></div>
+        <div class="fullscreen-footer"></div>
+      </div>
+
       <div id="home-screen" class="fullscreen-content">
         <div class="top-right-icon-fs elemento-flotante" id="settings-icon">
           <i class="fas fa-gear"></i>
@@ -273,9 +284,7 @@
       </div>
 
       <div id="settings-screen" class="fullscreen-content">
-        <div class="top-left-icon-fs elemento-flotante" id="back-to-home">
-          <i class="fas fa-angle-left"></i>
-        </div>
+
         <div class="fullscreen-header"></div>
         <h3 id="t-settings-privacy-title"></h3>
         <div class="setting">
@@ -473,7 +482,7 @@
           <hr class="separador">
           <div class="two-sided-opt">
             <p id="t-settings-aboutGadirE-version"></p>
-            <p>0.5.212</p>
+            <p>0.5.213</p>
           </div>
         </div>
         <h3 id="t-settings-moreFromTheSU-title" style="padding-bottom: 0; margin-bottom: 0;"></h3>

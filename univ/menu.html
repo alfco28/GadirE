@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Menú de cafetería</title>
+  <style>
+    :root {
+      color-scheme: light;
+      font-family: system-ui, Arial, sans-serif;
+      --demo-surface: #f4f5f2;
+      --demo-border: #d7dbd4;
+    }
+
+    html.dark {
+      color-scheme: dark;
+      --demo-surface: #292d2a;
+      --demo-border: #4b514c;
+    }
+
+    body {
+      margin: 0;
+      padding: 1rem;
+      background: var(--color-fondo-primario, #fff);
+      color: var(--color-texto-primario, #171a18);
+    }
+
+    main {
+      max-width: 720px;
+      margin: 0 auto;
+    }
+
+    .menu-panel,
+    .theme-panel {
+      padding: 1rem;
+      border: 1px solid var(--demo-border);
+      border-radius: 8px;
+      background: var(--demo-surface);
+    }
+
+    .menu-panel h1 {
+      margin-top: 0;
+    }
+
+    button {
+      padding: 0.65rem 0.9rem;
+      border: 0;
+      border-radius: 6px;
+      background: var(--color-enfasis, orange);
+      color: #111;
+      font: inherit;
+      cursor: pointer;
+    }
+
+    .menu-list[hidden] {
+      display: none;
+    }
+
+    .menu-list li + li {
+      margin-top: 0.5rem;
+    }
+
+    .theme-panel {
+      margin-top: 1rem;
+      font-size: 0.9rem;
+    }
+
+    .theme-swatch {
+      display: inline-block;
+      width: 1rem;
+      height: 1rem;
+      margin-left: 0.4rem;
+      border: 1px solid currentColor;
+      border-radius: 50%;
+      vertical-align: middle;
+      background: var(--color-enfasis, orange);
+    }
+
+    /* Esta regla !important prueba la excepción a la fuente de GadirE. */
+    .font-override-demo {
+      font-family: Georgia, serif !important;
+    }
+  </style>
+  <script defer src="./menu.js"></script>
+</head>
+<body>
+  <main>
+    <section class="menu-panel" aria-labelledby="menu-heading">
+      <h1 id="menu-heading">Menú de cafetería</h1>
+      <p>Ejemplo de contenido HTML interactivo cargado en una ventana modal.</p>
+      <button id="mostrar-menu" type="button" aria-expanded="false" aria-controls="menu-list">
+        Mostrar menú
+      </button>
+      <ul id="menu-list" class="menu-list" hidden>
+        <li>Café o infusión · 1,20 €</li>
+        <li>Tostada con aceite · 1,80 €</li>
+        <li>Fruta de temporada · 1,00 €</li>
+      </ul>
+    </section>
+
+    <section class="theme-panel" aria-label="Estado del tema heredado">
+      <strong>Tema recibido de GadirE</strong>
+      <p>Modo: <span id="theme-mode">Comprobando…</span></p>
+      <p>Fuente aplicada: <span id="theme-font">Comprobando…</span></p>
+      <p>Color de acento: <span id="theme-accent">Comprobando…</span><span class="theme-swatch" aria-hidden="true"></span></p>
+      <p class="font-override-demo">Esta línea usa Georgia con !important como excepción de prueba.</p>
+    </section>
+  </main>
+</body>
+</html>

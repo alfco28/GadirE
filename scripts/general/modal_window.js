@@ -20,6 +20,12 @@ function openMW(title, content) {
 // Función para cerrar la modal
 function closeMW() {
     const modal = document.getElementById("modal-window");
+    const modalBody = document.getElementById("mw-body");
+
+    // Descarga los HTML de tiles para detener sus scripts al cerrar la modal.
+    modalBody
+        .querySelectorAll(".home-tile-html-frame--modal")
+        .forEach(frame => frame.remove());
 
     modal.style.display = "none";
     document.body.style.overflow = "auto";

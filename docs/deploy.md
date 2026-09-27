@@ -22,7 +22,7 @@ La aplicación no necesita un proceso de compilación ni un gestor de paquetes p
 
 ## Service worker y caché
 
-El service worker usa el nombre de caché `pwa-cache-v1` y aplica distintas estrategias a los recursos declarados en `sw.js`. Los recursos dinámicos incluyen el GeoJSON, los ICS y el XML de notificaciones. Los recursos de aplicación se actualizan mediante stale while revalidate.
+El service worker usa el nombre de caché `pwa-cache-v2`. Precarga los recursos declarados en `staticAssets` y los sirve primero desde caché; `dynamicAssets` usa la red primero con recuperación desde caché, aunque actualmente no contiene recursos activos. Los recursos no declarados no se guardan automáticamente.
 
 Después de modificar JavaScript, CSS, configuración o datos:
 
@@ -40,6 +40,8 @@ Después de modificar JavaScript, CSS, configuración o datos:
 - Un marcador compartido mediante hash abre el lugar correcto.
 - La geolocalización solicita permiso y muestra una posición cuando se autoriza.
 - Las tiles de inicio cargan sus imágenes, iconos y enlaces.
+- Las tiles HTML cargan el título y ejecutan sus scripts en modal y fullscreen; prueba los controles interactivos del menú y la agenda.
+- Comprueba en esas vistas la fuente, el modo oscuro, el color de acento y la excepción con `!important`.
 - Los calendarios ICS se muestran sin errores.
 - Los feeds RSS cargan o muestran un estado tolerable si una fuente falla.
 - El cambio de idioma actualiza los textos disponibles.
@@ -63,6 +65,10 @@ Compruebe que la ruta ICS es accesible, que el contenido es válido y que el che
 ### Se muestra una versión antigua
 
 El navegador puede estar usando el service worker o una respuesta cacheada. Incremente `CACHE_NAME`, desregistre el service worker durante la prueba o borre los datos del sitio.
+
+### Una home tile HTML no está disponible sin conexión
+
+Incluye los documentos de `/univ/` en `staticAssets` de `sw.js` y añade también sus scripts, hojas de estilo e imágenes dependientes. Actualmente, las páginas de ejemplo de `univ/` no forman parte de esa lista.
 
 ### La geolocalización falla
 

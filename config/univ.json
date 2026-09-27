@@ -46,15 +46,17 @@
             "icon": "fa-solid fa-utensils",
             "text": "Menú Cafetería",
             "alt": "Menú Cafetería",
-            "url": "https://whatsapp.com/channel/0029VaO77mU4inoxDO786w3v"
+            "openAs": "modal",
+            "html": "/univ/menu.html"
         },
         {
             "id": "tile-6",
             "image": null,
-            "icon": "fa-solid fa-book",
-            "text": "Biblioteca",
-            "alt": "Biblioteca",
-            "url": "https://biblioteca.uca.es"
+            "icon": "fa-solid fa-calendar",
+            "text": "Agenda",
+            "alt": "Agenda",
+            "openAs": "fullscreen",
+            "html": "/univ/agenda.html"
         },
         {
             "id": "tile-7",

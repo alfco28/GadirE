@@ -12,6 +12,7 @@ GadirE no tiene panel de administración. La administración consiste en editar 
 | `locales/es_es.json` | Textos en español. |
 | `locales/uk_en.json` | Textos en inglés. |
 | `assets/*` | Imágenes usadas por la interfaz o las tiles. |
+| `univ/*` | HTML y JavaScript propios de las home tiles de cada universidad. |
 
 `config/global.json` existe, pero está vacío en la versión actual y no participa en la configuración efectiva.
 
@@ -27,8 +28,12 @@ Campos:
 - `text`: texto visible.
 - `alt`: texto alternativo.
 - `url`: destino externo opcional.
+- `openAs`: `modal` o `fullscreen` para abrir un HTML propio.
+- `html`: ruta absoluta al HTML, por ejemplo `/univ/menu.html`.
 
-`image` e `icon` son alternativas. Para la tile `tile-0`, la aplicación reserva el contenido para los datos personales locales del usuario.
+`image` e `icon` son alternativas. Para `tile-0`, la aplicación reserva el contenido para los datos personales locales del usuario. En las demás tiles, configura `openAs` y `html` para una vista propia; si no están definidos, `url` mantiene la navegación existente.
+
+Guarda las páginas y sus scripts particulares en `univ/`, no en `assets/`, para mantener separados los contenidos específicos de cada universidad. Cada página debe ser un documento HTML completo con `<title>` y puede incluir scripts relativos, como `./menu.js`. Sirve estos archivos desde el mismo origen y configura solo código de confianza. Consulta [home.md](home.md) para ver ejemplos configurados y cómo probarlos.
 
 Consulta también [home.md](home.md).
 

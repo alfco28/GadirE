@@ -23,7 +23,7 @@ GadirE es una aplicación frontend sin backend propio. `index.html` contiene la 
 - `scripts/map/sidebar.js`: agrupación de espacios por edificio y planta.
 - `scripts/ui/main.js`: cambio entre mapa, inicio, calendario, noticias y configuración.
 - `scripts/ui/sidebar.js`: apertura y cierre de la barra lateral.
-- `scripts/ui/home.js`: renderizado de tiles y tarjeta de datos personales.
+- `scripts/ui/home.js`: renderizado de tiles, tarjeta de datos personales y carga de sus vistas HTML.
 - `scripts/calendar/calendar.js`: lectura de ICS y renderizado mediante FullCalendar.
 - `scripts/notifications/rss_reader.js`: selección, consulta y ordenación de feeds RSS.
 - `scripts/general/config.js`: preferencias, accesibilidad, personalización y datos personales.
@@ -60,19 +60,20 @@ No existe sincronización entre dispositivos ni una cuenta de usuario.
 
 ## Service worker
 
-`sw.js` utiliza tres grupos de recursos:
+El `sw.js` utiliza dos grupos de recursos:
 
-- `staticAssets`: cache first; está vacío actualmente.
-- `dynamicAssets`: network first, con recuperación desde caché si falla la red.
-- `staleAssets`: stale while revalidate para recursos de aplicación tolerantes a desactualización.
+- `staticAssets`: se precarga durante la instalación y se sirve primero desde caché.
+- `dynamicAssets`: intenta la red primero, guarda la respuesta y usa la caché si falla la conexión; actualmente no tiene recursos activos.
 
-El nombre de caché actual es `pwa-cache-v1`. Tras cambios importantes de recursos, incremente el nombre de caché o asegure una estrategia de actualización equivalente.
+El nombre de caché actual es `pwa-cache-v2`. Los recursos que no estén declarados en esos grupos no se cachean automáticamente; las navegaciones offline no encontradas recurren a `/index.html`. Añade a `staticAssets` los HTML de tiles de `univ/` y sus dependencias si deben estar disponibles sin conexión.
 
 ## Convenciones de modificación
 
 - Mantener los identificadores de `index.html` compatibles con scripts y traducciones.
 - Escapar o insertar texto mediante APIs seguras cuando proceda.
 - No introducir rutas que solo funcionen en el entorno local.
+- Guardar el HTML y JavaScript específicos de las home tiles en `univ/`, servirlos desde el mismo origen y declarar un `<title>` en cada documento.
+- Las vistas HTML se cargan en iframes; el cargador sincroniza fuente, variables de color y la clase `html.dark`. Las páginas pueden pedir una excepción tipográfica con `font-family: ... !important`.
 - Actualizar `sw.js` cuando se incorporen recursos que deban cachearse.
 - Mantener la atribución y las licencias de las dependencias.
 - Probar primero el módulo modificado y después el flujo completo.

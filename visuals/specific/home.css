@@ -146,3 +146,41 @@
   max-width: 100%;
   height: auto;
 }
+
+/* FULLSCREEN Y MODAL WINDOWS DE LAS HOME TILES */
+/* Organiza los espaciadores y el iframe en una columna. */
+#home-tile-screen {
+  width: 100%;
+  max-width: none;
+  height: 100%;
+  padding: 0;
+  overflow: hidden;
+  flex-direction: column;
+}
+
+/* La clase visible general establece display: block; aquí necesitamos flex. */
+#home-tile-screen.visible {
+  display: flex;
+}
+
+#home-tile-frame-container {
+  flex: 1;
+  min-height: 0;
+  width: 100%;
+}
+
+.home-tile-html-frame--fullscreen {
+  height: 100%;
+}
+
+/* El contenido del documento tiene su propio CSS dentro del iframe. */
+.home-tile-html-frame {
+  display: block;
+  width: 100%;
+  border: 0;
+  background: white;
+}
+
+.home-tile-html-frame--modal {
+  height: 55vh;
+}
