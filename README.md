@@ -12,15 +12,14 @@ La aplicación está disponible para cualquier dispositivo y sistema operativo p
 
 ### 🛠️ Instalación
 
-1. Abre el mapa a través del enlace proporcionado al final de esta página.
-2. Pulsa el botón de **"más opciones"** de tu navegador.
-3. Elige la opción **"Añadir a pantalla de inicio"** o similar.
-4. Pulsa **"Aceptar"**, ¡y listo! La aplicación estará lista para funcionar.
+1. [Accede al mapa](https://gadire.alfeva.net).
+2. Pulsa el botón de **"más opciones"** de tu navegador y elige la opción **"Añadir a pantalla de inicio"** o similar.
+3. Pulsa **"Aceptar"**, ¡y listo! La aplicación estará lista para funcionar.
 
 ### ⚠️ Consideraciones
 
-- La aplicación **no funciona sin conexión**.
-- La aplicación **no permite por sí sola el acceso a vuestra ubicación** por parte de los distrbuidores de la misma.
+- La aplicación **no funciona completamente sin conexión**.
+- La aplicación **no permite por sí sola el acceso a vuestra ubicación** por parte de los distribuidores de la misma.
 - La aplicación **se actualiza automáticamente**.
 - La aplicación es **mucho más ligera** que la mayoría de aplicaciones disponibles en las tiendas de aplicaciones habituales.
 
