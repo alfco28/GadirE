@@ -18,7 +18,7 @@
 <style>
 body { margin:0; font-family: system-ui, Arial; }
 
-#layout { display:flex; height:100vh; }
+#layout { display:flex; height:100vh; width: 100vw; }
 
 #sidebar {
   width:320px;
@@ -92,25 +92,23 @@ body { margin:0; font-family: system-ui, Arial; }
   background: white;
   width: 36px;
   height: 36px;
-  border-radius: 6px;
+  border: 1px solid #d1d5db;
   cursor: pointer;
-  box-shadow: 0 1px 5px rgba(0,0,0,0.2);
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
 #geolocate:hover {
-  background: #f3f4f6;
+  background: #f9fafb;
 }
 
 .filter-button {
   background: white;
   width: 36px;
   height: 36px;
-  border-radius: 6px;
+  border: 1px solid #d1d5db;
   cursor: pointer;
-  box-shadow: 0 1px 5px rgba(0,0,0,0.2);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -118,7 +116,7 @@ body { margin:0; font-family: system-ui, Arial; }
 }
 
 .filter-button:hover {
-  background: #f3f4f6;
+  background: #f9fafb;
 }
 
 .compass {
@@ -129,11 +127,10 @@ body { margin:0; font-family: system-ui, Arial; }
   background: white;
   width: 36px;
   height: 36px;
-  border-radius: 6px;
+  border: 1px solid #d1d5db;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 1px 5px rgba(0,0,0,0.2);
   transform: rotate(0deg);
   transition: transform 0.3s ease;
 }
@@ -141,7 +138,7 @@ body { margin:0; font-family: system-ui, Arial; }
 .info-button {
   position: absolute;
   top: 15px;
-  right: 15px;
+  left: 15px;
   z-index: 10;
   background: transparent;
   border: none;
@@ -153,13 +150,10 @@ body { margin:0; font-family: system-ui, Arial; }
   justify-content: center;
   width: 24px;
   height: 24px;
-  border-radius: 50%;
-  border: 1px solid #9ca3af;
 }
 
 .info-button:hover {
   color: white;
-  border-color: white;
 }
 </style>
 </head>
@@ -169,7 +163,7 @@ body { margin:0; font-family: system-ui, Arial; }
 <div id="layout">
 
   <div id="sidebar">
-    <div class="version">v0.1.7</div>
+    <div class="version">v0.1.8</div>
     <a href="https://ceuca.uca.es/ceucatlas" target="_blank" class="info-button" title="Información">
       <i class="fas fa-info-circle"></i>
     </a>
@@ -251,17 +245,17 @@ L.tileLayer(
 
 // ================= GEOJSON =================
 const campusGeoJSON = {
-"type":"FeatureCollection",
-"features":[
-  {"type":"Feature","properties":{"clase":"espacio","edificio":"FC","planta":"1","tipo":"aula","nombre":"Aula C-101", "campus": "Cádiz"},
-   "geometry":{"type":"Point","coordinates":[-6.2041,36.5301]}},
+  "type":"FeatureCollection",
+  "features":[
+    {"type":"Feature","properties":{"clase":"espacio","edificio":"FC","planta":"1","tipo":"aula","nombre":"Aula C-101", "campus": "Cádiz"},
+     "geometry":{"type":"Point","coordinates":[-6.2041,36.5301]}},
 
-  {"type":"Feature","properties":{"clase":"espacio","edificio":"FC","planta":"1","tipo":"aula","nombre":"Aula C-102", "campus": "Cádiz"},
-   "geometry":{"type":"Point","coordinates":[-6.2040,36.5300]}},
+    {"type":"Feature","properties":{"clase":"espacio","edificio":"FC","planta":"1","tipo":"aula","nombre":"Aula C-102", "campus": "Cádiz"},
+     "geometry":{"type":"Point","coordinates":[-6.2040,36.5300]}},
 
-  {"type":"Feature","properties":{"clase":"espacio","edificio":"ESI","planta":"0","tipo":"fuente","nombre":"Fuente Patio ESI", "campus": "Puerto Real"},
-   "geometry":{"type":"Point","coordinates":[-6.2028,36.5295]}},
-]
+    {"type":"Feature","properties":{"clase":"espacio","edificio":"ESI","planta":"0","tipo":"fuente","nombre":"Fuente Patio ESI", "campus": "Puerto Real"},
+     "geometry":{"type":"Point","coordinates":[-6.2028,36.5295]}},
+  ]
 };
 
 // ================= ESTADO =================
@@ -275,7 +269,6 @@ const state = {
 // ================= CAPA =================
 const espaciosLayer = new L.LayerGroup().addTo(map);
 let userLocationMarker = null;
-let deviceOrientation = null;
 
 // ================= ICONOS =================
 function icon(tipo){
@@ -410,11 +403,6 @@ document.getElementById('toggle-sidebar').addEventListener('click', () => {
   const sidebar = document.getElementById('sidebar');
   const layout = document.getElementById('layout');
   sidebar.classList.toggle('hidden');
-  if (sidebar.classList.contains('hidden')) {
-    layout.style.gridTemplateColumns = '0px 1fr';
-  } else {
-    layout.style.gridTemplateColumns = '320px 1fr';
-  }
   map.invalidateSize();
 });
 
