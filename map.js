@@ -165,23 +165,34 @@ function initMap() {
   
   // =============== POPUP en HTML ===============
   function popupHTML(p) {
+    const currentUrl = window.location.href.split('#')[0]; // Obtiene la URL sin hash
+    const shareUrl = `${currentUrl}#${p.idnum}`; // Crea la URL con el hash
+    const buttonId = `shareButton_${p.idnum}`; // Identificador único para el botón
+
     return `
         <div class="popup-card">
           <div style="display: flex; justify-content: space-between; align-items: center;">
             <h4>${p.nombre}</h4>
-            <span style="color: #A0A0A0; font-size: 10px;">#${p.idnum}</span>
+            <button
+                id="${buttonId}"
+                style="padding: 6px 8px; margin: 0 0 0 4px; background: #3b82f6; color: white; border: none; border-radius: 4px; cursor: pointer;">
+              <i class="fa-solid fa-share-nodes"></i>
+            </button>
           </div>
           <p>${p.descrip}</p>
-          Planta ${p.planta}<br>
-          Edificio: ${p.edificio}<br>
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <span>Planta ${p.planta}</span>
+            <span style="color: #A0A0A0; font-size: 10px;">#${p.idnum}</span>
+          </div>
+          <span>Edificio: ${p.edificio}</span>
           <div style="display: flex; justify-content: space-between; align-items: center;">
             <span>Campus: ${p.campus}</span>
             <a href="https://docs.google.com/forms/d/e/1FAIpQLSdEZjtvKMVmpLC3zcajTqxQdqtVs6yuITLAooP6FPez8nhKoQ/viewform?usp=pp_url&entry.2020790469=${p.idnum}" 
-               style="text-decoration: none; color: #A0A0A0; transition: color 0.2s;"
-               target="_blank"
-               rel="noopener noreferrer"
-               onmouseover="this.style.color='#808080'" 
-               onmouseout="this.style.color='#A0A0A0'">
+                style="text-decoration: none; color: #A0A0A0; transition: color 0.2s;"
+                target="_blank"
+                rel="noopener noreferrer"
+                onmouseover="this.style.color='#808080'" 
+                onmouseout="this.style.color='#A0A0A0'">
               <i class="fa-solid fa-circle-exclamation"></i>
             </a>
           </div>
@@ -209,6 +220,19 @@ function initMap() {
       }
     ).bindPopup(popupHTML(f.properties));
     marker.feature = f;
+
+    // Añadir el evento de clic al botón de compartir cuando se abra el popup
+    marker.on('popupopen', function() {
+      const buttonId = `shareButton_${f.properties.idnum}`;
+      setTimeout(() => {
+        const shareButton = document.getElementById(buttonId);
+        if (shareButton) {
+          const currentUrl = window.location.href.split('#')[0];
+          const shareUrl = `${currentUrl}#${f.properties.idnum}`;
+          shareButton.addEventListener('click', () => shareMarker(shareUrl, f.properties.nombre));
+        }
+      }, 50);
+    });
 
     layersByTipo[tipo].addLayer(marker);
     const key = featureKey(f);
@@ -556,6 +580,32 @@ window.addEventListener('load', () => {
     // Espera a que el mapa y los marcadores estén listos
     setTimeout(() => {
       window.fly(idFromHash);
-    }, 1000); // Espera 1 segundos para asegurarte de que todo esté cargado
+    }, 500); // Espera 500 milisegundos para asegurarte de que todo esté cargado
   }
 });
+
+// ================= COMPARTIR MARCADOR =================
+// Función para compartir el marcador
+function shareMarker(url, title) {
+  if (navigator.share) {
+    // Usa la Web Share API si está disponible (móviles y algunos navegadores de escritorio)
+    navigator.share({
+      title: title,
+      text: `Mira este lugar en el CEUCAtlas: ${title}`,
+      url: url,
+    })
+  } else {
+    // Si no está disponible, copia el enlace al portapapeles
+    copyToClipboard(url);
+    alert("Enlace copiado en el portapapeles.");
+  }
+}
+
+// Función para copiar texto al portapapeles
+function copyToClipboard(text) {
+  navigator.clipboard.writeText(text).then(() => {
+    console.log("Enlace copiado al portapapeles");
+  }).catch(err => {
+    console.error("Error al copiar al portapapeles:", err);
+  });
+}
