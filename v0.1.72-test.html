@@ -107,6 +107,16 @@ html, body {
   margin-bottom: 20px;
 }
 
+.cookie-modal-content a:link {
+  color: lightblue;
+  text-decoration: underline;
+}
+
+.cookie-modal-content a:visited {
+  color: lightblue;
+  text-decoration: underline;
+}
+
 /* Botones */
 .cookie-modal-buttons {
   display: flex;
@@ -475,10 +485,12 @@ html, body {
   <div class="cookie-modal-content">
     <h3>Aviso de Cookies</h3>
     <p>
-      Este sitio web utiliza cookies propias y de terceros para mejorar tu experiencia de navegación, analizar el uso de la página y ofrecer contenido personalizado.
-      Las cookies de terceros pueden incluir servicios como análisis de tráfico y redes sociales.
+      Este sitio web utiliza software de terceros para mejorar la experiencia de navegación y ofrecer contenido personalizado.
+      Dicho software incluye <a href="https://leafletjs.com" target="_blank">Leaflet</a>, <a href="https://github.com/stefanocudini/leaflet-search" target="_blank">Leaflet Search</a>, <a href="https://www.openstreetmap.org" target="_blank">OpenStreetMap</a>, <a href="https://carto.com" target="_blank">CARTO</a> y <a href="https://fontawesome.com" target="_blank">Font Awesome</a>, y es necesario para su correcto funcionamiento.
+      <br>
+      Accede aquí a nuestra <a href="https://ceuca.uca.es/ceucatlas" target="_blank">Política de Privacidad</a>.
       <br><br>
-      Puedes <strong>aceptar</strong> todas las cookies o <strong>rechazarlas</strong>.
+      Puedes <strong>aceptar</strong> su uso o <strong>rechazarlo</strong>.
     </p>
     <div class="cookie-modal-buttons">
       <button id="reject-cookies" class="cookie-button cookie-reject">Rechazar</button>
@@ -516,7 +528,7 @@ html, body {
         <a href="https://www.instagram.com/estudiantes.uca" target="_blank" title="Seguir al CEUCA en Instagram"><i class="fab fa-instagram"></i> @estudiantes.uca</a>
       </div>
 
-      <div class="version">v0.1.71-test</div>
+      <div class="version">v0.1.72-test</div>
     </footer>
   </aside>
   
