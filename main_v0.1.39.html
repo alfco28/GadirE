@@ -372,7 +372,7 @@ html, body {
 
   <div id="sidebar">
       <div class="sidebar-header">
-        <div class="version">v0.1.38</div>
+        <div class="version">v0.1.39</div>
 
         <a href="https://ceuca.uca.es/ceucatlas" target="_blank" class="info-button" title="Información">
           <i class="fas fa-info-circle"></i>
@@ -436,15 +436,18 @@ html, body {
           <label>Edificio:</label>
           <select id="fEdificio">
             <option value="todos">Todos</option>
-            <option value="Escuela de Ingeniería Naval y Oceánica">Escuela de Ingeniería Naval y Oceánica</option>
-            <option value="Escuela Técnica Superior de Ingeniería de Algeciras">Escuela Técnica Superior de Ingeniería de Algeciras</option>
-            <option value="Escuela Superior de Ingeniería">Escuela Superior de Ingeniería</option>
+            <option value="Aulario Norte">Aulario Norte</option>
+            <option value="Aulario Sur">Aulario Sur</option>
+            <option value="Biblioteca del Campus de Puerto Real">Biblioteca del Campus de Puerto Real</option>
+            <option value="Centro Andaluz Superior de Estudios Marinos (CASEM)">Centro Andaluz Superior de Estudios Marinos (CASEM)</option>
+            <option value="Centro Integrado de Tecnologías de la Información (CITI)">Centro Integrado de Tecnologías de la Información (CITI)</option>
+            <option value="Complejo Deportivo del Campus de Puerto Real">Complejo Deportivo del Campus de Puerto Real</option>
+            <option value="Escuela Superior de Ingeniería (ESI)">Escuela Superior de Ingeniería (ESI)</option>
+            <option value="Escuela Técnica Superior de Ingeniería de Algeciras (ETSIA)">Escuela Técnica Superior de Ingeniería de Algeciras (ETSIA)</option>
             <option value="Facultad de Ciencias">Facultad de Ciencias</option>
             <option value="Facultad de Ciencias de la Educación">Facultad de Ciencias de la Educación</option>
-            <option value="Facultad de Ciencias del Mar y Ambientales">Facultad de Ciencias del Mar y Ambientales</option>
             <option value="Facultad de Ciencias del Trabajo">Facultad de Ciencias del Trabajo</option>
             <option value="Facultad de Ciencias Económicas y Empresariales">Facultad de Ciencias Económicas y Empresariales</option>
-            <option value="Escuela de Ingeniería Marina, Náutica y Radioelectrónica">Escuela de Ingeniería Marina, Náutica y Radioelectrónica</option>
             <option value="Facultad de Ciencias Sociales y de la Comunicación">Facultad de Ciencias Sociales y de la Comunicación</option>
             <option value="Facultad de Derecho">Facultad de Derecho</option>
             <option value="Facultad de Enfermería">Facultad de Enfermería</option>
@@ -479,7 +482,9 @@ html, body {
             <option value="biblio">Biblioteca o sala de estudio</option>
             <option value="cafete">Cafetería, fuente o máquina</option>
             <option value="despacho">Despacho</option>
+            <option value="lab">Laboratorio o taller</option>
             <option value="salon">Salón</option>
+            <option value="transporte">Transporte</option>
             <option value="unidad">Unidades o servicios</option>
           </select>
         </div>
@@ -512,13 +517,33 @@ L.tileLayer(
 const campusGeoJSON = {
   "type":"FeatureCollection",
   "features":[
-    {"type":"Feature","properties":{"clase":"espacio","edificio":"Facultad de Ciencias","planta":"1","tipo":"aula","nombre":"Aula C-101", "campus": "Cádiz"},
+    {"type":"Feature","properties":{"clase":"espacio",
+    "edificio":"Facultad de Ciencias",
+    "planta":"1","tipo":"aula",
+    "nombre":"Aula C-101", 
+    "campus": "Cádiz",
+    "descrip": ""
+      },
      "geometry":{"type":"Point","coordinates":[-6.2041,36.5301]}},
 
-    {"type":"Feature","properties":{"clase":"espacio","edificio":"Facultad de Ciencias","planta":"1","tipo":"aula","nombre":"Aula C-102", "campus": "Cádiz"},
+    {"type":"Feature","properties":{"clase":"espacio",
+    "edificio":"Facultad de Ciencias",
+    "planta":"1",
+    "tipo":"aula",
+    "nombre":"Aula C-102",
+    "campus": "Cádiz",
+    "descrip": ""
+      },
      "geometry":{"type":"Point","coordinates":[-6.2040,36.5300]}},
 
-    {"type":"Feature","properties":{"clase":"espacio","edificio":"Escuela Superior de Ingeniería","planta":"baja","tipo":"cafete","nombre":"Fuente Patio ESI", "campus": "Puerto Real"},
+    {"type":"Feature","properties":{"clase":"espacio",
+    "edificio":"Escuela Superior de Ingeniería",
+    "planta":"baja",
+    "tipo":"cafete",
+    "nombre":"Fuente Patio ESI",
+    "campus": "Puerto Real",
+    "descrip": ""
+      },
      "geometry":{"type":"Point","coordinates":[-6.2028,36.5295]}},
 
   ]
@@ -538,7 +563,7 @@ let userLocationMarker = null;
 
 // ================= ICONOS =================
 function icon(tipo){
-  const color = {aula:"#16a34a",fuente:"#ea580c"}[tipo] || "#6b7280";
+  const color = {aula:"#16a34a",cafete:"#ea580c"}[tipo] || "#6b7280";
   return L.divIcon({html:`<div style="background:${color};width:14px;height:14px;border-radius:50%"></div>`});
 }
 
@@ -567,6 +592,7 @@ function renderMap(features){
     m.bindPopup(`
       <div class="popup-card">
         <h4>${f.properties.nombre}</h4>
+        Descripción: ${f.properties.descrip}<br>
         Planta ${f.properties.planta}<br>
         Edificio: ${f.properties.edificio}<br>
         Campus: ${f.properties.campus}
