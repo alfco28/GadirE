@@ -26,11 +26,29 @@ body { margin:0; font-family: system-ui, Arial; }
   position: relative;
   width: 320px;
   min-width: 320px;
-  background:#1f2937;
-  color:white;
-  overflow-y:auto;
-  padding:10px;
-  transition: width 0.3s ease, min-width 0.3s ease;
+  background: #1f2937;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow: hidden; /* Evita el scroll del sidebar completo */
+}
+
+.sidebar-header {
+  padding: 10px;
+  flex-shrink: 0; /* Evita que el encabezado se comprima */
+}
+
+.sidebar-scrollable {
+  flex: 1; /* Ocupa el espacio restante */
+  overflow-y: auto; /* Habilita el scroll vertical */
+  padding: 0 10px;
+}
+
+.sidebar-footer {
+  padding: 10px;
+  flex-shrink: 0; /* Evita que el pie se comprima */
+  position: relative; /* Para posicionar los iconos absolutamente dentro del footer */
 }
 
 #sidebar.hidden {
@@ -62,7 +80,6 @@ body { margin:0; font-family: system-ui, Arial; }
   align-items: center;
 }
 
-/* Logo filtros */
 #filters-logo {
   margin-left:auto;
   height:32px;
@@ -81,10 +98,9 @@ body { margin:0; font-family: system-ui, Arial; }
   font-size: 12px;
 }
 
-.whatsapp {
-  position: absolute;
-  bottom: 34px;
-  left: 10px;
+.whatsapp, .instagram {
+  position: static;
+  margin-bottom: 5px;
   color: #9ca3af;
   font-size: 14px;
   display: flex;
@@ -92,24 +108,7 @@ body { margin:0; font-family: system-ui, Arial; }
   gap: 5px;
 }
 
-.whatsapp a {
-  color: #9ca3af;
-  text-decoration: none;
-}
-
-
-.instagram {
-  position: absolute;
-  bottom: 10px;
-  left: 10px;
-  color: #9ca3af;
-  font-size: 14px;
-  display: flex;
-  align-items: center;
-  gap: 5px;
-}
-
-.instagram a {
+.whatsapp a, .instagram a {
   color: #9ca3af;
   text-decoration: none;
 }
@@ -195,29 +194,29 @@ body { margin:0; font-family: system-ui, Arial; }
 <div id="layout">
 
   <div id="sidebar">
-    <div class="version">v0.1.21</div>
-    <a href="https://ceuca.uca.es/ceucatlas" target="_blank" class="info-button" title="Información">
-      <i class="fas fa-info-circle"></i>
-    </a>
+      <div class="sidebar-header">
+        <div class="version">v0.1.22</div>
+        <a href="https://ceuca.uca.es/ceucatlas" target="_blank" class="info-button" title="Información">
+          <i class="fas fa-info-circle"></i>
+        </a>
+        <img src="https://ceuca.uca.es/wp-content/uploads/2025/12/ceucatlas.webp" alt="" style="display: block; margin-left: auto; margin-right: auto; width: 300px;">
+      </div>
 
-    <img
-        src="https://ceuca.uca.es/wp-content/uploads/2025/12/ceucatlas.webp"
-        alt=""
-        style="display: block; margin-left: auto; margin-right: auto; width: 300px;"
-    >
+      <!-- Contenedor scrolleable -->
+      <div id="sidebarContent" class="sidebar-scrollable"></div>
 
-    <div id="sidebarContent"></div>
-
-    <div class="whatsapp">
-      <i class="fab fa-whatsapp"></i>
-      <a href="https://whatsapp.com/channel/0029VbCBfO696H4Qse6SQT0v" target="_blank">Canal del CEUCA</a>
+      <!-- Pie del sidebar -->
+      <div class="sidebar-footer">
+        <div class="whatsapp">
+          <i class="fab fa-whatsapp"></i>
+          <a href="https://whatsapp.com/channel/0029VbCBfO696H4Qse6SQT0v" target="_blank">Canal del CEUCA</a>
+        </div>
+        <div class="instagram">
+          <i class="fab fa-instagram"></i>
+          <a href="https://www.instagram.com/estudiantes.uca" target="_blank">@estudiantes.uca</a>
+        </div>
+      </div>
     </div>
-
-    <div class="instagram">
-      <i class="fab fa-instagram"></i>
-      <a href="https://www.instagram.com/estudiantes.uca/" target="_blank">@estudiantes.uca</a>
-    </div>
-  </div>
 
   <div id="map-container">
 
@@ -294,6 +293,7 @@ const campusGeoJSON = {
 
     {"type":"Feature","properties":{"clase":"espacio","edificio":"ESI","planta":"baja","tipo":"fuente","nombre":"Fuente Patio ESI", "campus": "Puerto Real"},
      "geometry":{"type":"Point","coordinates":[-6.2028,36.5295]}},
+
   ]
 };
 
