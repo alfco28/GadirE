@@ -16,3 +16,9 @@ export function setupFilters(state, update) {
         update();
     }
 }
+
+// ================= TOGGLE FILTERS =================
+export function toggleFilters() {
+    const filters = document.getElementById('filters-content');
+    filters.classList.toggle('hidden');
+}

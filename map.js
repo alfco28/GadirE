@@ -31,8 +31,8 @@ fetch('map_data.geojson')
   .catch(error => console.error('Error al cargar el archivo GeoJSON:', error));
 
 // ================= IMPORTAR FUNCIONES =================
-import { setupSidebar } from './js_modules/sidebar.js';
-import { setupFilters } from './js_modules/filter_change.js';
+import { setupSidebar, toggleSidebar, closeSidebar } from './js_modules/sidebar.js';
+import { setupFilters, toggleFilters } from './js_modules/filters.js';
 
 // ================= FUNCIONES =================
 function processGeoJSON(data) {
@@ -98,7 +98,7 @@ function initMap() {
   let userLocationMarker = null;
   
   // ================= ICONOS =================
-  const COLORS = {
+  const COLOURS = {
     aula: "#0284c7",
     cafete: "#ea580c",
     biblio: "#2563eb",
@@ -113,9 +113,9 @@ function initMap() {
   };
 
   function icon(tipo){
-    const color = COLORS[tipo] || "#6b7280";
+    const colour = COLOURS[tipo] || "#6b7280";
     return L.divIcon({
-      html: `<div style="background:${color};width:14px;height:14px;border-radius:50%"></div>`
+      html: `<div style="background:${colour};width:14px;height:14px;border-radius:50%"></div>`
     });
   }
   
@@ -392,44 +392,13 @@ function initMap() {
 }
 
 // ================= TOGGLE SIDEBAR =================
-document.getElementById('toggle-sidebar').addEventListener('click', () => {
-  const sidebar = document.getElementById('sidebar');
-  const toggleButton = document.getElementById('toggle-sidebar');
-
-  sidebar.classList.toggle('hidden');
-
-  // Si el sidebar está oculto, muestra el botón; si no, ocúltalo
-  if (sidebar.classList.contains('hidden')) {
-    toggleButton.classList.remove('hide-when-sidebar-visible');
-  } else {
-    toggleButton.classList.add('hide-when-sidebar-visible');
-  }
-
-  // Espera a que termine la animación del sidebar
-  setTimeout(() => {
-    map.invalidateSize();
-  }, SIDEBAR_ANIMATION_MS);
-});
+document.getElementById('toggle-sidebar').addEventListener('click', toggleSidebar);
 
 // Evento para el botón de cerrar el sidebar
-document.getElementById('close-sidebar').addEventListener('click', () => {
-  const sidebar = document.getElementById('sidebar');
-  const toggleButton = document.getElementById('toggle-sidebar');
-
-  sidebar.classList.add('hidden');
-  toggleButton.classList.remove('hide-when-sidebar-visible');
-
-  // Espera a que termine la animación del sidebar
-  setTimeout(() => {
-    map.invalidateSize();
-  }, SIDEBAR_ANIMATION_MS);
-});
+document.getElementById('close-sidebar').addEventListener('click', closeSidebar);
 
 // ================= MOSTRAR/OCULTAR FILTROS =================
-document.getElementById('toggle-filters').addEventListener('click', () => {
-  const filters = document.getElementById('filters-content');
-  filters.classList.toggle('hidden');
-});
+document.getElementById('toggle-filters').addEventListener('click', toggleFilters);
 
 // ============= CARGA DE LIBRERÍAS EXTERNAS ==========
 function loadExternalScripts(callback) {
@@ -482,53 +451,54 @@ function loadExternalScripts(callback) {
 let cookieButton = false;
 
 document.addEventListener('DOMContentLoaded', function() {
-  const cookieModal = document.getElementById('cookie-consent-modal');
-  const acceptButton = document.getElementById('accept-cookies');
-  const rejectButton = document.getElementById('reject-cookies');
+    const cookieModal = document.getElementById('cookie-consent-modal');
+    const acceptButton = document.getElementById('accept-cookies');
+    const rejectButton = document.getElementById('reject-cookies');
 
-  // Mostrar la ventana emergente si no hay consentimiento guardado
-  const consent = localStorage.getItem('cookieConsent');
-  if (!consent) {
+    // Mostrar la ventana emergente si no hay consentimiento guardado
+    const consent = localStorage.getItem('cookieConsent');
+    if (!consent) {
     cookieModal.style.display = 'flex';
-  } else if (consent === 'accepted') {
+    } else if (consent === 'accepted') {
     document.querySelectorAll('.text').forEach(el => {
-      el.style.display = 'none';
+        el.style.display = 'none';
     });
     loadExternalScripts(processGeoJSON);
-  }
+    }
 
-  // Función para manejar el consentimiento
-  function handleConsent(consent) {
+    // Función para manejar el consentimiento
+    function handleConsent(consent) {
     cookieModal.style.display = 'none';
 
     if (consent === 'accepted') {
-      localStorage.setItem('cookieConsent', consent);
-      document.querySelectorAll('.text').forEach(el => {
+        localStorage.setItem('cookieConsent', consent);
+        document.querySelectorAll('.text').forEach(el => {
         el.style.display = 'none';
-      });
-      loadExternalScripts(() => {
+        });
+        loadExternalScripts(() => {
         fetch('map_data.geojson')
-          .then(response => response.json())
-          .then(data => processGeoJSON(data))
-          .catch(error => console.error('Error al cargar el archivo GeoJSON:', error));
-      });
+            .then(response => response.json())
+            .then(data => processGeoJSON(data))
+            .catch(error => console.error('Error al cargar el archivo GeoJSON:', error));
+        });
     } else if (consent == 'rejected' && cookieButton) {
-      window.location.reload();
+        window.location.reload();
     }
-  }
+    }
 
-  // Eventos para los botones
-  acceptButton.addEventListener('click', () => handleConsent('accepted'));
-  rejectButton.addEventListener('click', () => handleConsent('rejected'));
+    // Eventos para los botones
+    acceptButton.addEventListener('click', () => handleConsent('accepted'));
+    rejectButton.addEventListener('click', () => handleConsent('rejected'));
 });
 
 // Botón para volver a configurar las cookies
 document.querySelector('.back-to-cookies-button').addEventListener('click', () => {
-  cookieButton = true;
-  localStorage.removeItem('cookieConsent');
-  const cookieModal = document.getElementById('cookie-consent-modal');
-  cookieModal.style.display = 'flex';
+    cookieButton = true;
+    localStorage.removeItem('cookieConsent');
+    const cookieModal = document.getElementById('cookie-consent-modal');
+    cookieModal.style.display = 'flex';
 });
+
 
 // Función para obtener la ubicación y redirigir al enlace personalizado
 function reportarConUbicacion() {

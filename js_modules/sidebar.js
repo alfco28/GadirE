@@ -1,3 +1,4 @@
+// ================= RENDER SIDEBAR =================
 export function setupSidebar(map, markersByKey, featureKey) {
     function renderSidebar(features){
         const cont=document.getElementById("sidebarContent");
@@ -30,4 +31,38 @@ export function setupSidebar(map, markersByKey, featureKey) {
     }
 
     return { renderSidebar };
+}
+
+// ================= TOGGLE SIDEBAR =================
+export function toggleSidebar() {
+    const sidebar = document.getElementById('sidebar');
+    const toggleButton = document.getElementById('toggle-sidebar');
+
+    sidebar.classList.toggle('hidden');
+
+    // Si el sidebar está oculto, muestra el botón; si no, ocúltalo
+    if (sidebar.classList.contains('hidden')) {
+    toggleButton.classList.remove('hide-when-sidebar-visible');
+    } else {
+    toggleButton.classList.add('hide-when-sidebar-visible');
+    }
+
+    // Espera a que termine la animación del sidebar
+    setTimeout(() => {
+    map.invalidateSize();
+    }, SIDEBAR_ANIMATION_MS);
+}
+
+// ================= CLOSE SIDEBAR =================
+export function closeSidebar() {
+    const sidebar = document.getElementById('sidebar');
+    const toggleButton = document.getElementById('toggle-sidebar');
+
+    sidebar.classList.add('hidden');
+    toggleButton.classList.remove('hide-when-sidebar-visible');
+
+    // Espera a que termine la animación del sidebar
+    setTimeout(() => {
+    map.invalidateSize();
+    }, SIDEBAR_ANIMATION_MS);
 }
