@@ -21,6 +21,37 @@
 <!-- Font Awesome para el icono de WhatsApp e Instagram -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
+<!-- Icono para iOS -->
+<link rel="apple-touch-icon" href="https://ceuca.uca.es/wp-content/uploads/2025/12/ceucatlas.webp">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+<!-- manifest.json de la PWA -->
+<script id="pwa-manifest" type="application/json">
+{
+  "name": "CEUCAtlas",
+  "short_name": "CEUCAtlas",
+  "description": "Mapa interactivo de la Universidad de Cádiz",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#1f2937",
+  "theme_color": "#1f2937",
+  "icons": [
+    {
+      "src": "https://ceuca.uca.es/wp-content/uploads/2025/12/ceucatlas.webp",
+      "sizes": "192x192",
+      "type": "image/webp"
+    },
+    {
+      "src": "https://ceuca.uca.es/wp-content/uploads/2025/12/ceucatlas.webp",
+      "sizes": "512x512",
+      "type": "image/webp"
+    }
+  ]
+}
+</script>
+
+
 <style>
 body {
   margin:0;
@@ -243,6 +274,22 @@ body {
 }
 
 </style>
+
+<!-- Registro dinámico del manifest.json de la PWA -->
+<script>
+  // Obtén el contenido del manifest
+  const manifestContent = document.getElementById('pwa-manifest').textContent;
+  const manifestBlob = new Blob([manifestContent], { type: 'application/json' });
+  const manifestURL = URL.createObjectURL(manifestBlob);
+
+  // Crea un enlace dinámico para el manifest
+  const link = document.createElement('link');
+  link.rel = 'manifest';
+  link.href = manifestURL;
+  document.head.appendChild(link);
+</script>
+
+
 </head>
 
 
@@ -252,7 +299,7 @@ body {
 
   <div id="sidebar">
       <div class="sidebar-header">
-        <div class="version">v0.1.26</div>
+        <div class="version">v0.1.27</div>
         <a href="https://ceuca.uca.es/ceucatlas" target="_blank" class="info-button" title="Información">
           <i class="fas fa-info-circle"></i>
         </a>
