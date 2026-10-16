@@ -38,10 +38,10 @@
 
   <style>
     :root {
-      --color-fondo-primario: #1f2937;
+      --color-fondo-primario: white;
       --color-texto-primario: #1f2937;
-      --color-texto-secundario: #9ca3af;
-      --color-fondo-secundario: #f3f4f6;
+      --color-texto-secundario: white;
+      --color-fondo-secundario: #1f2937;
       --color-borde-elementos: rgba(255, 255, 255, 0.3);
       --color-fondo-elementos: rgba(255, 255, 255, 0.1);
       --color-fondo-elementos-hover: rgba(255, 255, 255, 0.25);
@@ -50,11 +50,11 @@
       --radio-borde-iconos: 12px;
       --tamano-iconos: 30px;
       --duracion-transicion: 0.2s;
-      --z-index-dock: 7000;
-      --z-index-sidebar: 6000;
+      --z-index-dock: 400;
+      --z-index-sidebar: 200;
       --z-index-cookie: 3000;
-      --z-index-mapa: 1;
-      --z-index-fullscreen: 5000;
+      --z-index-mapa: 100;
+      --z-index-fullscreen: 300;
     }
 
     body {
@@ -144,7 +144,7 @@
       border-radius: var(--radio-borde);
       border: 1px solid var(--color-borde-elementos);
       box-shadow: 2px 2px 8px var(--color-sombra);
-      color: white;
+      color: var(--color-texto-secundario);
       display: flex;
       flex-direction: column;
       z-index: var(--z-index-sidebar);
@@ -202,14 +202,14 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background: rgba(31, 41, 55, 0.95);
+      background: var(--color-fondo-primario);
       backdrop-filter: blur(8px);
       z-index: var(--z-index-fullscreen);
       display: none;
       padding-top: 60px;
       padding-bottom: 80px;
       overflow-y: auto;
-      color: white;
+      color: var(--color-texto-primario);
     }
 
     .fullscreen-content.visible {
