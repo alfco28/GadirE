@@ -167,6 +167,38 @@ body { margin:0; font-family: system-ui, Arial; }
 .info-button:hover {
   color: white;
 }
+
+/* ================== MODO MÓVIL ================== */
+@media (max-width: 768px) {
+
+  #layout {
+    position: relative;
+  }
+
+  #sidebar {
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    z-index: 2000;
+    width: 280px;
+    min-width: 280px;
+    box-shadow: 2px 0 10px rgba(0,0,0,0.3);
+  }
+
+  #sidebar.hidden {
+    width: 0;
+    min-width: 0;
+    padding: 0;
+    box-shadow: none;
+  }
+
+  /* El mapa SIEMPRE ocupa todo el ancho en móvil */
+  #map-container {
+    width: 100%;
+  }
+}
+
 </style>
 </head>
 
@@ -175,7 +207,7 @@ body { margin:0; font-family: system-ui, Arial; }
 <div id="layout">
 
   <div id="sidebar">
-    <div class="version">v0.1.15</div>
+    <div class="version">v0.1.16</div>
     <a href="https://ceuca.uca.es/ceucatlas" target="_blank" class="info-button" title="Información">
       <i class="fas fa-info-circle"></i>
     </a>
