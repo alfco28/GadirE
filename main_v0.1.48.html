@@ -42,10 +42,16 @@
 
 
 <style>
+
+:root {
+  --color-fondo-primario: #1f2937;
+  --color-fondo-secundario: #f3f4f6;
+}
+
 body {
   margin:0;
   font-family: system-ui, Arial;
-  background-color: #1f2937;
+  background-color: var(--color-fondo-primario);
 }
 
 #layout {
@@ -77,7 +83,7 @@ html, body {
 
 /* Contenido de la ventana emergente */
 .cookie-modal-content {
-  background: #1f2937;
+  background: var(--color-fondo-primario);
   padding: 25px;
   border-radius: 8px;
   max-width: 500px;
@@ -129,7 +135,7 @@ html, body {
   position: relative;
   width: 320px;
   min-width: 320px;
-  background: #1f2937;
+  background: var(--color-fondo-primario);
   color: white;
   display: flex;
   flex-direction: column;
@@ -258,7 +264,7 @@ html, body {
 }
 
 #filters {
-  background: #f3f4f6;
+  background: var(--color-fondo-secundario);
   padding: 8px;
   display: flex;
   flex-direction: column;
@@ -311,17 +317,17 @@ html, body {
 }
 
 #map {
-  flex:1;
+  flex: 1;
   min-height: 0;
 }
 
 .popup-card h4 {
-  margin:0 0 5px;
-  color:#1f2937;
+  margin: 0 0 5px;
+  color: var(--color-fondo-primario);
 }
 
 .popup-card {
-  font-size:14px;
+  font-size: 14px;
 }
 
 #geolocate {
@@ -465,7 +471,7 @@ html, body {
 
     <!-- Pie del sidebar -->
     <footer class="sidebar-footer">
-      <div class="version">v0.1.47</div>
+      <div class="version">v0.1.48</div>
 
       <div class="whatsapp">
         <i class="fab fa-whatsapp"></i>
