@@ -72,17 +72,29 @@ body { margin:0; font-family: system-ui, Arial; }
 #map-container { flex:1; display:flex; flex-direction:column; position: relative; }
 
 #filters {
-  background:#f3f4f6;
-  padding:8px;
-  display:flex;
-  gap:10px;
-  flex-wrap:wrap;
+  background: #f3f4f6;
+  padding: 8px;
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
   align-items: center;
+  position: relative;
+}
+
+.filters-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+  width: calc(100% - 40px);
+  margin-right: 40px;
 }
 
 #filters-logo {
-  margin-left:auto;
-  height:32px;
+  height: 32px;
+  position: absolute;
+  top: 8px;
+  right: 8px;
 }
 
 #map { flex:1; }
@@ -195,7 +207,7 @@ body { margin:0; font-family: system-ui, Arial; }
 
   <div id="sidebar">
       <div class="sidebar-header">
-        <div class="version">v0.1.22</div>
+        <div class="version">v0.1.23</div>
         <a href="https://ceuca.uca.es/ceucatlas" target="_blank" class="info-button" title="Información">
           <i class="fas fa-info-circle"></i>
         </a>
@@ -221,42 +233,39 @@ body { margin:0; font-family: system-ui, Arial; }
   <div id="map-container">
 
     <div id="filters">
-      <button id="toggle-sidebar" class="filter-button" title="Mostrar/Ocultar barra lateral">
-        <i class="fas fa-bars"></i>
-      </button>
-
-      Campus:
-      <select id="fCampus">
-        <option value="todos">Todos</option>
-        <option value="Bahía de Algeciras">Bahía de Algeciras</option>
-        <option value="Cádiz">Cádiz</option>
-        <option value="Jerez">Jerez</option>
-        <option value="Puerto Real">Puerto Real</option>
-      </select>
-
-      Edificio:
-      <select id="fEdificio">
-        <option value="todos">Todos</option>
-        <option value="FC">Facultad de Ciencias</option>
-        <option value="ESI">Escuela Superior de Ingeniería</option>
-      </select>
-
-      Planta:
-      <select id="fPlanta">
-        <option value="todas">Todas</option>
-        <option value="baja">Baja</option>
-        <option value="1">Planta 1</option>
-        <option value="2">Planta 2</option>
-      </select>
-
-      Tipo:
-      <select id="fTipo">
-        <option value="todos">Todos</option>
-        <option value="aula">Aula</option>
-        <option value="fuente">Fuente</option>
-      </select>
-      <img id="filters-logo"
-        src="https://ceuca.uca.es/wp-content/uploads/2025/08/logo.webp">
+      <div class="filters-group">
+        <button id="toggle-sidebar" class="filter-button" title="Mostrar/Ocultar barra lateral">
+          <i class="fas fa-bars"></i>
+        </button>
+        Campus:
+        <select id="fCampus">
+          <option value="todos">Todos</option>
+          <option value="Bahía de Algeciras">Bahía de Algeciras</option>
+          <option value="Cádiz">Cádiz</option>
+          <option value="Jerez">Jerez</option>
+          <option value="Puerto Real">Puerto Real</option>
+        </select>
+        Edificio:
+        <select id="fEdificio">
+          <option value="todos">Todos</option>
+          <option value="FC">Facultad de Ciencias</option>
+          <option value="ESI">Escuela Superior de Ingeniería</option>
+        </select>
+        Planta:
+        <select id="fPlanta">
+          <option value="todas">Todas</option>
+          <option value="baja">Baja</option>
+          <option value="1">Planta 1</option>
+          <option value="2">Planta 2</option>
+        </select>
+        Tipo:
+        <select id="fTipo">
+          <option value="todos">Todos</option>
+          <option value="aula">Aula</option>
+          <option value="fuente">Fuente</option>
+        </select>
+      </div>
+      <img id="filters-logo" src="https://ceuca.uca.es/wp-content/uploads/2025/08/logo.webp">
     </div>
 
     <div class="compass" id="compass" style="display: none;">
