@@ -55,6 +55,12 @@ body { margin:0; font-family: system-ui, Arial; }
   align-items: center;
 }
 
+/* Logo filtros */
+#filters-logo {
+  margin-left:auto;
+  height:32px;
+}
+
 #map { flex:1; }
 
 .popup-card h4 { margin:0 0 5px; color:#2563eb; }
@@ -164,7 +170,7 @@ body { margin:0; font-family: system-ui, Arial; }
 <div id="layout">
 
   <div id="sidebar">
-    <div class="version">v0.1.13</div>
+    <div class="version">v0.1.14</div>
     <a href="https://ceuca.uca.es/ceucatlas" target="_blank" class="info-button" title="Información">
       <i class="fas fa-info-circle"></i>
     </a>
@@ -220,6 +226,8 @@ body { margin:0; font-family: system-ui, Arial; }
         <option value="aula">Aula</option>
         <option value="fuente">Fuente</option>
       </select>
+      <img id="filters-logo"
+        src="https://ceuca.uca.es/wp-content/uploads/2025/08/logo.webp">
     </div>
 
     <div class="compass" id="compass" style="display: none;">
