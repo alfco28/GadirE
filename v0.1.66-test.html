@@ -509,7 +509,7 @@ html, body {
         <a href="https://www.instagram.com/estudiantes.uca" target="_blank" title="Seguir al CEUCA en Instagram"><i class="fab fa-instagram"></i> @estudiantes.uca</a>
       </div>
 
-      <div class="version">v0.1.65-test</div>
+      <div class="version">v0.1.66-test</div>
     </footer>
   </aside>
   
@@ -1442,6 +1442,13 @@ document.addEventListener('DOMContentLoaded', function() {
   // Eventos para los botones
   acceptButton.addEventListener('click', () => handleConsent('accepted'));
   rejectButton.addEventListener('click', () => handleConsent('rejected'));
+});
+
+// Botón para volver a configurar las cookies
+document.querySelector('.back-to-cookies-button').addEventListener('click', () => {
+  localStorage.removeItem('cookieConsent');
+  const cookieModal = document.getElementById('cookie-consent-modal');
+  cookieModal.style.display = 'flex';
 });
 
 </script>
