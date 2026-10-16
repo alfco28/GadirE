@@ -217,6 +217,18 @@
       display: block;
     }
 
+    /* Interruptores configuración */
+    .toggle {
+      display: flex;
+      align-items: center;
+      padding: 12px 48px;
+      gap: 12px;
+    }
+
+    .toggle input {
+      margin-left: auto;
+    }
+
     /* Móvil */
     @media (max-width: 768px) {
       #sidebar {
@@ -374,8 +386,13 @@
       <h2 style="text-align: center;">Pantalla de Configuración</h2>
       <h3>Privacidad</h3>
       <p>Cookies</p>
+      <h3>Personalización</h3>
+      <label class="toggle">
+        <span>Modo oscuro</span>
+        <input type="checkbox" id="toggle-darkmode">
+      </label>
       <h3>Sobre el CEUCAtlas</h3>
-      <p>v0.2.9</p>
+      <p>v0.2.10</p>
     </div>
 
     <div id="map"></div>
@@ -393,6 +410,69 @@
   </script>
 
   <script>
+    // Estado global de la aplicación
+    const AppState = {
+      defaults: {
+        darkMode: false,
+        notificationsEnabled: true
+      },
+    
+      state: {},
+    
+      load() {
+        const saved = localStorage.getItem('ceucatlas_state');
+        this.state = saved
+          ? { ...this.defaults, ...JSON.parse(saved) }
+          : { ...this.defaults };
+      },
+    
+      save() {
+        localStorage.setItem(
+          'ceucatlas_state',
+          JSON.stringify(this.state)
+        );
+      },
+    
+      set(key, value) {
+        this.state[key] = value;
+        this.save();
+        this.apply(key, value);
+      },
+    
+      get(key) {
+        return this.state[key];
+      },
+    
+      apply(key, value) {
+        switch (key) {
+          case 'darkMode':
+            document.documentElement.classList.toggle('dark', value);
+            break;
+        
+          case 'notificationsEnabled':
+            console.log('Notificaciones:', value);
+            break;
+        }
+      },
+    
+      applyAll() {
+        Object.entries(this.state).forEach(([key, value]) => {
+          this.apply(key, value);
+        });
+      }
+    };
+
+    // Conexión toggle HTML a JS
+    const darkToggle = document.getElementById('toggle-darkmode');
+
+    // Estado inicial
+    darkToggle.checked = AppState.get('darkMode');
+
+    // Cambio
+    darkToggle.addEventListener('change', (e) => {
+      AppState.set('darkMode', e.target.checked);
+    });
+
     document.addEventListener('DOMContentLoaded', function() {
       const sidebar = document.getElementById('sidebar');
       const toggleSidebar = document.getElementById('toggle-sidebar');
@@ -404,6 +484,11 @@
       const homeScreen = document.getElementById('home-screen');
       const notificationsScreen = document.getElementById('notifications-screen');
       const settingsScreen = document.getElementById('settings-screen');
+
+      // Cargar el estado guardado de la aplicación, si lo hay
+      AppState.load();
+      AppState.applyAll();
+
 
       // Función para ocultar todas las pantallas
       function hideAllScreens() {
