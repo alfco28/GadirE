@@ -46,8 +46,8 @@
       --color-fondo-elementos: rgba(255, 255, 255, 0.1);
       --color-fondo-elementos-hover: rgba(255, 255, 255, 0.25);
       --color-sombra: rgba(0, 0, 0, 0.2);
-      --radio-borde: 10px;
-      --radio-borde-iconos: 12px;
+      --radio-borde: 20px;
+      --radio-borde-iconos: 20px;
       --tamano-iconos: 30px;
       --duracion-transicion: 0.2s;
       --z-index-dock: 400;
@@ -126,7 +126,7 @@
       font-size: var(--tamano-iconos);
     }
 
-    .dock-icon:hover {
+    .dock-icon:hover, .dock-icon.active {
       transform: scale(1.1);
       background: var(--color-fondo-elementos-hover);
       box-shadow: 0 4px 8px var(--color-sombra);
@@ -410,29 +410,47 @@
         settingsScreen.classList.remove('visible');
       }
 
+      // Icono activo del dock
+      function setActiveIcon(activeIcon) {
+        document.querySelectorAll('.dock-icon').forEach(icon => {
+          icon.classList.remove('active');
+        });
+        activeIcon.classList.add('active');
+      }
+      
+      // Icono por defecto
+      setActiveIcon(homeIcon);
+      homeScreen.classList.add('visible');
+
       // Eventos para los iconos del dock
       homeIcon.addEventListener('click', () => {
         hideAllScreens();
         homeScreen.classList.add('visible');
+        setActiveIcon(homeIcon);
       });
 
       notificationsIcon.addEventListener('click', () => {
         hideAllScreens();
         notificationsScreen.classList.add('visible');
+        setActiveIcon(notificationsIcon);
       });
 
       settingsIcon.addEventListener('click', () => {
         hideAllScreens();
         settingsScreen.classList.add('visible');
+        setActiveIcon(settingsIcon);
       });
 
       mapIcon.addEventListener('click', () => {
         hideAllScreens();
+        setActiveIcon(mapIcon);
       });
 
       // Sidebar
       toggleSidebar.addEventListener('click', () => {
+        hideAllScreens();
         sidebar.classList.toggle('visible');
+        setActiveIcon(toggleSidebar);
       });
 
       // Ocultar sidebar al hacer clic en otro icono del dock
