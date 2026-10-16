@@ -42,6 +42,7 @@
       --color-texto-primario: #1f2937;
       --color-texto-secundario: white;
       --color-fondo-secundario: #1f2937;
+      --color-fondo-flotante: rgba(255, 255, 255, 0.2);
       --color-borde-elementos: rgba(255, 255, 255, 0.3);
       --color-fondo-elementos: rgba(255, 255, 255, 0.1);
       --color-fondo-elementos-hover: rgba(255, 255, 255, 0.25);
@@ -55,6 +56,25 @@
       --z-index-cookie: 3000;
       --z-index-mapa: 100;
       --z-index-fullscreen: 300;
+    }
+
+    /* Modo oscuro */
+    html.dark {
+      --color-fondo-primario: black;
+      --color-texto-primario: white;
+      --color-fondo-flotante: rgba(0, 0, 0, 0.2);
+      --color-borde-elementos: rgba(255, 255, 255, 0.15);
+      --color-fondo-elementos: rgba(255, 255, 255, 0.08);
+      --color-fondo-elementos-hover: rgba(255, 255, 255, 0.18);
+      --color-sombra: rgba(0, 0, 0, 0.6);
+    }
+
+    /* Transición a modo oscuro */
+    * {
+      transition:
+        background-color 0.2s ease,
+        color 0.2s ease,
+        border-color 0.2s ease;
     }
 
     body {
@@ -74,7 +94,7 @@
 
     /* Estilo para elementos flotantes con blur */
     .elemento-flotante {
-      background: rgba(255, 255, 255, 0);
+      background: var(--color-fondo-flotante);
       backdrop-filter: blur(8px);
       border: 1px solid var(--color-borde-elementos);
       box-shadow: 0 2px 4px var(--color-sombra);
@@ -392,7 +412,7 @@
         <input type="checkbox" id="toggle-darkmode">
       </label>
       <h3>Sobre el CEUCAtlas</h3>
-      <p>v0.2.10</p>
+      <p>v0.2.11</p>
     </div>
 
     <div id="map"></div>
@@ -462,16 +482,9 @@
       }
     };
 
-    // Conexión toggle HTML a JS
-    const darkToggle = document.getElementById('toggle-darkmode');
 
-    // Estado inicial
-    darkToggle.checked = AppState.get('darkMode');
 
-    // Cambio
-    darkToggle.addEventListener('change', (e) => {
-      AppState.set('darkMode', e.target.checked);
-    });
+    
 
     document.addEventListener('DOMContentLoaded', function() {
       const sidebar = document.getElementById('sidebar');
@@ -489,6 +502,14 @@
       AppState.load();
       AppState.applyAll();
 
+      // Conexión darkToggle HTML a JS
+      const darkToggle = document.getElementById('toggle-darkmode');
+      // Estado inicial
+      darkToggle.checked = AppState.get('darkMode');
+      // Cambio
+      darkToggle.addEventListener('change', (e) => {
+        AppState.set('darkMode', e.target.checked);
+      });
 
       // Función para ocultar todas las pantallas
       function hideAllScreens() {
