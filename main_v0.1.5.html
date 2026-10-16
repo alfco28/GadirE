@@ -27,6 +27,11 @@ body { margin:0; font-family: system-ui, Arial; }
   overflow-y:auto;
   padding:10px;
   position: relative;
+  transition: transform 0.3s ease;
+}
+
+#sidebar.hidden {
+  transform: translateX(-100%);
 }
 
 #sidebar h2 { margin:0 0 10px; }
@@ -39,7 +44,7 @@ body { margin:0; font-family: system-ui, Arial; }
 }
 .sidebar-item:hover { background:#374151; }
 
-#map-container { flex:1; display:flex; flex-direction:column; }
+#map-container { flex:1; display:flex; flex-direction:column; position: relative; }
 
 #filters {
   background:#f3f4f6;
@@ -80,14 +85,51 @@ body { margin:0; font-family: system-ui, Arial; }
 
 #geolocate {
   position: absolute;
-  top: 10px;
-  right: 10px;
+  bottom: 20px;
+  right: 20px;
   z-index: 1000;
   background: white;
-  padding: 5px 10px;
-  border-radius: 4px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
   cursor: pointer;
   box-shadow: 0 1px 5px rgba(0,0,0,0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#toggle-sidebar {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  z-index: 1000;
+  background: white;
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow: 0 1px 5px rgba(0,0,0,0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.compass {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  z-index: 1000;
+  background: white;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 1px 5px rgba(0,0,0,0.2);
+  transform: rotate(0deg);
+  transition: transform 0.3s ease;
 }
 </style>
 </head>
@@ -97,7 +139,7 @@ body { margin:0; font-family: system-ui, Arial; }
 <div id="layout">
 
   <div id="sidebar">
-    <div class="version">v0.1.4</div>
+    <div class="version">v0.1.5</div>
 
     <img
         src="https://ceuca.uca.es/wp-content/uploads/2025/12/ceucatlas.webp"
@@ -114,8 +156,16 @@ body { margin:0; font-family: system-ui, Arial; }
   </div>
 
   <div id="map-container">
+    <button id="toggle-sidebar" title="Mostrar/Ocultar barra lateral">
+      <i class="fas fa-bars"></i>
+    </button>
+
+    <div class="compass" id="compass" style="display: none;">
+      <i class="fas fa-compass"></i>
+    </div>
+
     <button id="geolocate" title="Ir a mi ubicación">
-      <i class="fas fa-location-arrow"></i> Mi ubicación
+      <i class="fas fa-location-arrow"></i>
     </button>
 
     <div id="filters">
@@ -191,6 +241,7 @@ const state = {
 // ================= CAPA =================
 const espaciosLayer = new L.LayerGroup().addTo(map);
 let userLocationMarker = null;
+let deviceOrientation = null;
 
 // ================= ICONOS =================
 function icon(tipo){
@@ -298,9 +349,7 @@ document.getElementById('geolocate').addEventListener('click', () => {
             html: `<div style="background:#3b82f6;width:16px;height:16px;border-radius:50%;border:2px solid white"></div>`,
             className: 'user-location-icon'
           })
-        }).addTo(map)
-        .bindPopup("Tu ubicación actual")
-        .openPopup();
+        }).addTo(map);
         map.flyTo([latitude, longitude], 18);
       },
       (error) => {
@@ -310,6 +359,22 @@ document.getElementById('geolocate').addEventListener('click', () => {
   } else {
     alert("Tu navegador no soporta geolocalización.");
   }
+});
+
+// ================= ORIENTACIÓN =================
+function handleOrientation(event) {
+  if (!event.alpha) return;
+  const compass = document.getElementById('compass');
+  compass.style.display = 'flex';
+  compass.style.transform = `rotate(${event.alpha}deg)`;
+}
+
+window.addEventListener('deviceorientation', handleOrientation, true);
+
+// ================= TOGGLE SIDEBAR =================
+document.getElementById('toggle-sidebar').addEventListener('click', () => {
+  const sidebar = document.getElementById('sidebar');
+  sidebar.classList.toggle('hidden');
 });
 
 // ================= UPDATE =================
