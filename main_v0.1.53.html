@@ -474,7 +474,7 @@ html, body {
 
     <!-- Pie del sidebar -->
     <footer class="sidebar-footer">
-      <div class="version">v0.1.52</div>
+      <div class="version">v0.1.53</div>
 
       <div class="whatsapp">
         <i class="fab fa-whatsapp"></i>
@@ -651,6 +651,31 @@ const campusGeoJSON = {
   ]
 };
 
+// ================= INDEXACIÓN =================
+const index = {
+  campus: {},
+  edificio: {},
+  planta: {},
+  tipo: {},
+  all: new Set()
+};
+
+campusGeoJSON.features.forEach(f => {
+  index.all.add(f);
+
+  const { campus, edificio, planta, tipo } = f.properties;
+
+  if (!index.campus[campus]) index.campus[campus] = new Set();
+  if (!index.edificio[edificio]) index.edificio[edificio] = new Set();
+  if (!index.planta[planta]) index.planta[planta] = new Set();
+  if (!index.tipo[tipo]) index.tipo[tipo] = new Set();
+
+  index.campus[campus].add(f);
+  index.edificio[edificio].add(f);
+  index.planta[planta].add(f);
+  index.tipo[tipo].add(f);
+});
+
 // ================= ESTADO =================
 const state = {
   edificio: "todos",
@@ -727,15 +752,34 @@ function initMap() {
   }
   
   // ================= FILTRADO =================
-  function getFilteredFeatures(){
-    return campusGeoJSON.features.filter(f=>{
-      return (
-        (state.edificio==="todos" || f.properties.edificio===state.edificio) &&
-        (state.planta==="todas" || f.properties.planta===state.planta) &&
-        (state.tipo==="todos" || f.properties.tipo===state.tipo) &&
-        (state.campus==="todos" || f.properties.campus===state.campus)
-      );
-    });
+  function getFilteredFeatures() {
+    let sets = [];
+
+    if (state.campus !== "todos") {
+      sets.push(index.campus[state.campus] || new Set());
+    }
+    if (state.edificio !== "todos") {
+      sets.push(index.edificio[state.edificio] || new Set());
+    }
+    if (state.planta !== "todas") {
+      sets.push(index.planta[state.planta] || new Set());
+    }
+    if (state.tipo !== "todos") {
+      sets.push(index.tipo[state.tipo] || new Set());
+    }
+
+    // Si no hay filtros activos → todos
+    if (sets.length === 0) {
+      return Array.from(index.all);
+    }
+
+    // Intersección de sets
+    let result = sets[0];
+    for (let i = 1; i < sets.length; i++) {
+      result = new Set([...result].filter(f => sets[i].has(f)));
+    }
+
+    return Array.from(result);
   }
   
   // =============== POPUP en HTML ===============
@@ -772,22 +816,13 @@ function initMap() {
 
   // =============== CAPAS VISIBLES EN EL MAPA ===============
   function updateLayers() {
+    const visibles = new Set(getFilteredFeatures());
+
     for (const tipo in layersByTipo) {
-      const layer = layersByTipo[tipo];
-
-      layer.eachLayer(marker => {
-        const f = marker.feature;
-        const visible =
-          (state.tipo === "todos" || f.properties.tipo === state.tipo) &&
-          (state.edificio === "todos" || f.properties.edificio === state.edificio) &&
-          (state.planta === "todas" || f.properties.planta === state.planta) &&
-          (state.campus === "todos" || f.properties.campus === state.campus);
-
-        if (visible) {
-          marker.addTo(map);
-        } else {
-          map.removeLayer(marker);
-        }
+      layersByTipo[tipo].eachLayer(marker => {
+        const visible = visibles.has(marker.feature);
+        if (visible) marker.addTo(map);
+        else map.removeLayer(marker);
       });
     }
   }
@@ -922,8 +957,8 @@ function initMap() {
   // ================= UPDATE =================
   function update(){
     const feats = getFilteredFeatures();
-    updateLayers();       // ← mapa
-    renderSidebar(feats); // ← sidebar
+    updateLayers();       // Mapa
+    renderSidebar(feats); // Sidebar
   }
   
   // ================= EVENTOS =================
