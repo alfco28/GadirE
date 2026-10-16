@@ -488,7 +488,7 @@ html, body {
         <a href="https://www.instagram.com/estudiantes.uca" target="_blank" title="Seguir al CEUCA en Instagram"><i class="fab fa-instagram"></i> @estudiantes.uca</a>
       </div>
 
-      <div class="version">v0.1.61-test</div>
+      <div class="version">v0.1.62-test</div>
     </footer>
   </aside>
   
@@ -1159,18 +1159,30 @@ function initMap() {
   }
   
   // ================= BUSCADOR =================
+  const searchLayer = L.layerGroup();
+
   const searchControl = new L.Control.Search({
-    layer: L.layerGroup(
-      Object.values(layersByTipo).flatMap(l => l.getLayers())
-    ),
+    layer: searchLayer,
     propertyName: 'title',
     zoom: FLY_ZOOM,
     textPlaceholder: 'Buscar...',
     marker: false
   });
 
+  // Actualizar capa de búsqueda cuando se cambian los filtros
   searchControl.on('search:locationfound', e => e.layer.openPopup());
-  map.addControl(searchControl);
+    map.addControl(searchControl);
+
+    function updateSearchLayer(features) {
+    searchLayer.clearLayers();
+
+    features.forEach(f => {
+      const marker = markersByNombre[f.properties.nombre];
+      if (marker) {
+        searchLayer.addLayer(marker);
+      }
+    });
+  }
   
   // ================= HELPER =================
   function isMobile() {
@@ -1257,8 +1269,9 @@ function initMap() {
   // ================= UPDATE =================
   function update(){
     const feats = getFilteredFeatures();
-    updateLayers();       // Mapa
+    updateLayers(); // Mapa
     renderSidebar(feats); // Sidebar
+    updateSearchLayer(feats); // Capa de búsqueda
   }
   
   // ================= EVENTOS =================
