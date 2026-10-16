@@ -100,6 +100,10 @@ body { margin:0; font-family: system-ui, Arial; }
   justify-content: center;
 }
 
+#geolocate:hover {
+  background: #f3f4f6;
+}
+
 .filter-button {
   background: white;
   width: 36px;
@@ -111,6 +115,10 @@ body { margin:0; font-family: system-ui, Arial; }
   align-items: center;
   justify-content: center;
   margin-right: 10px;
+}
+
+.filter-button:hover {
+  background: #f3f4f6;
 }
 
 .compass {
@@ -129,6 +137,30 @@ body { margin:0; font-family: system-ui, Arial; }
   transform: rotate(0deg);
   transition: transform 0.3s ease;
 }
+
+.info-button {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  z-index: 10;
+  background: transparent;
+  border: none;
+  color: #9ca3af;
+  font-size: 18px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 1px solid #9ca3af;
+}
+
+.info-button:hover {
+  color: white;
+  border-color: white;
+}
 </style>
 </head>
 
@@ -137,7 +169,10 @@ body { margin:0; font-family: system-ui, Arial; }
 <div id="layout">
 
   <div id="sidebar">
-    <div class="version">v0.1.6</div>
+    <div class="version">v0.1.7</div>
+    <a href="https://ceuca.uca.es/ceucatlas" target="_blank" class="info-button" title="Información">
+      <i class="fas fa-info-circle"></i>
+    </a>
 
     <img
         src="https://ceuca.uca.es/wp-content/uploads/2025/12/ceucatlas.webp"
@@ -211,7 +246,7 @@ const map = L.map('map').setView([36.5298, -6.2035], 16);
 
 L.tileLayer(
   'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',
-  { maxZoom:20, attribution:'Map data from <a href="openstreetmap.org/copyright">OpenStreetMap</a>. © CARTO' }
+  { maxZoom:20, attribution:'Map data from <a href="https://openstreetmap.org/copyright">OpenStreetMap</a>. © CARTO' }
 ).addTo(map);
 
 // ================= GEOJSON =================
@@ -373,15 +408,14 @@ window.addEventListener('deviceorientation', handleOrientation, true);
 // ================= TOGGLE SIDEBAR =================
 document.getElementById('toggle-sidebar').addEventListener('click', () => {
   const sidebar = document.getElementById('sidebar');
-  const mapContainer = document.getElementById('map-container');
+  const layout = document.getElementById('layout');
   sidebar.classList.toggle('hidden');
   if (sidebar.classList.contains('hidden')) {
-    mapContainer.style.width = '100%';
-    map.invalidateSize();
+    layout.style.gridTemplateColumns = '0px 1fr';
   } else {
-    mapContainer.style.width = '';
-    map.invalidateSize();
+    layout.style.gridTemplateColumns = '320px 1fr';
   }
+  map.invalidateSize();
 });
 
 // ================= UPDATE =================
