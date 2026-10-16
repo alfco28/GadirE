@@ -488,7 +488,7 @@ html, body {
         <a href="https://www.instagram.com/estudiantes.uca" target="_blank" title="Seguir al CEUCA en Instagram"><i class="fab fa-instagram"></i> @estudiantes.uca</a>
       </div>
 
-      <div class="version">v0.1.63-test</div>
+      <div class="version">v0.1.64-test</div>
     </footer>
   </aside>
   
@@ -1171,8 +1171,12 @@ function initMap() {
     if (searchControl) {
       map.removeControl(searchControl);
 
-      const old = document.querySelector('.leaflet-control-search');
-      if (old) old.remove();
+      map.dragging.enable();
+      map.touchZoom.enable();
+      map.doubleClickZoom.enable();
+      map.scrollWheelZoom.enable();
+
+      searchControl = null;
     }
 
     const searchLayer = L.layerGroup();
