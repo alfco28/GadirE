@@ -446,42 +446,42 @@ html, body {
 <!-- PÁGINA -->
 <div id="layout">
 
-  <div id="sidebar">
-      <!-- Encabezado -->
-      <div class="sidebar-header">
-        <div class="version">v0.1.46</div>
+  <aside id="sidebar">
+    <!-- Encabezado -->
+    <header class="sidebar-header">
+      <a href="https://ceuca.uca.es/ceucatlas" target="_blank" class="info-button" title="Información">
+        <i class="fas fa-info-circle"></i>
+      </a>
 
-        <a href="https://ceuca.uca.es/ceucatlas" target="_blank" class="info-button" title="Información">
-          <i class="fas fa-info-circle"></i>
-        </a>
+      <button id="close-sidebar" class="close-button" title="Cerrar barra lateral">
+        <i class="fas fa-times"></i>
+      </button>
 
-        <button id="close-sidebar" class="close-button" title="Cerrar barra lateral">
-          <i class="fas fa-times"></i>
-        </button>
+      <img src="https://ceuca.uca.es/wp-content/uploads/2025/12/ceucatlas.webp" alt="" style="display: block; margin-left: auto; margin-right: auto; width: 300px;">
+    </header>
 
-        <img src="https://ceuca.uca.es/wp-content/uploads/2025/12/ceucatlas.webp" alt="" style="display: block; margin-left: auto; margin-right: auto; width: 300px;">
+    <!-- Contenedor scrolleable -->
+    <div id="sidebarContent" class="sidebar-scrollable"></div>
+
+    <!-- Pie del sidebar -->
+    <footer class="sidebar-footer">
+      <div class="version">v0.1.47</div>
+
+      <div class="whatsapp">
+        <i class="fab fa-whatsapp"></i>
+        <a href="https://whatsapp.com/channel/0029VbCBfO696H4Qse6SQT0v" target="_blank" title="Unirse al canal del CEUCA">Canal del CEUCA</a>
       </div>
-
-      <!-- Contenedor scrolleable -->
-      <div id="sidebarContent" class="sidebar-scrollable"></div>
-
-      <!-- Pie del sidebar -->
-      <div class="sidebar-footer">
-        <div class="whatsapp">
-          <i class="fab fa-whatsapp"></i>
-          <a href="https://whatsapp.com/channel/0029VbCBfO696H4Qse6SQT0v" target="_blank" title="Unirse al canal del CEUCA">Canal del CEUCA</a>
-        </div>
-        <div class="instagram">
-          <i class="fab fa-instagram"></i>
-          <a href="https://www.instagram.com/estudiantes.uca" target="_blank" title="Seguir al CEUCA en Instagram">@estudiantes.uca</a>
-        </div>
+      <div class="instagram">
+        <i class="fab fa-instagram"></i>
+        <a href="https://www.instagram.com/estudiantes.uca" target="_blank" title="Seguir al CEUCA en Instagram">@estudiantes.uca</a>
       </div>
-    </div>
+    </footer>
+  </aside>
   
   <!-- MAP -->
-  <div id="map-container">
+  <main id="map-container">
 
-    <div id="filters">
+    <nav id="filters">
       <!-- FILA SUPERIOR -->
       <div class="filters-top">
         <button id="toggle-sidebar" class="filter-button" title="Mostrar barra lateral">
@@ -567,7 +567,7 @@ html, body {
           </select>
         </div>
       </div>
-    </div>
+    </nav>
 
     <div class="compass" id="compass" style="display: none;">
       <i class="fas fa-compass"></i>
@@ -578,7 +578,7 @@ html, body {
     </button>
 
     <div id="map"></div>
-  </div>
+  </main>
 
 </div>
 
