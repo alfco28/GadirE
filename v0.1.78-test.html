@@ -531,7 +531,7 @@ html, body {
         <a href="https://www.instagram.com/estudiantes.uca" target="_blank" title="Seguir al CEUCA en Instagram"><i class="fab fa-instagram"></i> @estudiantes.uca</a>
       </div>
 
-      <div class="version">v0.1.77-test</div>
+      <div class="version">v0.1.78-test</div>
     </footer>
   </aside>
   
@@ -1139,7 +1139,7 @@ function initMap() {
   
   // ================= ICONOS =================
   const COLORS = {
-    aula: "#16a34a",
+    aula: "#0284c7",
     cafete: "#ea580c",
     biblio: "#2563eb",
     repre: "#7c3aed",
@@ -1148,7 +1148,7 @@ function initMap() {
     descanso: "#facc15",
     aseo: "#64748b",
     salon: "#9333ea",
-    transporte: "#0284c7",
+    transporte: "#16a34a",
     unidad: "#334155"
   };
 
@@ -1219,7 +1219,7 @@ function initMap() {
     const marker = L.marker(
       [f.geometry.coordinates[1], f.geometry.coordinates[0]],
       {
-        title: f.properties.nombre,
+        title: `${f.properties.nombre}, ${f.properties.edificio}`,
         icon: icon(tipo)
       }
     ).bindPopup(popupHTML(f.properties));
