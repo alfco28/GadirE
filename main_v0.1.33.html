@@ -135,23 +135,32 @@ html, body {
   background: #f3f4f6;
   padding: 8px;
   display: flex;
+  flex-direction: column;
   gap: 10px;
-  flex-wrap: wrap;
-  align-items: center;
   position: relative;
+  align-items: stretch;
 }
 
 #toggle-sidebar.hide-when-sidebar-visible {
   display: none;
 }
 
-.filters-group {
+.filters-top {
+  display: flex;
+  align-items: center;
+  gap: 0px;
+  width: 100%;
+}
+
+.filters-content {
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
-  align-items: center;
-  width: calc(100% - 40px);
-  margin-right: 40px;
+  margin-top: 8px;
+}
+
+.filters-content.hidden {
+  display: none;
 }
 
 .filter-pair {
@@ -360,7 +369,7 @@ html, body {
 
   <div id="sidebar">
       <div class="sidebar-header">
-        <div class="version">v0.1.32</div>
+        <div class="version">v0.1.33</div>
 
         <a href="https://ceuca.uca.es/ceucatlas" target="_blank" class="info-button" title="Información">
           <i class="fas fa-info-circle"></i>
@@ -393,10 +402,23 @@ html, body {
 
     <div id="filters">
 
-      <div class="filters-group">
+      <!-- FILA SUPERIOR -->
+      <div class="filters-top">
         <button id="toggle-sidebar" class="filter-button" title="Mostrar barra lateral">
           <i class="fas fa-bars"></i>
         </button>
+
+        <button id="toggle-filters" class="filter-button" title="Mostrar/ocultar filtros">
+          <i class="fas fa-sliders-h"></i>
+        </button>
+
+        <a href="https://ceuca.uca.es" target="_blank" title="Ir al sitio web del CEUCA">
+          <img id="filters-logo" src="https://ceuca.uca.es/wp-content/uploads/2025/08/logo.webp" alt="Ir al sitio del CEUCA">
+        </a>
+      </div>
+
+      <!-- FILTROS (PLEGABLES) -->
+      <div id="filters-content" class="filters-content hidden">
         <div class="filter-pair">
           <label>Campus:</label>
           <select id="fCampus">
@@ -458,10 +480,6 @@ html, body {
           </select>
         </div>
       </div>
-
-      <a href="https://ceuca.uca.es" target="_blank" title="Ir al sitio web del CEUCA">
-        <img id="filters-logo" src="https://ceuca.uca.es/wp-content/uploads/2025/08/logo.webp" alt="Ir al sitio del CEUCA">
-      </a>
     </div>
 
     <div class="compass" id="compass" style="display: none;">
@@ -732,6 +750,12 @@ window.addEventListener('load', () => {
   setTimeout(() => {
     map.invalidateSize();
   }, 300);
+});
+
+// ================= MOSTRAR/OCULTAR FILTROS =================
+document.getElementById('toggle-filters').addEventListener('click', () => {
+  const filters = document.getElementById('filters-content');
+  filters.classList.toggle('hidden');
 });
 
 </script>
