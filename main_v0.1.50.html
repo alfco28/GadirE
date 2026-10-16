@@ -474,7 +474,7 @@ html, body {
 
     <!-- Pie del sidebar -->
     <footer class="sidebar-footer">
-      <div class="version">v0.1.49</div>
+      <div class="version">v0.1.50</div>
 
       <div class="whatsapp">
         <i class="fab fa-whatsapp"></i>
@@ -701,6 +701,18 @@ function initMap() {
     });
   }
   
+  // =============== POPUP en HTML ===============
+  function popupHTML(p) {
+    return `
+        <div class="popup-card">
+          <h4>${p.nombre}</h4>
+          Descripción: ${p.descrip}<br><br>
+          Planta ${p.planta}<br>
+          Edificio: ${p.edificio}<br>
+          Campus: ${p.campus}
+        </div>`;
+  }
+
   // ================= RENDER MAPA =================
   function renderMap(features){
     espaciosLayer.clearLayers();
@@ -711,14 +723,7 @@ function initMap() {
         {title:f.properties.nombre,icon:icon(f.properties.tipo)}
       );
     
-      m.bindPopup(`
-        <div class="popup-card">
-          <h4>${f.properties.nombre}</h4>
-          Descripción: ${f.properties.descrip}<br><br>
-          Planta ${f.properties.planta}<br>
-          Edificio: ${f.properties.edificio}<br>
-          Campus: ${f.properties.campus}
-        </div>`);
+      m.bindPopup(popupHTML(f.properties));
       
       espaciosLayer.addLayer(m);
     });
