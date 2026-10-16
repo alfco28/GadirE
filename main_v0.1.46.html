@@ -449,7 +449,7 @@ html, body {
   <div id="sidebar">
       <!-- Encabezado -->
       <div class="sidebar-header">
-        <div class="version">v0.1.45</div>
+        <div class="version">v0.1.46</div>
 
         <a href="https://ceuca.uca.es/ceucatlas" target="_blank" class="info-button" title="Información">
           <i class="fas fa-info-circle"></i>
@@ -763,7 +763,7 @@ function initMap() {
   }
   
   // ================= FLY =================
-  function fly(nombre){
+  window.fly = function(nombre) {
     espaciosLayer.eachLayer(l=>{
       if(l.options.title===nombre){
         map.flyTo(l.getLatLng(),19);
