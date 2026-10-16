@@ -153,6 +153,11 @@ html, body {
   background: #f9fafb;
 }
 
+/* Texto alternativo si se rechazan cookies */
+.text {
+  display: flex;
+}
+
 /* ========== SIDEBAR ========== */
 
 #sidebar {
@@ -509,7 +514,7 @@ html, body {
         <a href="https://www.instagram.com/estudiantes.uca" target="_blank" title="Seguir al CEUCA en Instagram"><i class="fab fa-instagram"></i> @estudiantes.uca</a>
       </div>
 
-      <div class="version">v0.1.67-test</div>
+      <div class="version">v0.1.68-test</div>
     </footer>
   </aside>
   
@@ -521,14 +526,17 @@ html, body {
       <div class="filters-top">
         <button id="toggle-sidebar" class="filter-button" title="Mostrar barra lateral">
           <i class="fas fa-bars"></i>
+          <span class="text">Barra lateral</span>
         </button>
 
         <button id="toggle-filters" class="filter-button" title="Mostrar/ocultar filtros">
           <i class="fa-solid fa-filter"></i>
+          <span class="text">Filtros</span>
         </button>
 
         <button class="back-to-cookies-button" title="Configurar cookies">
           <i class="fa-solid fa-cookie-bite"></i>
+          <span class="text">Configurar cookies</span>
         </button>
 
         <a href="https://ceuca.uca.es" target="_blank" title="Ir al sitio web del CEUCA">
@@ -614,6 +622,7 @@ html, body {
 
     <button id="geolocate" title="Ir a mi ubicación">
       <i class="fas fa-location-arrow"></i>
+      <span class="text">Mi ubicación</span>
     </button>
 
     <div id="map"></div>
@@ -1426,6 +1435,9 @@ document.addEventListener('DOMContentLoaded', function() {
   if (!consent) {
     cookieModal.style.display = 'flex';
   } else if (consent === 'accepted') {
+    document.querySelectorAll('.text').forEach(el => {
+      el.style.display = 'none';
+    });
     loadExternalScripts(initMap);
   }
 
