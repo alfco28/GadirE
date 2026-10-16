@@ -85,7 +85,7 @@ body { margin:0; font-family: system-ui, Arial; }
 <div id="layout">
 
   <div id="sidebar">
-    <div class="version">v0.1.2</div>
+    <div class="version">v0.1.3</div>
 
     <img
         src="https://ceuca.uca.es/wp-content/uploads/2025/12/ceucatlas.webp"
@@ -229,26 +229,21 @@ function renderSidebar(features){
   features.forEach(f=>{
     const e=f.properties.edificio;
     const p=f.properties.planta;
-    const c=f.properties.campus;
-    estructura[c] ??= {};
-    estructura[c][e] ??= {};
-    estructura[c][e][p] ??= [];
-    estructura[c][e][p].push(f);
+    estructura[e] ??= {};
+    estructura[e][p] ??= [];
+    estructura[e][p].push(f);
   });
 
-  for(const c in estructura){
-    cont.innerHTML+=`<h3>${c}</h3>`;
-    for(const e in estructura[c]){
-      cont.innerHTML+=`<b>${e}</b>`;
-      for(const p in estructura[c][e]){
-        cont.innerHTML+=`<br><b>Planta ${p}</b>`;
-        estructura[c][e][p].forEach(f=>{
-          cont.innerHTML+=`
-            <div class="sidebar-item" onclick="fly('${f.properties.nombre}')">
-              • ${f.properties.nombre}
-            </div>`;
-        });
-      }
+  for(const e in estructura){
+    cont.innerHTML+=`<h3>${e}</h3>`;
+    for(const p in estructura[e]){
+      cont.innerHTML+=`<b>Planta ${p}</b>`;
+      estructura[e][p].forEach(f=>{
+        cont.innerHTML+=`
+          <div class="sidebar-item" onclick="fly('${f.properties.nombre}')">
+            • ${f.properties.nombre}
+          </div>`;
+      });
     }
   }
 }
