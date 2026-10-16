@@ -488,7 +488,7 @@ html, body {
         <a href="https://www.instagram.com/estudiantes.uca" target="_blank" title="Seguir al CEUCA en Instagram"><i class="fab fa-instagram"></i> @estudiantes.uca</a>
       </div>
 
-      <div class="version">v0.1.62-test</div>
+      <div class="version">v0.1.63-test</div>
     </footer>
   </aside>
   
@@ -990,6 +990,7 @@ const MOBILE_BREAKPOINT = 768;
 const DEFAULT_ZOOM = 16;
 const FLY_ZOOM = 19;
 
+let searchControl = null;
 function initMap() {
   // ================= MAPA =================
   const map = L.map('map', {
@@ -1095,7 +1096,13 @@ function initMap() {
   }
 
   // ================= CREAR MARKERS UNA SOLA VEZ =================
-  const markersByNombre = {};
+
+  function featureKey(f) { // Función para crear un marker (casi) único para cada feature.
+    const p = f.properties;
+    return `${p.campus}|${p.edificio}|${p.nombre}`;
+  }
+
+  const markersByKey = {};
 
   campusGeoJSON.features.forEach(f => {
     const tipo = f.properties.tipo;
@@ -1111,7 +1118,8 @@ function initMap() {
     marker.feature = f;
 
     layersByTipo[tipo].addLayer(marker);
-    markersByNombre[f.properties.nombre] = marker;
+    const key = featureKey(f);
+    markersByKey[key] = marker;
   });
 
   // =============== CAPAS VISIBLES EN EL MAPA ===============
@@ -1148,7 +1156,7 @@ function initMap() {
         html += `<h4>Planta ${p}</h4>`;
         estructura[e][p].forEach(f => {
           html += `
-            <div class="sidebar-item" onclick="fly('${f.properties.nombre}')">
+            <div class="sidebar-item" onclick="fly('${featureKey(f)}')">
               • ${f.properties.nombre}
             </div>`;
         });
@@ -1159,29 +1167,34 @@ function initMap() {
   }
   
   // ================= BUSCADOR =================
-  const searchLayer = L.layerGroup();
+  function rebuildSearch(features) {
+    if (searchControl) {
+      map.removeControl(searchControl);
 
-  const searchControl = new L.Control.Search({
-    layer: searchLayer,
-    propertyName: 'title',
-    zoom: FLY_ZOOM,
-    textPlaceholder: 'Buscar...',
-    marker: false
-  });
+      const old = document.querySelector('.leaflet-control-search');
+      if (old) old.remove();
+    }
 
-  // Actualizar capa de búsqueda cuando se cambian los filtros
-  searchControl.on('search:locationfound', e => e.layer.openPopup());
-    map.addControl(searchControl);
-
-    function updateSearchLayer(features) {
-    searchLayer.clearLayers();
+    const searchLayer = L.layerGroup();
 
     features.forEach(f => {
-      const marker = markersByNombre[f.properties.nombre];
-      if (marker) {
-        searchLayer.addLayer(marker);
-      }
+      const marker = markersByKey[featureKey(f)];
+      if (marker) searchLayer.addLayer(marker);
     });
+
+    searchControl = new L.Control.Search({
+      layer: searchLayer,
+      propertyName: 'title',
+      zoom: FLY_ZOOM,
+      marker: false,
+      textPlaceholder: 'Buscar...'
+    });
+
+    searchControl.on('search:locationfound', e => {
+      e.layer.openPopup();
+    });
+
+    map.addControl(searchControl);
   }
   
   // ================= HELPER =================
@@ -1190,8 +1203,10 @@ function initMap() {
   }
   
   // ================= FLY =================
-  window.fly = function(nombre) {
-    const marker = markersByNombre[nombre];
+  window.featureKey = featureKey;
+  
+  window.fly = function(key) {
+    const marker = markersByKey[key];
     if (!marker) return;
 
     map.flyTo(marker.getLatLng(), FLY_ZOOM);
@@ -1204,7 +1219,6 @@ function initMap() {
       if (!sidebar.classList.contains('hidden')) {
         sidebar.classList.add('hidden');
         toggleButton.classList.remove('hide-when-sidebar-visible');
-
         setTimeout(() => map.invalidateSize(), SIDEBAR_ANIMATION_MS);
       }
     }
@@ -1271,7 +1285,7 @@ function initMap() {
     const feats = getFilteredFeatures();
     updateLayers(); // Mapa
     renderSidebar(feats); // Sidebar
-    updateSearchLayer(feats); // Capa de búsqueda
+    rebuildSearch(feats); // Capa de búsqueda
   }
   
   // ================= EVENTOS =================
