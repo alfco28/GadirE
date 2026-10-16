@@ -52,6 +52,7 @@ body { margin:0; font-family: system-ui, Arial; }
   display:flex;
   gap:10px;
   flex-wrap:wrap;
+  align-items: center;
 }
 
 #map { flex:1; }
@@ -89,9 +90,9 @@ body { margin:0; font-family: system-ui, Arial; }
   right: 20px;
   z-index: 1000;
   background: white;
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  border-radius: 6px;
   cursor: pointer;
   box-shadow: 0 1px 5px rgba(0,0,0,0.2);
   display: flex;
@@ -99,20 +100,17 @@ body { margin:0; font-family: system-ui, Arial; }
   justify-content: center;
 }
 
-#toggle-sidebar {
-  position: absolute;
-  top: 15px;
-  left: 15px;
-  z-index: 1000;
+.filter-button {
   background: white;
-  width: 35px;
-  height: 35px;
-  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  border-radius: 6px;
   cursor: pointer;
   box-shadow: 0 1px 5px rgba(0,0,0,0.2);
   display: flex;
   align-items: center;
   justify-content: center;
+  margin-right: 10px;
 }
 
 .compass {
@@ -121,9 +119,9 @@ body { margin:0; font-family: system-ui, Arial; }
   right: 20px;
   z-index: 1000;
   background: white;
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  border-radius: 6px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -139,7 +137,7 @@ body { margin:0; font-family: system-ui, Arial; }
 <div id="layout">
 
   <div id="sidebar">
-    <div class="version">v0.1.5</div>
+    <div class="version">v0.1.6</div>
 
     <img
         src="https://ceuca.uca.es/wp-content/uploads/2025/12/ceucatlas.webp"
@@ -156,19 +154,12 @@ body { margin:0; font-family: system-ui, Arial; }
   </div>
 
   <div id="map-container">
-    <button id="toggle-sidebar" title="Mostrar/Ocultar barra lateral">
-      <i class="fas fa-bars"></i>
-    </button>
-
-    <div class="compass" id="compass" style="display: none;">
-      <i class="fas fa-compass"></i>
-    </div>
-
-    <button id="geolocate" title="Ir a mi ubicación">
-      <i class="fas fa-location-arrow"></i>
-    </button>
 
     <div id="filters">
+      <button id="toggle-sidebar" class="filter-button" title="Mostrar/Ocultar barra lateral">
+        <i class="fas fa-bars"></i>
+      </button>
+
       Campus:
       <select id="fCampus">
         <option value="todos">Todos</option>
@@ -200,6 +191,14 @@ body { margin:0; font-family: system-ui, Arial; }
         <option value="fuente">Fuente</option>
       </select>
     </div>
+
+    <div class="compass" id="compass" style="display: none;">
+      <i class="fas fa-compass"></i>
+    </div>
+
+    <button id="geolocate" title="Ir a mi ubicación">
+      <i class="fas fa-location-arrow"></i>
+    </button>
 
     <div id="map"></div>
   </div>
@@ -374,7 +373,15 @@ window.addEventListener('deviceorientation', handleOrientation, true);
 // ================= TOGGLE SIDEBAR =================
 document.getElementById('toggle-sidebar').addEventListener('click', () => {
   const sidebar = document.getElementById('sidebar');
+  const mapContainer = document.getElementById('map-container');
   sidebar.classList.toggle('hidden');
+  if (sidebar.classList.contains('hidden')) {
+    mapContainer.style.width = '100%';
+    map.invalidateSize();
+  } else {
+    mapContainer.style.width = '';
+    map.invalidateSize();
+  }
 });
 
 // ================= UPDATE =================
