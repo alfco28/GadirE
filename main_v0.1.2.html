@@ -12,6 +12,9 @@
 <link rel="stylesheet" href="https://unpkg.com/leaflet-search/dist/leaflet-search.min.css">
 <script src="https://unpkg.com/leaflet-search/dist/leaflet-search.min.js"></script>
 
+<!-- Font Awesome para el icono de Instagram -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
 <style>
 body { margin:0; font-family: system-ui, Arial; }
 
@@ -23,6 +26,7 @@ body { margin:0; font-family: system-ui, Arial; }
   color:white;
   overflow-y:auto;
   padding:10px;
+  position: relative;
 }
 
 #sidebar h2 { margin:0 0 10px; }
@@ -49,6 +53,30 @@ body { margin:0; font-family: system-ui, Arial; }
 
 .popup-card h4 { margin:0 0 5px; color:#2563eb; }
 .popup-card { font-size:14px; }
+
+.version {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  color: #9ca3af;
+  font-size: 12px;
+}
+
+.instagram {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  color: #9ca3af;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.instagram a {
+  color: #9ca3af;
+  text-decoration: none;
+}
 </style>
 </head>
 
@@ -57,7 +85,8 @@ body { margin:0; font-family: system-ui, Arial; }
 <div id="layout">
 
   <div id="sidebar">
-    
+    <div class="version">v0.1.2</div>
+
     <img
         src="https://ceuca.uca.es/wp-content/uploads/2025/12/ceucatlas.webp"
         alt=""
@@ -65,11 +94,25 @@ body { margin:0; font-family: system-ui, Arial; }
     >
 
     <div id="sidebarContent"></div>
+
+    <div class="instagram">
+      <i class="fab fa-instagram"></i>
+      <a href="https://www.instagram.com/estudiantes.uca/" target="_blank">@estudiantes.uca</a>
+    </div>
   </div>
 
   <div id="map-container">
 
     <div id="filters">
+      Campus:
+      <select id="fCampus">
+        <option value="todos">Todos</option>
+        <option value="Bahía de Algeciras">Bahía de Algeciras</option>
+        <option value="Cádiz">Cádiz</option>
+        <option value="Jerez">Jerez</option>
+        <option value="Puerto Real">Puerto Real</option>
+      </select>
+
       Edificio:
       <select id="fEdificio">
         <option value="todos">Todos</option>
@@ -111,13 +154,13 @@ L.tileLayer(
 const campusGeoJSON = {
 "type":"FeatureCollection",
 "features":[
-  {"type":"Feature","properties":{"clase":"espacio","edificio":"FC","planta":"1","tipo":"aula","nombre":"Aula C-101"},
+  {"type":"Feature","properties":{"clase":"espacio","edificio":"FC","planta":"1","tipo":"aula","nombre":"Aula C-101", "campus": "Cádiz"},
    "geometry":{"type":"Point","coordinates":[-6.2041,36.5301]}},
 
-  {"type":"Feature","properties":{"clase":"espacio","edificio":"FC","planta":"1","tipo":"aula","nombre":"Aula C-102"},
+  {"type":"Feature","properties":{"clase":"espacio","edificio":"FC","planta":"1","tipo":"aula","nombre":"Aula C-102", "campus": "Cádiz"},
    "geometry":{"type":"Point","coordinates":[-6.2040,36.5300]}},
 
-  {"type":"Feature","properties":{"clase":"espacio","edificio":"ESI","planta":"0","tipo":"fuente","nombre":"Fuente Patio ESI"},
+  {"type":"Feature","properties":{"clase":"espacio","edificio":"ESI","planta":"0","tipo":"fuente","nombre":"Fuente Patio ESI", "campus": "Puerto Real"},
    "geometry":{"type":"Point","coordinates":[-6.2028,36.5295]}},
 ]
 };
@@ -126,7 +169,8 @@ const campusGeoJSON = {
 const state = {
   edificio: "todos",
   planta: "todas",
-  tipo: "todos"
+  tipo: "todos",
+  campus: "todos"
 };
 
 // ================= CAPA =================
@@ -144,7 +188,8 @@ function getFilteredFeatures(){
     return (
       (state.edificio==="todos" || f.properties.edificio===state.edificio) &&
       (state.planta==="todas" || f.properties.planta===state.planta) &&
-      (state.tipo==="todos" || f.properties.tipo===state.tipo)
+      (state.tipo==="todos" || f.properties.tipo===state.tipo) &&
+      (state.campus==="todos" || f.properties.campus===state.campus)
     );
   });
 }
@@ -164,7 +209,8 @@ function renderMap(features){
         <h4>${f.properties.nombre}</h4>
         ${f.properties.edificio}<br>
         Planta ${f.properties.planta}<br>
-        Tipo: ${f.properties.tipo}
+        Tipo: ${f.properties.tipo}<br>
+        Campus: ${f.properties.campus}
       </div>`);
 
     espaciosLayer.addLayer(m);
@@ -183,21 +229,26 @@ function renderSidebar(features){
   features.forEach(f=>{
     const e=f.properties.edificio;
     const p=f.properties.planta;
-    estructura[e] ??= {};
-    estructura[e][p] ??= [];
-    estructura[e][p].push(f);
+    const c=f.properties.campus;
+    estructura[c] ??= {};
+    estructura[c][e] ??= {};
+    estructura[c][e][p] ??= [];
+    estructura[c][e][p].push(f);
   });
 
-  for(const e in estructura){
-    cont.innerHTML+=`<h3>${e}</h3>`;
-    for(const p in estructura[e]){
-      cont.innerHTML+=`<b>Planta ${p}</b>`;
-      estructura[e][p].forEach(f=>{
-        cont.innerHTML+=`
-          <div class="sidebar-item" onclick="fly('${f.properties.nombre}')">
-            • ${f.properties.nombre}
-          </div>`;
-      });
+  for(const c in estructura){
+    cont.innerHTML+=`<h3>${c}</h3>`;
+    for(const e in estructura[c]){
+      cont.innerHTML+=`<b>${e}</b>`;
+      for(const p in estructura[c][e]){
+        cont.innerHTML+=`<br><b>Planta ${p}</b>`;
+        estructura[c][e][p].forEach(f=>{
+          cont.innerHTML+=`
+            <div class="sidebar-item" onclick="fly('${f.properties.nombre}')">
+              • ${f.properties.nombre}
+            </div>`;
+        });
+      }
     }
   }
 }
@@ -233,6 +284,7 @@ function update(){
 document.getElementById("fEdificio").onchange=e=>{state.edificio=e.target.value;update();}
 document.getElementById("fPlanta").onchange=e=>{state.planta=e.target.value;update();}
 document.getElementById("fTipo").onchange=e=>{state.tipo=e.target.value;update();}
+document.getElementById("fCampus").onchange=e=>{state.campus=e.target.value;update();}
 
 update();
 </script>
