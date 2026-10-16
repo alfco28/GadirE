@@ -132,6 +132,27 @@ html, body {
   color: white;
 }
 
+.back-to-cookies-button {
+  width: 34px;
+  height: 34px;
+  cursor: pointer;
+  position: absolute;
+  top: 8px;
+  right: 54px;
+  z-index: 10;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  box-shadow: 0 0 2px rgba(0, 0, 0, 0.65);
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}
+
+.back-to-cookies-button:hover {
+  background: #f9fafb;
+}
+
 /* ========== SIDEBAR ========== */
 
 #sidebar {
@@ -488,7 +509,7 @@ html, body {
         <a href="https://www.instagram.com/estudiantes.uca" target="_blank" title="Seguir al CEUCA en Instagram"><i class="fab fa-instagram"></i> @estudiantes.uca</a>
       </div>
 
-      <div class="version">v0.1.64-test</div>
+      <div class="version">v0.1.65-test</div>
     </footer>
   </aside>
   
@@ -504,6 +525,10 @@ html, body {
 
         <button id="toggle-filters" class="filter-button" title="Mostrar/ocultar filtros">
           <i class="fa-solid fa-filter"></i>
+        </button>
+
+        <button class="back-to-cookies-button" title="Configurar cookies">
+          <i class="fa-solid fa-cookie-bite"></i>
         </button>
 
         <a href="https://ceuca.uca.es" target="_blank" title="Ir al sitio web del CEUCA">
