@@ -514,7 +514,7 @@ html, body {
         <a href="https://www.instagram.com/estudiantes.uca" target="_blank" title="Seguir al CEUCA en Instagram"><i class="fab fa-instagram"></i> @estudiantes.uca</a>
       </div>
 
-      <div class="version">v0.1.68-test</div>
+      <div class="version">v0.1.69-test</div>
     </footer>
   </aside>
   
@@ -1425,6 +1425,8 @@ function loadExternalScripts(callback) {
 }
 
 // ================ COOKIES ======================
+let cookieButton = false;
+
 document.addEventListener('DOMContentLoaded', function() {
   const cookieModal = document.getElementById('cookie-consent-modal');
   const acceptButton = document.getElementById('accept-cookies');
@@ -1448,6 +1450,8 @@ document.addEventListener('DOMContentLoaded', function() {
     if (consent === 'accepted') {
       localStorage.setItem('cookieConsent', consent);
       loadExternalScripts(initMap);
+    } else if (consent == 'rejected' && cookieButton) {
+      window.location.reload();
     }
   }
 
@@ -1458,6 +1462,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // Botón para volver a configurar las cookies
 document.querySelector('.back-to-cookies-button').addEventListener('click', () => {
+  cookieButton = true;
   localStorage.removeItem('cookieConsent');
   const cookieModal = document.getElementById('cookie-consent-modal');
   cookieModal.style.display = 'flex';
