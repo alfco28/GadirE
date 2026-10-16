@@ -542,3 +542,20 @@ function reportarConUbicacion() {
 
 // Asignar el evento al botón "Reportar falta de lugar"
 document.getElementById("report").addEventListener("click", reportarConUbicacion);
+
+// ================= FLY DESDE URL =================
+// Función para obtener el hash de la URL (sin el #)
+function getUrlHash() {
+  return window.location.hash.substring(1); // Elimina el #
+}
+
+// Al cargar la página, revisa si hay un hash en la URL
+window.addEventListener('load', () => {
+  const idFromHash = getUrlHash();
+  if (idFromHash) {
+    // Espera a que el mapa y los marcadores estén listos
+    setTimeout(() => {
+      window.fly(idFromHash);
+    }, 1000); // Espera 1 segundos para asegurarte de que todo esté cargado
+  }
+});
