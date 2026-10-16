@@ -136,6 +136,10 @@ body {
   position: relative;
 }
 
+#toggle-sidebar.hide-when-sidebar-visible {
+  display: none;
+}
+
 .filters-group {
   display: flex;
   flex-wrap: wrap;
@@ -273,6 +277,27 @@ body {
   color: white;
 }
 
+.close-button {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  z-index: 10;
+  background: transparent;
+  border: none;
+  color: #9ca3af;
+  font-size: 18px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+}
+
+.close-button:hover {
+  color: white;
+}
+
 </style>
 
 <!-- Registro dinámico del manifest.json de la PWA -->
@@ -299,10 +324,16 @@ body {
 
   <div id="sidebar">
       <div class="sidebar-header">
-        <div class="version">v0.1.28</div>
+        <div class="version">v0.1.29</div>
+
         <a href="https://ceuca.uca.es/ceucatlas" target="_blank" class="info-button" title="Información">
           <i class="fas fa-info-circle"></i>
         </a>
+
+        <button id="close-sidebar" class="close-button" title="Cerrar barra lateral">
+          <i class="fas fa-times"></i>
+        </button>
+
         <img src="https://ceuca.uca.es/wp-content/uploads/2025/12/ceucatlas.webp" alt="" style="display: block; margin-left: auto; margin-right: auto; width: 300px;">
       </div>
 
@@ -575,8 +606,17 @@ window.addEventListener('deviceorientation', handleOrientation, true);
 // ================= TOGGLE SIDEBAR =================
 document.getElementById('toggle-sidebar').addEventListener('click', () => {
   const sidebar = document.getElementById('sidebar');
-  const layout = document.getElementById('layout');
+  const toggleButton = document.getElementById('toggle-sidebar');
+
   sidebar.classList.toggle('hidden');
+
+  // Si el sidebar está oculto, muestra el botón; si no, ocúltalo
+  if (sidebar.classList.contains('hidden')) {
+    toggleButton.classList.remove('hide-when-sidebar-visible');
+  } else {
+    toggleButton.classList.add('hide-when-sidebar-visible');
+  }
+
   // Espera a que termine la animación del sidebar
   setTimeout(() => {
     map.invalidateSize();
@@ -597,6 +637,31 @@ document.getElementById("fTipo").onchange=e=>{state.tipo=e.target.value;update()
 document.getElementById("fCampus").onchange=e=>{state.campus=e.target.value;update();}
 
 update();
+
+// Al cargar la página, verifica el estado inicial del sidebar
+document.addEventListener('DOMContentLoaded', () => {
+  const sidebar = document.getElementById('sidebar');
+  const toggleButton = document.getElementById('toggle-sidebar');
+
+  if (!sidebar.classList.contains('hidden')) {
+    toggleButton.classList.add('hide-when-sidebar-visible');
+  }
+});
+
+// Evento para el botón de cerrar el sidebar
+document.getElementById('close-sidebar').addEventListener('click', () => {
+  const sidebar = document.getElementById('sidebar');
+  const toggleButton = document.getElementById('toggle-sidebar');
+
+  sidebar.classList.add('hidden');
+  toggleButton.classList.remove('hide-when-sidebar-visible');
+
+  // Espera a que termine la animación del sidebar
+  setTimeout(() => {
+    map.invalidateSize();
+  }, 310);
+});
+
 </script>
 
 </body>
