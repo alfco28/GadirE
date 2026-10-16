@@ -360,7 +360,7 @@ html, body {
 
   <div id="sidebar">
       <div class="sidebar-header">
-        <div class="version">v0.1.31</div>
+        <div class="version">v0.1.32</div>
 
         <a href="https://ceuca.uca.es/ceucatlas" target="_blank" class="info-button" title="Información">
           <i class="fas fa-info-circle"></i>
@@ -595,12 +595,32 @@ const searchControl=new L.Control.Search({
 searchControl.on('search:locationfound',e=>e.layer.openPopup());
 map.addControl(searchControl);
 
+// ================= HELPER =================
+function isMobileSidebar() {
+  return window.matchMedia("(max-width: 768px)").matches;
+}
+
 // ================= FLY =================
 function fly(nombre){
   espaciosLayer.eachLayer(l=>{
     if(l.options.title===nombre){
       map.flyTo(l.getLatLng(),19);
       l.openPopup();
+
+      //Cerrar sidebar SOLO en móvil
+      if (isMobileSidebar()) {
+        const sidebar = document.getElementById('sidebar');
+        const toggleButton = document.getElementById('toggle-sidebar');
+
+        if (!sidebar.classList.contains('hidden')) {
+          sidebar.classList.add('hidden');
+          toggleButton.classList.remove('hide-when-sidebar-visible');
+
+          setTimeout(() => {
+            map.invalidateSize();
+          }, 310);
+        }
+      }
     }
   });
 }
