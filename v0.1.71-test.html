@@ -495,10 +495,12 @@ html, body {
     <header class="sidebar-header">
       <a href="https://ceuca.uca.es/ceucatlas" target="_blank" class="sidebar-button info-button" title="Información">
         <i class="fas fa-info-circle"></i>
+        <span class="text">Información</span>
       </a>
 
       <button id="close-sidebar" class="sidebar-button close-button" title="Cerrar barra lateral">
         <i class="fas fa-times"></i>
+        <span class="text">Cerrar barra lateral</span>
       </button>
 
       <img class="sidebar-logo-ceucatlas" src="https://ceuca.uca.es/wp-content/uploads/2025/12/ceucatlas.webp" alt="">
@@ -514,7 +516,7 @@ html, body {
         <a href="https://www.instagram.com/estudiantes.uca" target="_blank" title="Seguir al CEUCA en Instagram"><i class="fab fa-instagram"></i> @estudiantes.uca</a>
       </div>
 
-      <div class="version">v0.1.70-test</div>
+      <div class="version">v0.1.71-test</div>
     </footer>
   </aside>
   
@@ -1298,26 +1300,6 @@ function initMap() {
   
   window.addEventListener('deviceorientation', handleOrientation, true);
   
-  // ================= TOGGLE SIDEBAR =================
-  document.getElementById('toggle-sidebar').addEventListener('click', () => {
-    const sidebar = document.getElementById('sidebar');
-    const toggleButton = document.getElementById('toggle-sidebar');
-  
-    sidebar.classList.toggle('hidden');
-  
-    // Si el sidebar está oculto, muestra el botón; si no, ocúltalo
-    if (sidebar.classList.contains('hidden')) {
-      toggleButton.classList.remove('hide-when-sidebar-visible');
-    } else {
-      toggleButton.classList.add('hide-when-sidebar-visible');
-    }
-  
-    // Espera a que termine la animación del sidebar
-    setTimeout(() => {
-      map.invalidateSize();
-    }, SIDEBAR_ANIMATION_MS);
-  });
-  
   // ================= UPDATE =================
   function update(){
     const feats = getFilteredFeatures();
@@ -1342,20 +1324,6 @@ function initMap() {
     toggleButton.classList.add('hide-when-sidebar-visible');
   }
   
-  // Evento para el botón de cerrar el sidebar
-  document.getElementById('close-sidebar').addEventListener('click', () => {
-    const sidebar = document.getElementById('sidebar');
-    const toggleButton = document.getElementById('toggle-sidebar');
-  
-    sidebar.classList.add('hidden');
-    toggleButton.classList.remove('hide-when-sidebar-visible');
-  
-    // Espera a que termine la animación del sidebar
-    setTimeout(() => {
-      map.invalidateSize();
-    }, SIDEBAR_ANIMATION_MS);
-  });
-  
   // ================= AJUSTE MAPA EN MÓVILES =================
   
   // Cuando cambia el tamaño de la pantalla (rotar móvil, barras del navegador, etc.)
@@ -1370,12 +1338,47 @@ function initMap() {
     }, 300);
   });
   
-  // ================= MOSTRAR/OCULTAR FILTROS =================
-  document.getElementById('toggle-filters').addEventListener('click', () => {
-    const filters = document.getElementById('filters-content');
-    filters.classList.toggle('hidden');
-  });
 }
+
+// ================= TOGGLE SIDEBAR =================
+document.getElementById('toggle-sidebar').addEventListener('click', () => {
+  const sidebar = document.getElementById('sidebar');
+  const toggleButton = document.getElementById('toggle-sidebar');
+
+  sidebar.classList.toggle('hidden');
+
+  // Si el sidebar está oculto, muestra el botón; si no, ocúltalo
+  if (sidebar.classList.contains('hidden')) {
+    toggleButton.classList.remove('hide-when-sidebar-visible');
+  } else {
+    toggleButton.classList.add('hide-when-sidebar-visible');
+  }
+
+  // Espera a que termine la animación del sidebar
+  setTimeout(() => {
+    map.invalidateSize();
+  }, SIDEBAR_ANIMATION_MS);
+});
+
+// Evento para el botón de cerrar el sidebar
+document.getElementById('close-sidebar').addEventListener('click', () => {
+  const sidebar = document.getElementById('sidebar');
+  const toggleButton = document.getElementById('toggle-sidebar');
+
+  sidebar.classList.add('hidden');
+  toggleButton.classList.remove('hide-when-sidebar-visible');
+
+  // Espera a que termine la animación del sidebar
+  setTimeout(() => {
+    map.invalidateSize();
+  }, SIDEBAR_ANIMATION_MS);
+});
+
+// ================= MOSTRAR/OCULTAR FILTROS =================
+document.getElementById('toggle-filters').addEventListener('click', () => {
+  const filters = document.getElementById('filters-content');
+  filters.classList.toggle('hidden');
+});
 
 // ============= CARGA DE LIBRERÍAS EXTERNAS ==========
 function loadExternalScripts(callback) {
