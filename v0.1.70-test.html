@@ -142,7 +142,7 @@ html, body {
   z-index: 10;
   align-items: center;
   justify-content: center;
-  font-size: 16px;
+  display: flex;
   box-shadow: 0 0 2px rgba(0, 0, 0, 0.65);
   background-color: #fff;
   border: 1px solid #ccc;
@@ -514,7 +514,7 @@ html, body {
         <a href="https://www.instagram.com/estudiantes.uca" target="_blank" title="Seguir al CEUCA en Instagram"><i class="fab fa-instagram"></i> @estudiantes.uca</a>
       </div>
 
-      <div class="version">v0.1.69-test</div>
+      <div class="version">v0.1.70-test</div>
     </footer>
   </aside>
   
@@ -1449,6 +1449,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
     if (consent === 'accepted') {
       localStorage.setItem('cookieConsent', consent);
+      document.querySelectorAll('.text').forEach(el => {
+        el.style.display = 'none';
+      });
       loadExternalScripts(initMap);
     } else if (consent == 'rejected' && cookieButton) {
       window.location.reload();
