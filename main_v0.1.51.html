@@ -474,7 +474,7 @@ html, body {
 
     <!-- Pie del sidebar -->
     <footer class="sidebar-footer">
-      <div class="version">v0.1.50</div>
+      <div class="version">v0.1.51</div>
 
       <div class="whatsapp">
         <i class="fab fa-whatsapp"></i>
@@ -659,11 +659,17 @@ const state = {
   campus: "todos"
 };
 
+// =============== CONSTANTES GLOBALES ===============
+const SIDEBAR_ANIMATION_MS = 310;
+const MOBILE_BREAKPOINT = 768;
+const DEFAULT_ZOOM = 16;
+const FLY_ZOOM = 19;
+
 function initMap() {
   // ================= MAPA =================
   const map = L.map('map', {
     zoomControl: false,
-  }).setView([36.5298, -6.2035], 16);
+  }).setView([36.5298, -6.2035], DEFAULT_ZOOM);
 
   // Añade el control de zoom en la esquina inferior derecha
   L.control.zoom({
@@ -734,7 +740,7 @@ function initMap() {
   // ================= SIDEBAR =================
   function renderSidebar(features){
     const cont=document.getElementById("sidebarContent");
-    cont.innerHTML="";
+    let html = "";
   
     const estructura={};
   
@@ -747,40 +753,42 @@ function initMap() {
     });
   
     for(const e in estructura){
-      cont.innerHTML+=`<h3>${e}</h3>`;
+      html += `<h3>${e}</h3>`;
       for(const p in estructura[e]){
-        cont.innerHTML+=`<h4>Planta ${p}</h4>`;
-        estructura[e][p].forEach(f=>{
-          cont.innerHTML+=`
+        html += `<h4>Planta ${p}</h4>`;
+        estructura[e][p].forEach(f => {
+          html += `
             <div class="sidebar-item" onclick="fly('${f.properties.nombre}')">
               • ${f.properties.nombre}
             </div>`;
         });
       }
     }
+
+    cont.innerHTML = html;
   }
   
   // ================= BUSCADOR =================
   const searchControl=new L.Control.Search({
     layer: espaciosLayer,
-    propertyName:'title',
-    zoom:19,
+    propertyName: 'title',
+    zoom: FLY_ZOOM,
     textPlaceholder: 'Buscar...',
-    marker:false
+    marker: false
   });
-  searchControl.on('search:locationfound',e=>e.layer.openPopup());
+  searchControl.on('search:locationfound', e=>e.layer.openPopup());
   map.addControl(searchControl);
   
   // ================= HELPER =================
-  function isMobileSidebar() {
-    return window.matchMedia("(max-width: 768px)").matches;
+  function isMobile() {
+    return window.matchMedia(`(max-width: ${MOBILE_BREAKPOINT}px)`).matches;
   }
   
   // ================= FLY =================
   window.fly = function(nombre) {
     espaciosLayer.eachLayer(l=>{
       if(l.options.title===nombre){
-        map.flyTo(l.getLatLng(),19);
+        map.flyTo(l.getLatLng(), FLY_ZOOM);
         l.openPopup();
       
         //Cerrar sidebar SOLO en móvil
@@ -794,7 +802,7 @@ function initMap() {
           
             setTimeout(() => {
               map.invalidateSize();
-            }, 310);
+            }, SIDEBAR_ANIMATION_MS);
           }
         }
       }
@@ -854,7 +862,7 @@ function initMap() {
     // Espera a que termine la animación del sidebar
     setTimeout(() => {
       map.invalidateSize();
-    }, 310);
+    }, SIDEBAR_ANIMATION_MS);
   });
   
   // ================= UPDATE =================
@@ -893,7 +901,7 @@ function initMap() {
     // Espera a que termine la animación del sidebar
     setTimeout(() => {
       map.invalidateSize();
-    }, 310);
+    }, SIDEBAR_ANIMATION_MS);
   });
   
   // ================= AJUSTE MAPA EN MÓVILES =================
