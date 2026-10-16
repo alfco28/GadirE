@@ -207,7 +207,7 @@ body { margin:0; font-family: system-ui, Arial; }
 
   <div id="sidebar">
       <div class="sidebar-header">
-        <div class="version">v0.1.23</div>
+        <div class="version">v0.1.24</div>
         <a href="https://ceuca.uca.es/ceucatlas" target="_blank" class="info-button" title="Información">
           <i class="fas fa-info-circle"></i>
         </a>
@@ -248,21 +248,46 @@ body { margin:0; font-family: system-ui, Arial; }
         Edificio:
         <select id="fEdificio">
           <option value="todos">Todos</option>
-          <option value="FC">Facultad de Ciencias</option>
-          <option value="ESI">Escuela Superior de Ingeniería</option>
+          <option value="Escuela de Ingeniería Naval y Oceánica">Escuela de Ingeniería Naval y Oceánica</option>
+          <option value="Escuela Técnica Superior de Ingeniería de Algeciras">Escuela Técnica Superior de Ingeniería de Algeciras</option>
+          <option value="Escuela Superior de Ingeniería">Escuela Superior de Ingeniería</option>
+          <option value="Facultad de Ciencias">Facultad de Ciencias</option>
+          <option value="Facultad de Ciencias de la Educación">Facultad de Ciencias de la Educación</option>
+          <option value="Facultad de Ciencias del Mar y Ambientales">Facultad de Ciencias del Mar y Ambientales</option>
+          <option value="Facultad de Ciencias del Trabajo">Facultad de Ciencias del Trabajo</option>
+          <option value="Facultad de Ciencias Económicas y Empresariales">Facultad de Ciencias Económicas y Empresariales</option>
+          <option value="Escuela de Ingeniería Marina, Náutica y Radioelectrónica">Escuela de Ingeniería Marina, Náutica y Radioelectrónica</option>
+          <option value="Facultad de Ciencias Sociales y de la Comunicación">Facultad de Ciencias Sociales y de la Comunicación</option>
+          <option value="Facultad de Derecho">Facultad de Derecho</option>
+          <option value="Facultad de Enfermería">Facultad de Enfermería</option>
+          <option value="Facultad de Enfermería y Fisioterapia">Facultad de Enfermería y Fisioterapia</option>
+          <option value="Facultad de Filosofía y Letras">Facultad de Filosofía y Letras</option>
+          <option value="Facultad de Medicina">Facultad de Medicina</option>
+          <option value="Escuela de Doctorado de la Universidad de Cádiz">Escuela de Doctorado de la Universidad de Cádiz</option>
+          <option value="Escuela Internacional de Doctorado en Estudios del Mar">Escuela Internacional de Doctorado en Estudios del Mar</option>
+          <option value="Centro Universitario de Enfermería “Salus Infirmorum”">Centro Universitario de Enfermería “Salus Infirmorum”</option>
+          <option value="Centro de Magisterio “Virgen de Europa”">Centro de Magisterio “Virgen de Europa”</option>
         </select>
         Planta:
         <select id="fPlanta">
           <option value="todas">Todas</option>
+          <option value="sótano">Sótano</option>
           <option value="baja">Baja</option>
           <option value="1">Planta 1</option>
           <option value="2">Planta 2</option>
+          <option value="3">Planta 3</option>
+          <option value="4">Planta 4</option>
         </select>
         Tipo:
         <select id="fTipo">
           <option value="todos">Todos</option>
+          <option value="descanso">Área de descanso</option>
           <option value="aula">Aula</option>
-          <option value="fuente">Fuente</option>
+          <option value="biblio">Biblioteca o sala de estudio</option>
+          <option value="cafete">Cafetería, fuente o máquina</option>
+          <option value="despacho">Despacho</option>
+          <option value="salon">Salón</option>
+          <option value="unidad">Unidades o servicios</option>
         </select>
       </div>
       <img id="filters-logo" src="https://ceuca.uca.es/wp-content/uploads/2025/08/logo.webp">
@@ -300,7 +325,7 @@ const campusGeoJSON = {
     {"type":"Feature","properties":{"clase":"espacio","edificio":"FC","planta":"1","tipo":"aula","nombre":"Aula C-102", "campus": "Cádiz"},
      "geometry":{"type":"Point","coordinates":[-6.2040,36.5300]}},
 
-    {"type":"Feature","properties":{"clase":"espacio","edificio":"ESI","planta":"baja","tipo":"fuente","nombre":"Fuente Patio ESI", "campus": "Puerto Real"},
+    {"type":"Feature","properties":{"clase":"espacio","edificio":"ESI","planta":"baja","tipo":"cafe","nombre":"Fuente Patio ESI", "campus": "Puerto Real"},
      "geometry":{"type":"Point","coordinates":[-6.2028,36.5295]}},
 
   ]
