@@ -10,17 +10,6 @@
 <!-- Favicon -->
 <link rel="icon" href="https://ceuca.uca.es/wp-content/uploads/2025/12/ceucatlas.webp" type="image/webp">
 
-<!-- Leaflet -->
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-
-<!-- Leaflet Search -->
-<link rel="stylesheet" href="https://unpkg.com/leaflet-search/dist/leaflet-search.min.css">
-<script src="https://unpkg.com/leaflet-search/dist/leaflet-search.min.js"></script>
-
-<!-- Font Awesome para el icono de WhatsApp e Instagram -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-
 <!-- Icono para iOS -->
 <link rel="apple-touch-icon" href="https://ceuca.uca.es/wp-content/uploads/2025/12/ceucatlas.webp">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -444,7 +433,7 @@ html, body {
       Este sitio web utiliza cookies propias y de terceros para mejorar tu experiencia de navegación, analizar el uso de la página y ofrecer contenido personalizado.
       Las cookies de terceros pueden incluir servicios como análisis de tráfico y redes sociales.
       <br><br>
-      Puedes <strong>aceptar</strong> todas las cookies, <strong>rechazarlas</strong> o <a href="/politica-de-cookies" target="_blank" style="color: #3b82f6;">configurarlas</a>.
+      Puedes <strong>aceptar</strong> todas las cookies o <strong>rechazarlas</strong>.
     </p>
     <div class="cookie-modal-buttons">
       <button id="reject-cookies" class="cookie-button cookie-reject">Rechazar</button>
@@ -458,7 +447,7 @@ html, body {
 
   <div id="sidebar">
       <div class="sidebar-header">
-        <div class="version">v0.1.42</div>
+        <div class="version">v0.1.43</div>
 
         <a href="https://ceuca.uca.es/ceucatlas" target="_blank" class="info-button" title="Información">
           <i class="fas fa-info-circle"></i>
@@ -591,24 +580,6 @@ html, body {
 </div>
 
 <script>
-// ================= MAPA =================
-const map = L.map('map', {
-  zoomControl: false,
-}).setView([36.5298, -6.2035], 16);
-
-// Añade el control de zoom en la esquina inferior derecha
-L.control.zoom({
-  position: 'bottomright',
-  zoomInText: '+',
-  zoomInTitle: 'Acercar',
-  zoomOutText: '-',
-  zoomOutTitle: 'Alejar'
-}).addTo(map);
-
-L.tileLayer(
-  'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',
-  { maxZoom:20, attribution:'Map data from <a href="https://openstreetmap.org/copyright">OpenStreetMap</a>. © <a href="https://carto.com/about-carto/">rastertiles/voyager</a>' }
-).addTo(map);
 
 // ================= GEOJSON =================
 const campusGeoJSON = {
@@ -654,237 +625,305 @@ const state = {
   campus: "todos"
 };
 
-// ================= CAPA =================
-const espaciosLayer = new L.LayerGroup().addTo(map);
-let userLocationMarker = null;
+function initMap() {
+  // ================= MAPA =================
+  const map = L.map('map', {
+    zoomControl: false,
+  }).setView([36.5298, -6.2035], 16);
 
-// ================= ICONOS =================
-function icon(tipo){
-  const color = {aula:"#16a34a",cafete:"#ea580c"}[tipo] || "#6b7280";
-  return L.divIcon({html:`<div style="background:${color};width:14px;height:14px;border-radius:50%"></div>`});
-}
+  // Añade el control de zoom en la esquina inferior derecha
+  L.control.zoom({
+    position: 'bottomright',
+    zoomInText: '+',
+    zoomInTitle: 'Acercar',
+    zoomOutText: '-',
+    zoomOutTitle: 'Alejar'
+  }).addTo(map);
 
-// ================= FILTRADO =================
-function getFilteredFeatures(){
-  return campusGeoJSON.features.filter(f=>{
-    return (
-      (state.edificio==="todos" || f.properties.edificio===state.edificio) &&
-      (state.planta==="todas" || f.properties.planta===state.planta) &&
-      (state.tipo==="todos" || f.properties.tipo===state.tipo) &&
-      (state.campus==="todos" || f.properties.campus===state.campus)
-    );
-  });
-}
+  L.tileLayer(
+    'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',
+    { maxZoom:20, attribution:'Map data from <a href="https://openstreetmap.org/copyright">OpenStreetMap</a>. © <a href="https://carto.com/about-carto/">rastertiles/voyager</a>' }
+  ).addTo(map);
 
-// ================= RENDER MAPA =================
-function renderMap(features){
-  espaciosLayer.clearLayers();
-
-  features.forEach(f=>{
-    const m=L.marker(
-      [f.geometry.coordinates[1],f.geometry.coordinates[0]],
-      {title:f.properties.nombre,icon:icon(f.properties.tipo)}
-    );
-
-    m.bindPopup(`
-      <div class="popup-card">
-        <h4>${f.properties.nombre}</h4>
-        Descripción: ${f.properties.descrip}<br><br>
-        Planta ${f.properties.planta}<br>
-        Edificio: ${f.properties.edificio}<br>
-        Campus: ${f.properties.campus}
-      </div>`);
-
-    espaciosLayer.addLayer(m);
-  });
-
-  searchControl.setLayer(espaciosLayer);
-}
-
-// ================= SIDEBAR =================
-function renderSidebar(features){
-  const cont=document.getElementById("sidebarContent");
-  cont.innerHTML="";
-
-  const estructura={};
-
-  features.forEach(f=>{
-    const e=f.properties.edificio;
-    const p=f.properties.planta;
-    estructura[e] ??= {};
-    estructura[e][p] ??= [];
-    estructura[e][p].push(f);
-  });
-
-  for(const e in estructura){
-    cont.innerHTML+=`<h3>${e}</h3>`;
-    for(const p in estructura[e]){
-      cont.innerHTML+=`<h4>Planta ${p}</h4>`;
-      estructura[e][p].forEach(f=>{
-        cont.innerHTML+=`
-          <div class="sidebar-item" onclick="fly('${f.properties.nombre}')">
-            • ${f.properties.nombre}
-          </div>`;
-      });
-    }
+  // ================= CAPA =================
+  const espaciosLayer = new L.LayerGroup().addTo(map);
+  let userLocationMarker = null;
+  
+  // ================= ICONOS =================
+  function icon(tipo){
+    const color = {aula:"#16a34a",cafete:"#ea580c"}[tipo] || "#6b7280";
+    return L.divIcon({html:`<div style="background:${color};width:14px;height:14px;border-radius:50%"></div>`});
   }
-}
-
-// ================= BUSCADOR =================
-const searchControl=new L.Control.Search({
-  layer: espaciosLayer,
-  propertyName:'title',
-  zoom:19,
-  textPlaceholder: 'Buscar...',
-  marker:false
-});
-searchControl.on('search:locationfound',e=>e.layer.openPopup());
-map.addControl(searchControl);
-
-// ================= HELPER =================
-function isMobileSidebar() {
-  return window.matchMedia("(max-width: 768px)").matches;
-}
-
-// ================= FLY =================
-function fly(nombre){
-  espaciosLayer.eachLayer(l=>{
-    if(l.options.title===nombre){
-      map.flyTo(l.getLatLng(),19);
-      l.openPopup();
-
-      //Cerrar sidebar SOLO en móvil
-      if (isMobileSidebar()) {
-        const sidebar = document.getElementById('sidebar');
-        const toggleButton = document.getElementById('toggle-sidebar');
-
-        if (!sidebar.classList.contains('hidden')) {
-          sidebar.classList.add('hidden');
-          toggleButton.classList.remove('hide-when-sidebar-visible');
-
-          setTimeout(() => {
-            map.invalidateSize();
-          }, 310);
-        }
+  
+  // ================= FILTRADO =================
+  function getFilteredFeatures(){
+    return campusGeoJSON.features.filter(f=>{
+      return (
+        (state.edificio==="todos" || f.properties.edificio===state.edificio) &&
+        (state.planta==="todas" || f.properties.planta===state.planta) &&
+        (state.tipo==="todos" || f.properties.tipo===state.tipo) &&
+        (state.campus==="todos" || f.properties.campus===state.campus)
+      );
+    });
+  }
+  
+  // ================= RENDER MAPA =================
+  function renderMap(features){
+    espaciosLayer.clearLayers();
+  
+    features.forEach(f=>{
+      const m=L.marker(
+        [f.geometry.coordinates[1],f.geometry.coordinates[0]],
+        {title:f.properties.nombre,icon:icon(f.properties.tipo)}
+      );
+    
+      m.bindPopup(`
+        <div class="popup-card">
+          <h4>${f.properties.nombre}</h4>
+          Descripción: ${f.properties.descrip}<br><br>
+          Planta ${f.properties.planta}<br>
+          Edificio: ${f.properties.edificio}<br>
+          Campus: ${f.properties.campus}
+        </div>`);
+      
+      espaciosLayer.addLayer(m);
+    });
+  
+    searchControl.setLayer(espaciosLayer);
+  }
+  
+  // ================= SIDEBAR =================
+  function renderSidebar(features){
+    const cont=document.getElementById("sidebarContent");
+    cont.innerHTML="";
+  
+    const estructura={};
+  
+    features.forEach(f=>{
+      const e=f.properties.edificio;
+      const p=f.properties.planta;
+      estructura[e] ??= {};
+      estructura[e][p] ??= [];
+      estructura[e][p].push(f);
+    });
+  
+    for(const e in estructura){
+      cont.innerHTML+=`<h3>${e}</h3>`;
+      for(const p in estructura[e]){
+        cont.innerHTML+=`<h4>Planta ${p}</h4>`;
+        estructura[e][p].forEach(f=>{
+          cont.innerHTML+=`
+            <div class="sidebar-item" onclick="fly('${f.properties.nombre}')">
+              • ${f.properties.nombre}
+            </div>`;
+        });
       }
     }
-  });
-}
-
-// ================= GEOLOCALIZACIÓN =================
-document.getElementById('geolocate').addEventListener('click', () => {
-  if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(
-      (position) => {
-        const { latitude, longitude } = position.coords;
-        if (userLocationMarker) {
-          map.removeLayer(userLocationMarker);
-        }
-        userLocationMarker = L.marker([latitude, longitude], {
-          icon: L.divIcon({
-            html: `<div style="background:#3b82f6;width:16px;height:16px;border-radius:50%;border:2px solid white"></div>`,
-            className: 'user-location-icon'
-          })
-        }).addTo(map);
-        map.flyTo([latitude, longitude], 18);
-      },
-      (error) => {
-        alert("No se pudo obtener tu ubicación. Por favor, asegúrate de que la geolocalización esté activada.");
-      }
-    );
-  } else {
-    alert("Tu navegador no soporta geolocalización.");
   }
-});
-
-// ================= ORIENTACIÓN =================
-function handleOrientation(event) {
-  if (!event.alpha) return;
-  const compass = document.getElementById('compass');
-  compass.style.display = 'flex';
-  compass.style.transform = `rotate(${event.alpha}deg)`;
-}
-
-window.addEventListener('deviceorientation', handleOrientation, true);
-
-// ================= TOGGLE SIDEBAR =================
-document.getElementById('toggle-sidebar').addEventListener('click', () => {
-  const sidebar = document.getElementById('sidebar');
-  const toggleButton = document.getElementById('toggle-sidebar');
-
-  sidebar.classList.toggle('hidden');
-
-  // Si el sidebar está oculto, muestra el botón; si no, ocúltalo
-  if (sidebar.classList.contains('hidden')) {
+  
+  // ================= BUSCADOR =================
+  const searchControl=new L.Control.Search({
+    layer: espaciosLayer,
+    propertyName:'title',
+    zoom:19,
+    textPlaceholder: 'Buscar...',
+    marker:false
+  });
+  searchControl.on('search:locationfound',e=>e.layer.openPopup());
+  map.addControl(searchControl);
+  
+  // ================= HELPER =================
+  function isMobileSidebar() {
+    return window.matchMedia("(max-width: 768px)").matches;
+  }
+  
+  // ================= FLY =================
+  function fly(nombre){
+    espaciosLayer.eachLayer(l=>{
+      if(l.options.title===nombre){
+        map.flyTo(l.getLatLng(),19);
+        l.openPopup();
+      
+        //Cerrar sidebar SOLO en móvil
+        if (isMobileSidebar()) {
+          const sidebar = document.getElementById('sidebar');
+          const toggleButton = document.getElementById('toggle-sidebar');
+        
+          if (!sidebar.classList.contains('hidden')) {
+            sidebar.classList.add('hidden');
+            toggleButton.classList.remove('hide-when-sidebar-visible');
+          
+            setTimeout(() => {
+              map.invalidateSize();
+            }, 310);
+          }
+        }
+      }
+    });
+  }
+  
+  // ================= GEOLOCALIZACIÓN =================
+  document.getElementById('geolocate').addEventListener('click', () => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const { latitude, longitude } = position.coords;
+          if (userLocationMarker) {
+            map.removeLayer(userLocationMarker);
+          }
+          userLocationMarker = L.marker([latitude, longitude], {
+            icon: L.divIcon({
+              html: `<div style="background:#3b82f6;width:16px;height:16px;border-radius:50%;border:2px solid white"></div>`,
+              className: 'user-location-icon'
+            })
+          }).addTo(map);
+          map.flyTo([latitude, longitude], 18);
+        },
+        (error) => {
+          alert("No se pudo obtener tu ubicación. Por favor, asegúrate de que la geolocalización esté activada.");
+        }
+      );
+    } else {
+      alert("Tu navegador no soporta geolocalización.");
+    }
+  });
+  
+  // ================= ORIENTACIÓN =================
+  function handleOrientation(event) {
+    if (!event.alpha) return;
+    const compass = document.getElementById('compass');
+    compass.style.display = 'flex';
+    compass.style.transform = `rotate(${event.alpha}deg)`;
+  }
+  
+  window.addEventListener('deviceorientation', handleOrientation, true);
+  
+  // ================= TOGGLE SIDEBAR =================
+  document.getElementById('toggle-sidebar').addEventListener('click', () => {
+    const sidebar = document.getElementById('sidebar');
+    const toggleButton = document.getElementById('toggle-sidebar');
+  
+    sidebar.classList.toggle('hidden');
+  
+    // Si el sidebar está oculto, muestra el botón; si no, ocúltalo
+    if (sidebar.classList.contains('hidden')) {
+      toggleButton.classList.remove('hide-when-sidebar-visible');
+    } else {
+      toggleButton.classList.add('hide-when-sidebar-visible');
+    }
+  
+    // Espera a que termine la animación del sidebar
+    setTimeout(() => {
+      map.invalidateSize();
+    }, 310);
+  });
+  
+  // ================= UPDATE =================
+  function update(){
+    const feats=getFilteredFeatures();
+    renderMap(feats);
+    renderSidebar(feats);
+  }
+  
+  // ================= EVENTOS =================
+  document.getElementById("fEdificio").onchange=e=>{state.edificio=e.target.value;update();}
+  document.getElementById("fPlanta").onchange=e=>{state.planta=e.target.value;update();}
+  document.getElementById("fTipo").onchange=e=>{state.tipo=e.target.value;update();}
+  document.getElementById("fCampus").onchange=e=>{state.campus=e.target.value;update();}
+  
+  update();
+  
+  // Al cargar la página, verifica el estado inicial del sidebar
+  document.addEventListener('DOMContentLoaded', () => {
+    const sidebar = document.getElementById('sidebar');
+    const toggleButton = document.getElementById('toggle-sidebar');
+  
+    if (!sidebar.classList.contains('hidden')) {
+      toggleButton.classList.add('hide-when-sidebar-visible');
+    }
+  });
+  
+  // Evento para el botón de cerrar el sidebar
+  document.getElementById('close-sidebar').addEventListener('click', () => {
+    const sidebar = document.getElementById('sidebar');
+    const toggleButton = document.getElementById('toggle-sidebar');
+  
+    sidebar.classList.add('hidden');
     toggleButton.classList.remove('hide-when-sidebar-visible');
-  } else {
-    toggleButton.classList.add('hide-when-sidebar-visible');
-  }
-
-  // Espera a que termine la animación del sidebar
-  setTimeout(() => {
+  
+    // Espera a que termine la animación del sidebar
+    setTimeout(() => {
+      map.invalidateSize();
+    }, 310);
+  });
+  
+  // ================= AJUSTE MAPA EN MÓVILES =================
+  
+  // Cuando cambia el tamaño de la pantalla (rotar móvil, barras del navegador, etc.)
+  window.addEventListener('resize', () => {
     map.invalidateSize();
-  }, 310);
-});
-
-// ================= UPDATE =================
-function update(){
-  const feats=getFilteredFeatures();
-  renderMap(feats);
-  renderSidebar(feats);
+  });
+  
+  // Al cargar la página (muy importante en móviles)
+  window.addEventListener('load', () => {
+    setTimeout(() => {
+      map.invalidateSize();
+    }, 300);
+  });
+  
+  // ================= MOSTRAR/OCULTAR FILTROS =================
+  document.getElementById('toggle-filters').addEventListener('click', () => {
+    const filters = document.getElementById('filters-content');
+    filters.classList.toggle('hidden');
+  });
 }
 
-// ================= EVENTOS =================
-document.getElementById("fEdificio").onchange=e=>{state.edificio=e.target.value;update();}
-document.getElementById("fPlanta").onchange=e=>{state.planta=e.target.value;update();}
-document.getElementById("fTipo").onchange=e=>{state.tipo=e.target.value;update();}
-document.getElementById("fCampus").onchange=e=>{state.campus=e.target.value;update();}
+// ============= CARGA DE LIBRERÍAS EXTERNAS ==========
+function loadExternalScripts(callback) {
+  // Contador para saber cuándo todos los scripts están cargados
+  let loadedCount = 0;
+  const totalScripts = 5; // Leaflet CSS, Leaflet JS, Leaflet Search CSS, Leaflet Search JS, Font Awesome
 
-update();
-
-// Al cargar la página, verifica el estado inicial del sidebar
-document.addEventListener('DOMContentLoaded', () => {
-  const sidebar = document.getElementById('sidebar');
-  const toggleButton = document.getElementById('toggle-sidebar');
-
-  if (!sidebar.classList.contains('hidden')) {
-    toggleButton.classList.add('hide-when-sidebar-visible');
+  function checkAllLoaded() {
+    loadedCount++;
+    if (loadedCount === totalScripts) {
+      callback();
+    }
   }
-});
 
-// Evento para el botón de cerrar el sidebar
-document.getElementById('close-sidebar').addEventListener('click', () => {
-  const sidebar = document.getElementById('sidebar');
-  const toggleButton = document.getElementById('toggle-sidebar');
+  // Cargar Leaflet CSS
+  const leafletCSS = document.createElement('link');
+  leafletCSS.rel = 'stylesheet';
+  leafletCSS.href = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css';
+  leafletCSS.onload = checkAllLoaded;
+  document.head.appendChild(leafletCSS);
 
-  sidebar.classList.add('hidden');
-  toggleButton.classList.remove('hide-when-sidebar-visible');
+  // Cargar Leaflet JS
+  const leafletJS = document.createElement('script');
+  leafletJS.src = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js';
+  leafletJS.onload = checkAllLoaded;
+  document.head.appendChild(leafletJS);
 
-  // Espera a que termine la animación del sidebar
-  setTimeout(() => {
-    map.invalidateSize();
-  }, 310);
-});
+  // Cargar Leaflet Search CSS
+  const searchCSS = document.createElement('link');
+  searchCSS.rel = 'stylesheet';
+  searchCSS.href = 'https://unpkg.com/leaflet-search/dist/leaflet-search.min.css';
+  searchCSS.onload = checkAllLoaded;
+  document.head.appendChild(searchCSS);
 
-// ================= AJUSTE MAPA EN MÓVILES =================
+  // Cargar Leaflet Search JS
+  const searchJS = document.createElement('script');
+  searchJS.src = 'https://unpkg.com/leaflet-search/dist/leaflet-search.min.js';
+  searchJS.onload = checkAllLoaded;
+  document.head.appendChild(searchJS);
 
-// Cuando cambia el tamaño de la pantalla (rotar móvil, barras del navegador, etc.)
-window.addEventListener('resize', () => {
-  map.invalidateSize();
-});
-
-// Al cargar la página (muy importante en móviles)
-window.addEventListener('load', () => {
-  setTimeout(() => {
-    map.invalidateSize();
-  }, 300);
-});
-
-// ================= MOSTRAR/OCULTAR FILTROS =================
-document.getElementById('toggle-filters').addEventListener('click', () => {
-  const filters = document.getElementById('filters-content');
-  filters.classList.toggle('hidden');
-});
+  // Cargar Font Awesome
+  const fontAwesome = document.createElement('link');
+  fontAwesome.rel = 'stylesheet';
+  fontAwesome.href = 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css';
+  fontAwesome.onload = checkAllLoaded;
+  document.head.appendChild(fontAwesome);
+}
 
 // ================ COOKIES ======================
 document.addEventListener('DOMContentLoaded', function() {
@@ -893,8 +932,11 @@ document.addEventListener('DOMContentLoaded', function() {
   const rejectButton = document.getElementById('reject-cookies');
 
   // Mostrar la ventana emergente si no hay consentimiento guardado
-  if (!localStorage.getItem('cookieConsent')) {
+  const consent = localStorage.getItem('cookieConsent');
+  if (!consent) {
     cookieModal.style.display = 'flex';
+  } else if (consent === 'accepted') {
+    loadExternalScripts(initMap);
   }
 
   // Función para manejar el consentimiento
@@ -902,10 +944,8 @@ document.addEventListener('DOMContentLoaded', function() {
     localStorage.setItem('cookieConsent', consent);
     cookieModal.style.display = 'none';
 
-    // Aquí puedes cargar scripts de terceros si el usuario acepta
     if (consent === 'accepted') {
-      console.log("Cookies aceptadas. Cargar scripts de terceros...");
-      // Ejemplo: loadExternalScripts(); // Función para cargar Leaflet, etc.
+      loadExternalScripts(initMap);
     }
   }
 
