@@ -151,7 +151,7 @@ html, body {
   flex-shrink: 0; /* Evita que el encabezado se comprima */
 }
 
-.sidebar-scrollable {
+.sidebar-body {
   flex: 1; /* Ocupa el espacio restante */
   overflow-y: auto; /* Habilita el scroll vertical */
   padding: 0 10px;
@@ -191,10 +191,9 @@ html, body {
   background:#374151; 
 }
 
-.info-button {
+.sidebar-button {
   position: absolute;
   top: 15px;
-  left: 15px;
   z-index: 10;
   background: transparent;
   border: none;
@@ -206,32 +205,20 @@ html, body {
   justify-content: center;
   width: 24px;
   height: 24px;
+  transition: color 0.2s ease;
+}
+
+.sidebar-button:hover {
+  color: var(--color-texto-primario-sobre-fondo-primario);
+}
+
+.info-button {
+  left: 15px;
   text-decoration: none;
 }
 
-.info-button:hover {
-  color: var(--color-texto-primario-sobre-fondo-primario);
-}
-
 .close-button {
-  position: absolute;
-  top: 15px;
   right: 15px;
-  z-index: 10;
-  background: transparent;
-  border: none;
-  color: var(--color-texto-secundario-sobre-fondo-primario);
-  font-size: 18px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 24px;
-  height: 24px;
-}
-
-.close-button:hover {
-  color: var(--color-texto-primario-sobre-fondo-primario);
 }
 
 .version {
@@ -466,11 +453,11 @@ html, body {
   <aside id="sidebar">
     <!-- Encabezado -->
     <header class="sidebar-header">
-      <a href="https://ceuca.uca.es/ceucatlas" target="_blank" class="info-button" title="Información">
+      <a href="https://ceuca.uca.es/ceucatlas" target="_blank" class="sidebar-button info-button" title="Información">
         <i class="fas fa-info-circle"></i>
       </a>
 
-      <button id="close-sidebar" class="close-button" title="Cerrar barra lateral">
+      <button id="close-sidebar" class="sidebar-button close-button" title="Cerrar barra lateral">
         <i class="fas fa-times"></i>
       </button>
 
@@ -478,11 +465,11 @@ html, body {
     </header>
 
     <!-- Contenedor scrolleable -->
-    <div id="sidebarContent" class="sidebar-scrollable"></div>
+    <div id="sidebarContent" class="sidebar-body"></div>
 
     <!-- Pie del sidebar -->
     <footer class="sidebar-footer">
-      <div class="version">v0.1.55-test</div>
+      <div class="version">v0.1.56-test</div>
 
       <div class="whatsapp">
         <i class="fab fa-whatsapp"></i>
