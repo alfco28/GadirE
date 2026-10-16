@@ -164,7 +164,7 @@ body { margin:0; font-family: system-ui, Arial; }
 <div id="layout">
 
   <div id="sidebar">
-    <div class="version">v0.1.11</div>
+    <div class="version">v0.1.12</div>
     <a href="https://ceuca.uca.es/ceucatlas" target="_blank" class="info-button" title="Información">
       <i class="fas fa-info-circle"></i>
     </a>
@@ -304,7 +304,7 @@ function renderMap(features){
         <h4>${f.properties.nombre}</h4>
         Tipo: ${f.properties.tipo}<br>
         Planta ${f.properties.planta}<br>
-        ${f.properties.edificio}<br>
+        Edificio: ${f.properties.edificio}<br>
         Campus: ${f.properties.campus}
       </div>`);
 
