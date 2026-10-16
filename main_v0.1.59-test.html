@@ -230,25 +230,28 @@ html, body {
   font-size: 12px;
 }
 
-.whatsapp, .instagram {
-  position: static;
-  margin-bottom: 5px;
+.red-social {
+  position: relative;
+  left: 0;
+  bottom: 0;
   color: var(--color-texto-secundario-sobre-fondo-primario);
   font-size: 14px;
   display: flex;
-  align-items: center;
+  align-items: left;
   gap: 5px;
+  flex-direction: column;
 }
 
-.whatsapp a, .instagram a {
-  color: var(--color-texto-secundario-sobre-fondo-primario);
+.red-social a {
+  color: inherit;
   text-decoration: none;
   transition: color 0.2s ease;
 }
 
-.whatsapp a:hover, .instagram a:hover {
+.red-social a:hover {
   color: var(--color-texto-primario-sobre-fondo-primario);
 }
+
 
 /* ========== MAP ========== */
 
@@ -475,14 +478,12 @@ html, body {
 
     <!-- Pie del sidebar -->
     <footer class="sidebar-footer">
-      <div class="version">v0.1.58-test</div>
-
-      <div class="whatsapp">
+      <div class="red-social">
         <a href="https://whatsapp.com/channel/0029VbCBfO696H4Qse6SQT0v" target="_blank" title="Unirse al canal del CEUCA"><i class="fab fa-whatsapp"></i> Canal del CEUCA</a>
-      </div>
-      <div class="instagram">
         <a href="https://www.instagram.com/estudiantes.uca" target="_blank" title="Seguir al CEUCA en Instagram"><i class="fab fa-instagram"></i> @estudiantes.uca</a>
       </div>
+
+      <div class="version">v0.1.59-test</div>
     </footer>
   </aside>
   
