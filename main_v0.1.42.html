@@ -70,6 +70,72 @@ html, body {
   overflow: hidden;
 }
 
+/* COOKIES */
+
+/* Fondo oscuro para la ventana emergente */
+.cookie-modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  z-index: 2000;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Contenido de la ventana emergente */
+.cookie-modal-content {
+  background: #1f2937;
+  padding: 25px;
+  border-radius: 8px;
+  max-width: 500px;
+  width: 90%;
+  color: white;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.cookie-modal-content h3 {
+  margin-top: 0;
+  color: white;
+  text-align: center;
+}
+
+.cookie-modal-content p {
+  font-size: 14px;
+  line-height: 1.5;
+  margin-bottom: 20px;
+}
+
+/* Botones */
+.cookie-modal-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+}
+
+.cookie-button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.cookie-reject {
+  background: #6b7280;
+  color: white;
+}
+
+.cookie-accept {
+  background: #3b82f6;
+  color: white;
+}
+
+/* SIDEBAR */
+
 #sidebar {
   position: relative;
   width: 320px;
@@ -126,6 +192,31 @@ html, body {
 .sidebar-item:hover { 
   background:#374151; 
 }
+
+.version {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  color: #9ca3af;
+  font-size: 12px;
+}
+
+.whatsapp, .instagram {
+  position: static;
+  margin-bottom: 5px;
+  color: #9ca3af;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.whatsapp a, .instagram a {
+  color: #9ca3af;
+  text-decoration: none;
+}
+
+/* MAP */
 
 #map-container {
   flex:1; 
@@ -199,29 +290,6 @@ html, body {
 
 .popup-card {
   font-size:14px;
-}
-
-.version {
-  position: absolute;
-  bottom: 10px;
-  right: 10px;
-  color: #9ca3af;
-  font-size: 12px;
-}
-
-.whatsapp, .instagram {
-  position: static;
-  margin-bottom: 5px;
-  color: #9ca3af;
-  font-size: 14px;
-  display: flex;
-  align-items: center;
-  gap: 5px;
-}
-
-.whatsapp a, .instagram a {
-  color: #9ca3af;
-  text-decoration: none;
 }
 
 #geolocate {
@@ -368,11 +436,29 @@ html, body {
 
 <body>
 
+<!-- COOKIES -->
+<div id="cookie-consent-modal" class="cookie-modal">
+  <div class="cookie-modal-content">
+    <h3>Aviso de Cookies</h3>
+    <p>
+      Este sitio web utiliza cookies propias y de terceros para mejorar tu experiencia de navegación, analizar el uso de la página y ofrecer contenido personalizado.
+      Las cookies de terceros pueden incluir servicios como análisis de tráfico y redes sociales.
+      <br><br>
+      Puedes <strong>aceptar</strong> todas las cookies, <strong>rechazarlas</strong> o <a href="/politica-de-cookies" target="_blank" style="color: #3b82f6;">configurarlas</a>.
+    </p>
+    <div class="cookie-modal-buttons">
+      <button id="reject-cookies" class="cookie-button cookie-reject">Rechazar</button>
+      <button id="accept-cookies" class="cookie-button cookie-accept">Aceptar</button>
+    </div>
+  </div>
+</div>
+
+
 <div id="layout">
 
   <div id="sidebar">
       <div class="sidebar-header">
-        <div class="version">v0.1.41</div>
+        <div class="version">v0.1.42</div>
 
         <a href="https://ceuca.uca.es/ceucatlas" target="_blank" class="info-button" title="Información">
           <i class="fas fa-info-circle"></i>
@@ -798,6 +884,34 @@ window.addEventListener('load', () => {
 document.getElementById('toggle-filters').addEventListener('click', () => {
   const filters = document.getElementById('filters-content');
   filters.classList.toggle('hidden');
+});
+
+// ================ COOKIES ======================
+document.addEventListener('DOMContentLoaded', function() {
+  const cookieModal = document.getElementById('cookie-consent-modal');
+  const acceptButton = document.getElementById('accept-cookies');
+  const rejectButton = document.getElementById('reject-cookies');
+
+  // Mostrar la ventana emergente si no hay consentimiento guardado
+  if (!localStorage.getItem('cookieConsent')) {
+    cookieModal.style.display = 'flex';
+  }
+
+  // Función para manejar el consentimiento
+  function handleConsent(consent) {
+    localStorage.setItem('cookieConsent', consent);
+    cookieModal.style.display = 'none';
+
+    // Aquí puedes cargar scripts de terceros si el usuario acepta
+    if (consent === 'accepted') {
+      console.log("Cookies aceptadas. Cargar scripts de terceros...");
+      // Ejemplo: loadExternalScripts(); // Función para cargar Leaflet, etc.
+    }
+  }
+
+  // Eventos para los botones
+  acceptButton.addEventListener('click', () => handleConsent('accepted'));
+  rejectButton.addEventListener('click', () => handleConsent('rejected'));
 });
 
 </script>
