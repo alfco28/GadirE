@@ -531,7 +531,7 @@ html, body {
         <a href="https://www.instagram.com/estudiantes.uca" target="_blank" title="Seguir al CEUCA en Instagram"><i class="fab fa-instagram"></i> @estudiantes.uca</a>
       </div>
 
-      <div class="version">v0.1.73-test</div>
+      <div class="version">v0.1.74-test</div>
     </footer>
   </aside>
   
@@ -1480,6 +1480,29 @@ document.querySelector('.back-to-cookies-button').addEventListener('click', () =
   const cookieModal = document.getElementById('cookie-consent-modal');
   cookieModal.style.display = 'flex';
 });
+
+// Función para obtener la ubicación y redirigir al enlace personalizado
+function reportarConUbicacion() {
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        const { latitude, longitude } = position.coords;
+        // Construye el enlace con las coordenadas
+        const url = `https://docs.google.com/forms/d/e/1FAIpQLSdgbuxXkLoHbwkBDh5i6TF-OzIHC7WK_Y6LDy4tCTiSR3Sg5Q/viewform?usp=pp_url&entry.339440483=${latitude}&entry.736856326=${longitude}`;
+        // Redirige al usuario
+        window.location.href = url;
+      },
+      (error) => {
+        alert("No se pudo obtener tu ubicación. Asegúrate de que la geolocalización esté activada.");
+      }
+    );
+  } else {
+    alert("Tu navegador no soporta geolocalización.");
+  }
+}
+
+// Asignar el evento al botón "Reportar falta de lugar"
+document.getElementById("report").addEventListener("click", reportarConUbicacion);
 
 </script>
 
