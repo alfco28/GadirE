@@ -24,6 +24,16 @@ const FLY_ZOOM = 19;
 let searchControl = null;
 let campusGeoJSON = null;
 
+// ================= CARGAR GEOJSON =================
+fetch('map_data.geojson')
+  .then(response => response.json())
+  .then(data => processGeoJSON(data))
+  .catch(error => console.error('Error al cargar el archivo GeoJSON:', error));
+
+// ================= IMPORTAR FUNCIONES =================
+import { setupSidebar } from './js_modules/sidebar.js';
+import { setupFilters } from './js_modules/filter_change.js';
+
 // ================= FUNCIONES =================
 function processGeoJSON(data) {
   campusGeoJSON = data;
@@ -47,12 +57,6 @@ function processGeoJSON(data) {
 
   initMap();
 }
-
-// ================= CARGAR GEOJSON =================
-fetch('map_data.geojson')
-  .then(response => response.json())
-  .then(data => processGeoJSON(data))
-  .catch(error => console.error('Error al cargar el archivo GeoJSON:', error));
 
 function initMap() {
   // ================= MAPA =================
@@ -212,35 +216,7 @@ function initMap() {
   }
   
   // ================= SIDEBAR =================
-  function renderSidebar(features){
-    const cont=document.getElementById("sidebarContent");
-    let html = "";
-  
-    const estructura={};
-  
-    features.forEach(f=>{
-      const e=f.properties.edificio;
-      const p=f.properties.planta;
-      estructura[e] ??= {};
-      estructura[e][p] ??= [];
-      estructura[e][p].push(f);
-    });
-  
-    for(const e in estructura){
-      html += `<h3>${e}</h3>`;
-      for(const p in estructura[e]){
-        html += `<h4>Planta ${p}</h4>`;
-        estructura[e][p].forEach(f => {
-          html += `
-            <div class="sidebar-item" onclick="fly('${featureKey(f)}')">
-              • ${f.properties.nombre}
-            </div>`;
-        });
-      }
-    }
-
-    cont.innerHTML = html;
-  }
+  const { renderSidebar } = setupSidebar(map, markersByKey, featureKey);
   
   // ================= BUSCADOR =================
   function rebuildSearch(features) {
@@ -348,12 +324,9 @@ function initMap() {
     rebuildSearch(feats); // Capa de búsqueda
   }
   
-  // ================= EVENTOS =================
-  document.getElementById("fEdificio").onchange=e=>{state.edificio=e.target.value;update();}
-  document.getElementById("fPlanta").onchange=e=>{state.planta=e.target.value;update();}
-  document.getElementById("fTipo").onchange=e=>{state.tipo=e.target.value;update();}
-  document.getElementById("fCampus").onchange=e=>{state.campus=e.target.value;update();}
-  
+  // ================= CAMBIO DE FILTROS =================
+  setupFilters(state, update);
+
   update();
   
   // Al cargar la página, verifica el estado inicial del sidebar
@@ -521,7 +494,7 @@ document.addEventListener('DOMContentLoaded', function() {
     document.querySelectorAll('.text').forEach(el => {
       el.style.display = 'none';
     });
-    loadExternalScripts(initMap);
+    loadExternalScripts(processGeoJSON);
   }
 
   // Función para manejar el consentimiento
@@ -533,7 +506,12 @@ document.addEventListener('DOMContentLoaded', function() {
       document.querySelectorAll('.text').forEach(el => {
         el.style.display = 'none';
       });
-      loadExternalScripts(initMap);
+      loadExternalScripts(() => {
+        fetch('map_data.geojson')
+          .then(response => response.json())
+          .then(data => processGeoJSON(data))
+          .catch(error => console.error('Error al cargar el archivo GeoJSON:', error));
+      });
     } else if (consent == 'rejected' && cookieButton) {
       window.location.reload();
     }
