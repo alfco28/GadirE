@@ -193,6 +193,14 @@ body { margin:0; font-family: system-ui, Arial; }
     box-shadow: none;
   }
 
+  #sidebar:not(.hidden)::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.4);
+    z-index: -1;
+  }
+
   /* El mapa SIEMPRE ocupa todo el ancho en móvil */
   #map-container {
     width: 100%;
@@ -207,7 +215,7 @@ body { margin:0; font-family: system-ui, Arial; }
 <div id="layout">
 
   <div id="sidebar">
-    <div class="version">v0.1.16</div>
+    <div class="version">v0.1.17</div>
     <a href="https://ceuca.uca.es/ceucatlas" target="_blank" class="info-button" title="Información">
       <i class="fas fa-info-circle"></i>
     </a>
