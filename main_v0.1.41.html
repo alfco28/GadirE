@@ -226,7 +226,7 @@ html, body {
 
 #geolocate {
   position: absolute;
-  bottom: 25px;
+  bottom: 100px;
   right: 10px;
   z-index: 1000;
   background: white;
@@ -372,7 +372,7 @@ html, body {
 
   <div id="sidebar">
       <div class="sidebar-header">
-        <div class="version">v0.1.40</div>
+        <div class="version">v0.1.41</div>
 
         <a href="https://ceuca.uca.es/ceucatlas" target="_blank" class="info-button" title="Información">
           <i class="fas fa-info-circle"></i>
@@ -506,7 +506,18 @@ html, body {
 
 <script>
 // ================= MAPA =================
-const map = L.map('map').setView([36.5298, -6.2035], 16);
+const map = L.map('map', {
+  zoomControl: false,
+}).setView([36.5298, -6.2035], 16);
+
+// Añade el control de zoom en la esquina inferior derecha
+L.control.zoom({
+  position: 'bottomright',
+  zoomInText: '+',
+  zoomInTitle: 'Acercar',
+  zoomOutText: '-',
+  zoomOutTitle: 'Alejar'
+}).addTo(map);
 
 L.tileLayer(
   'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',
