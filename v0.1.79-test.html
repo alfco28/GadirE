@@ -531,7 +531,7 @@ html, body {
         <a href="https://www.instagram.com/estudiantes.uca" target="_blank" title="Seguir al CEUCA en Instagram"><i class="fab fa-instagram"></i> @estudiantes.uca</a>
       </div>
 
-      <div class="version">v0.1.78-test</div>
+      <div class="version">v0.1.79-test</div>
     </footer>
   </aside>
   
@@ -542,7 +542,7 @@ html, body {
       <!-- FILA SUPERIOR -->
       <div class="filters-top">
         <button id="toggle-sidebar" class="filter-button" title="Mostrar barra lateral">
-          <i class="fas fa-bars"></i>
+          <i class="fa-solid fa-bars"></i>
           <span class="text">Barra lateral</span>
         </button>
 
@@ -1194,12 +1194,24 @@ function initMap() {
   function popupHTML(p) {
     return `
         <div class="popup-card">
-          <h4>${p.nombre}</h4>
-          #${p.idnum}<br><br>
-          ${p.descrip}<br><br>
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <h4>${p.nombre}</h4>
+            <span style="color: #A0A0A0; font-size: 10px;">#${p.idnum}</span>
+          </div>
+          <p>${p.descrip}</p>
           Planta ${p.planta}<br>
           Edificio: ${p.edificio}<br>
-          Campus: ${p.campus}
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <span>Campus: ${p.campus}</span>
+            <a href="https://docs.google.com/forms/d/e/1FAIpQLSdEZjtvKMVmpLC3zcajTqxQdqtVs6yuITLAooP6FPez8nhKoQ/viewform?usp=pp_url&entry.2020790469=${p.idnum}" 
+               style="text-decoration: none; color: #A0A0A0; transition: color 0.2s;"
+               target="_blank"
+               rel="noopener noreferrer"
+               onmouseover="this.style.color='#808080'" 
+               onmouseout="this.style.color='#A0A0A0'">
+              <i class="fa-solid fa-circle-exclamation"></i>
+            </a>
+          </div>
         </div>`;
   }
 
@@ -1421,7 +1433,7 @@ function initMap() {
         <div class="popup-card">
           <h4>¿Falta algún lugar aquí?</h4>
           <p>Puedes reportarlo aquí:</p>
-          <button onclick="window.open('https://docs.google.com/forms/d/e/1FAIpQLSdgbuxXkLoHbwkBDh5i6TF-OzIHC7WK_Y6LDy4tCTiSR3Sg5Q/viewform?usp=pp_url&entry.339440483=${lat}&entry.736856326=${lng}', '_blank')" style="padding: 8px 12px; background: #3b82f6; color: white; border: none; border-radius: 4px; cursor: pointer;">
+          <button onclick="window.open('https://docs.google.com/forms/d/e/1FAIpQLSdgbuxXkLoHbwkBDh5i6TF-OzIHC7WK_Y6LDy4tCTiSR3Sg5Q/viewform?usp=pp_url&entry.339440483=${lat}&entry.736856326=${lng}')" style="padding: 8px 12px; background: #3b82f6; color: white; border: none; border-radius: 4px; cursor: pointer;">
             Reportar falta de lugar
           </button>
         </div>
@@ -1586,6 +1598,13 @@ document.querySelector('.back-to-cookies-button').addEventListener('click', () =
 
 // Función para obtener la ubicación y redirigir al enlace personalizado
 function reportarConUbicacion() {
+  const mensajeConfirmacion = "Con esta función puedes reportar la falta de un lugar usando las coordenadas de donde te encuentras ahora mismo.";
+
+  // Mostrar el mensaje al usuario pidiendo confirmación
+  if (!confirm(mensajeConfirmacion)) {
+    return;
+  }
+
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(
       (position) => {
