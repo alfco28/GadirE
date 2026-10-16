@@ -164,7 +164,7 @@ body { margin:0; font-family: system-ui, Arial; }
 <div id="layout">
 
   <div id="sidebar">
-    <div class="version">v0.1.10</div>
+    <div class="version">v0.1.11</div>
     <a href="https://ceuca.uca.es/ceucatlas" target="_blank" class="info-button" title="Información">
       <i class="fas fa-info-circle"></i>
     </a>
@@ -209,7 +209,7 @@ body { margin:0; font-family: system-ui, Arial; }
       Planta:
       <select id="fPlanta">
         <option value="todas">Todas</option>
-        <option value="0">Baja</option>
+        <option value="baja">Baja</option>
         <option value="1">Planta 1</option>
         <option value="2">Planta 2</option>
       </select>
@@ -254,7 +254,7 @@ const campusGeoJSON = {
     {"type":"Feature","properties":{"clase":"espacio","edificio":"FC","planta":"1","tipo":"aula","nombre":"Aula C-102", "campus": "Cádiz"},
      "geometry":{"type":"Point","coordinates":[-6.2040,36.5300]}},
 
-    {"type":"Feature","properties":{"clase":"espacio","edificio":"ESI","planta":"0","tipo":"fuente","nombre":"Fuente Patio ESI", "campus": "Puerto Real"},
+    {"type":"Feature","properties":{"clase":"espacio","edificio":"ESI","planta":"baja","tipo":"fuente","nombre":"Fuente Patio ESI", "campus": "Puerto Real"},
      "geometry":{"type":"Point","coordinates":[-6.2028,36.5295]}},
   ]
 };
@@ -302,9 +302,9 @@ function renderMap(features){
     m.bindPopup(`
       <div class="popup-card">
         <h4>${f.properties.nombre}</h4>
-        ${f.properties.edificio}<br>
-        Planta ${f.properties.planta}<br>
         Tipo: ${f.properties.tipo}<br>
+        Planta ${f.properties.planta}<br>
+        ${f.properties.edificio}<br>
         Campus: ${f.properties.campus}
       </div>`);
 
