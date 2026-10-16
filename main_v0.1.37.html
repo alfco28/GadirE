@@ -372,7 +372,7 @@ html, body {
 
   <div id="sidebar">
       <div class="sidebar-header">
-        <div class="version">v0.1.36</div>
+        <div class="version">v0.1.37</div>
 
         <a href="https://ceuca.uca.es/ceucatlas" target="_blank" class="info-button" title="Información">
           <i class="fas fa-info-circle"></i>
@@ -612,6 +612,7 @@ const searchControl=new L.Control.Search({
   layer: espaciosLayer,
   propertyName:'title',
   zoom:19,
+  textPlaceholder: 'Buscar...',
   marker:false
 });
 searchControl.on('search:locationfound',e=>e.layer.openPopup());
