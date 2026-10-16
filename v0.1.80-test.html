@@ -531,7 +531,7 @@ html, body {
         <a href="https://www.instagram.com/estudiantes.uca" target="_blank" title="Seguir al CEUCA en Instagram"><i class="fab fa-instagram"></i> @estudiantes.uca</a>
       </div>
 
-      <div class="version">v0.1.79-test</div>
+      <div class="version">v0.1.80-test</div>
     </footer>
   </aside>
   
@@ -1419,8 +1419,8 @@ function initMap() {
         const markerLatLng = layer.getLatLng();
         // Compara las coordenadas con un margen pequeño para evitar problemas de precisión
         if (
-          Math.abs(markerLatLng.lat - lat) < 0.0001 &&
-          Math.abs(markerLatLng.lng - lng) < 0.0001
+          Math.abs(markerLatLng.lat - lat) < 0.00005 &&
+          Math.abs(markerLatLng.lng - lng) < 0.00005
         ) {
           markerFound = true;
         }
