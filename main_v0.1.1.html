@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>CEUCAtlas</title>
+
+<!-- Leaflet -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+<!-- Leaflet Search -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet-search/dist/leaflet-search.min.css">
+<script src="https://unpkg.com/leaflet-search/dist/leaflet-search.min.js"></script>
+
+<style>
+body { margin:0; font-family: system-ui, Arial; }
+
+#layout { display:flex; height:100vh; }
+
+#sidebar {
+  width:320px;
+  background:#1f2937;
+  color:white;
+  overflow-y:auto;
+  padding:10px;
+}
+
+#sidebar h2 { margin:0 0 10px; }
+#sidebar h3 { margin:10px 0 5px; border-bottom:1px solid #374151; }
+
+.sidebar-item {
+  padding:4px 10px;
+  cursor:pointer;
+  font-size:14px;
+}
+.sidebar-item:hover { background:#374151; }
+
+#map-container { flex:1; display:flex; flex-direction:column; }
+
+#filters {
+  background:#f3f4f6;
+  padding:8px;
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+}
+
+#map { flex:1; }
+
+.popup-card h4 { margin:0 0 5px; color:#2563eb; }
+.popup-card { font-size:14px; }
+</style>
+</head>
+
+<body>
+
+<div id="layout">
+
+  <div id="sidebar">
+    
+    <img
+        src="https://ceuca.uca.es/wp-content/uploads/2025/12/ceucatlas.webp"
+        alt=""
+        style="display: block; margin-left: auto; margin-right: auto; width: 300px;"
+    >
+
+    <div id="sidebarContent"></div>
+  </div>
+
+  <div id="map-container">
+
+    <div id="filters">
+      Edificio:
+      <select id="fEdificio">
+        <option value="todos">Todos</option>
+        <option value="FC">Facultad de Ciencias</option>
+        <option value="ESI">Escuela de Ingeniería</option>
+      </select>
+
+      Planta:
+      <select id="fPlanta">
+        <option value="todas">Todas</option>
+        <option value="0">Planta 0</option>
+        <option value="1">Planta 1</option>
+        <option value="2">Planta 2</option>
+      </select>
+
+      Tipo:
+      <select id="fTipo">
+        <option value="todos">Todos</option>
+        <option value="aula">Aula</option>
+        <option value="fuente">Fuente</option>
+      </select>
+    </div>
+
+    <div id="map"></div>
+  </div>
+
+</div>
+
+<script>
+// ================= MAPA =================
+const map = L.map('map').setView([36.5298, -6.2035], 16);
+
+L.tileLayer(
+  'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',
+  { maxZoom:20, attribution:'Map data from <a href="openstreetmap.org/copyright">OpenStreetMap</a>. © CARTO' }
+).addTo(map);
+
+// ================= GEOJSON =================
+const campusGeoJSON = {
+"type":"FeatureCollection",
+"features":[
+  {"type":"Feature","properties":{"clase":"espacio","edificio":"FC","planta":"1","tipo":"aula","nombre":"Aula C-101"},
+   "geometry":{"type":"Point","coordinates":[-6.2041,36.5301]}},
+
+  {"type":"Feature","properties":{"clase":"espacio","edificio":"FC","planta":"1","tipo":"aula","nombre":"Aula C-102"},
+   "geometry":{"type":"Point","coordinates":[-6.2040,36.5300]}},
+
+  {"type":"Feature","properties":{"clase":"espacio","edificio":"ESI","planta":"0","tipo":"fuente","nombre":"Fuente Patio ESI"},
+   "geometry":{"type":"Point","coordinates":[-6.2028,36.5295]}},
+]
+};
+
+// ================= ESTADO =================
+const state = {
+  edificio: "todos",
+  planta: "todas",
+  tipo: "todos"
+};
+
+// ================= CAPA =================
+const espaciosLayer = new L.LayerGroup().addTo(map);
+
+// ================= ICONOS =================
+function icon(tipo){
+  const color = {aula:"#16a34a",fuente:"#ea580c"}[tipo] || "#6b7280";
+  return L.divIcon({html:`<div style="background:${color};width:14px;height:14px;border-radius:50%"></div>`});
+}
+
+// ================= FILTRADO =================
+function getFilteredFeatures(){
+  return campusGeoJSON.features.filter(f=>{
+    return (
+      (state.edificio==="todos" || f.properties.edificio===state.edificio) &&
+      (state.planta==="todas" || f.properties.planta===state.planta) &&
+      (state.tipo==="todos" || f.properties.tipo===state.tipo)
+    );
+  });
+}
+
+// ================= RENDER MAPA =================
+function renderMap(features){
+  espaciosLayer.clearLayers();
+
+  features.forEach(f=>{
+    const m=L.marker(
+      [f.geometry.coordinates[1],f.geometry.coordinates[0]],
+      {title:f.properties.nombre,icon:icon(f.properties.tipo)}
+    );
+
+    m.bindPopup(`
+      <div class="popup-card">
+        <h4>${f.properties.nombre}</h4>
+        ${f.properties.edificio}<br>
+        Planta ${f.properties.planta}<br>
+        Tipo: ${f.properties.tipo}
+      </div>`);
+
+    espaciosLayer.addLayer(m);
+  });
+
+  searchControl.setLayer(espaciosLayer);
+}
+
+// ================= SIDEBAR =================
+function renderSidebar(features){
+  const cont=document.getElementById("sidebarContent");
+  cont.innerHTML="";
+
+  const estructura={};
+
+  features.forEach(f=>{
+    const e=f.properties.edificio;
+    const p=f.properties.planta;
+    estructura[e] ??= {};
+    estructura[e][p] ??= [];
+    estructura[e][p].push(f);
+  });
+
+  for(const e in estructura){
+    cont.innerHTML+=`<h3>${e}</h3>`;
+    for(const p in estructura[e]){
+      cont.innerHTML+=`<b>Planta ${p}</b>`;
+      estructura[e][p].forEach(f=>{
+        cont.innerHTML+=`
+          <div class="sidebar-item" onclick="fly('${f.properties.nombre}')">
+            • ${f.properties.nombre}
+          </div>`;
+      });
+    }
+  }
+}
+
+// ================= BUSCADOR =================
+const searchControl=new L.Control.Search({
+  layer: espaciosLayer,
+  propertyName:'title',
+  zoom:19,
+  marker:false
+});
+searchControl.on('search:locationfound',e=>e.layer.openPopup());
+map.addControl(searchControl);
+
+// ================= FLY =================
+function fly(nombre){
+  espaciosLayer.eachLayer(l=>{
+    if(l.options.title===nombre){
+      map.flyTo(l.getLatLng(),19);
+      l.openPopup();
+    }
+  });
+}
+
+// ================= UPDATE =================
+function update(){
+  const feats=getFilteredFeatures();
+  renderMap(feats);
+  renderSidebar(feats);
+}
+
+// ================= EVENTOS =================
+document.getElementById("fEdificio").onchange=e=>{state.edificio=e.target.value;update();}
+document.getElementById("fPlanta").onchange=e=>{state.planta=e.target.value;update();}
+document.getElementById("fTipo").onchange=e=>{state.tipo=e.target.value;update();}
+
+update();
+</script>
+
+</body>
+</html>
