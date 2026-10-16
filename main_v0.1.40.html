@@ -194,7 +194,7 @@ html, body {
 
 .popup-card h4 {
   margin:0 0 5px;
-  color:#2563eb;
+  color:#1f2937;
 }
 
 .popup-card {
@@ -372,7 +372,7 @@ html, body {
 
   <div id="sidebar">
       <div class="sidebar-header">
-        <div class="version">v0.1.39</div>
+        <div class="version">v0.1.40</div>
 
         <a href="https://ceuca.uca.es/ceucatlas" target="_blank" class="info-button" title="Información">
           <i class="fas fa-info-circle"></i>
@@ -592,7 +592,7 @@ function renderMap(features){
     m.bindPopup(`
       <div class="popup-card">
         <h4>${f.properties.nombre}</h4>
-        Descripción: ${f.properties.descrip}<br>
+        Descripción: ${f.properties.descrip}<br><br>
         Planta ${f.properties.planta}<br>
         Edificio: ${f.properties.edificio}<br>
         Campus: ${f.properties.campus}
