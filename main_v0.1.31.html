@@ -60,8 +60,13 @@ body {
 
 #layout {
   display:flex;
-  height:100vh;
-  width: 100vw;
+  height:100dvh;
+  width: 100%;
+}
+
+html, body {
+  height: 100%;
+  overflow: hidden;
 }
 
 #sidebar {
@@ -170,7 +175,10 @@ body {
   right: 8px;
 }
 
-#map { flex:1; }
+#map {
+  flex:1;
+  min-height: 0;
+}
 
 .popup-card h4 {
   margin:0 0 5px;
@@ -298,6 +306,34 @@ body {
   color: white;
 }
 
+@media (max-width: 768px) {
+
+  #layout {
+    flex-direction: column;
+  }
+
+  #sidebar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    min-width: 100%;
+    height: 100dvh;
+    z-index: 2000;
+  }
+
+  #sidebar.hidden {
+    transform: translateX(-100%);
+    width: 100%;
+  }
+
+  #map-container {
+    flex: 1;
+    width: 100%;
+  }
+
+}
+
 </style>
 
 <!-- Registro dinámico del manifest.json de la PWA -->
@@ -324,7 +360,7 @@ body {
 
   <div id="sidebar">
       <div class="sidebar-header">
-        <div class="version">v0.1.30</div>
+        <div class="version">v0.1.31</div>
 
         <a href="https://ceuca.uca.es/ceucatlas" target="_blank" class="info-button" title="Información">
           <i class="fas fa-info-circle"></i>
@@ -662,6 +698,20 @@ document.getElementById('close-sidebar').addEventListener('click', () => {
   setTimeout(() => {
     map.invalidateSize();
   }, 310);
+});
+
+// ================= AJUSTE MAPA EN MÓVILES =================
+
+// Cuando cambia el tamaño de la pantalla (rotar móvil, barras del navegador, etc.)
+window.addEventListener('resize', () => {
+  map.invalidateSize();
+});
+
+// Al cargar la página (muy importante en móviles)
+window.addEventListener('load', () => {
+  setTimeout(() => {
+    map.invalidateSize();
+  }, 300);
 });
 
 </script>
