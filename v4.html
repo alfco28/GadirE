@@ -54,6 +54,7 @@
       --z-index-sidebar: 6000;
       --z-index-cookie: 3000;
       --z-index-mapa: 1;
+      --z-index-fullscreen: 5000;
     }
 
     body {
@@ -93,6 +94,7 @@
       font-family: sans-serif;
       font-weight: bold;
       font-size: 16px;
+      z-index: var(--z-index-dock);
     }
 
     /* Dock */
@@ -105,6 +107,7 @@
       gap: 10px;
       padding: 10px;
       width: fit-content;
+      z-index: var(--z-index-dock);
     }
 
     /* Iconos del Dock */
@@ -141,7 +144,7 @@
       border-radius: var(--radio-borde);
       border: 1px solid var(--color-borde-elementos);
       box-shadow: 2px 2px 8px var(--color-sombra);
-      color: var(--color-texto-primario);
+      color: white;
       display: flex;
       flex-direction: column;
       z-index: var(--z-index-sidebar);
@@ -190,6 +193,27 @@
       width: 100%;
       height: 100%;
       z-index: var(--z-index-mapa);
+    }
+
+    /* Pantallas completas */
+    .fullscreen-content {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(31, 41, 55, 0.95);
+      backdrop-filter: blur(8px);
+      z-index: var(--z-index-fullscreen);
+      display: none;
+      padding-top: 60px;
+      padding-bottom: 80px;
+      overflow-y: auto;
+      color: white;
+    }
+
+    .fullscreen-content.visible {
+      display: block;
     }
 
     /* Móvil */
@@ -270,16 +294,16 @@
       <div class="dock-icon" id="toggle-sidebar">
         <i class="fas fa-list"></i>
       </div>
-      <div class="dock-icon">
+      <div class="dock-icon" id="map-icon">
         <i class="fas fa-map-location-dot"></i>
       </div>
-      <div class="dock-icon">
+      <div class="dock-icon" id="home-icon">
         <i class="fas fa-house"></i>
       </div>
-      <div class="dock-icon">
+      <div class="dock-icon" id="notifications-icon">
         <i class="fas fa-bell"></i>
       </div>
-      <div class="dock-icon">
+      <div class="dock-icon" id="settings-icon">
         <i class="fas fa-gear"></i>
       </div>
     </nav>
@@ -294,6 +318,25 @@
         <!-- Contenido dinámico -->
       </div>
     </aside>
+
+    <!-- Pantallas completas -->
+    <div id="home-screen" class="fullscreen-content">
+      <!-- Contenido de la pantalla de Inicio -->
+      <h2 style="text-align: center;">Pantalla de Inicio</h2>
+      <!-- Personaliza este contenido -->
+    </div>
+
+    <div id="notifications-screen" class="fullscreen-content">
+      <!-- Contenido de la pantalla de Notificaciones -->
+      <h2 style="text-align: center;">Pantalla de Notificaciones</h2>
+      <!-- Personaliza este contenido -->
+    </div>
+
+    <div id="settings-screen" class="fullscreen-content">
+      <!-- Contenido de la pantalla de Configuración -->
+      <h2 style="text-align: center;">Pantalla de Configuración</h2>
+      <!-- Personaliza este contenido -->
+    </div>
 
     <div id="map"></div>
   </main>
@@ -313,7 +356,43 @@
     document.addEventListener('DOMContentLoaded', function() {
       const sidebar = document.getElementById('sidebar');
       const toggleSidebar = document.getElementById('toggle-sidebar');
+      const homeIcon = document.getElementById('home-icon');
+      const notificationsIcon = document.getElementById('notifications-icon');
+      const settingsIcon = document.getElementById('settings-icon');
+      const mapIcon = document.getElementById('map-icon');
 
+      const homeScreen = document.getElementById('home-screen');
+      const notificationsScreen = document.getElementById('notifications-screen');
+      const settingsScreen = document.getElementById('settings-screen');
+
+      // Función para ocultar todas las pantallas
+      function hideAllScreens() {
+        homeScreen.classList.remove('visible');
+        notificationsScreen.classList.remove('visible');
+        settingsScreen.classList.remove('visible');
+      }
+
+      // Eventos para los iconos del dock
+      homeIcon.addEventListener('click', () => {
+        hideAllScreens();
+        homeScreen.classList.add('visible');
+      });
+
+      notificationsIcon.addEventListener('click', () => {
+        hideAllScreens();
+        notificationsScreen.classList.add('visible');
+      });
+
+      settingsIcon.addEventListener('click', () => {
+        hideAllScreens();
+        settingsScreen.classList.add('visible');
+      });
+
+      mapIcon.addEventListener('click', () => {
+        hideAllScreens();
+      });
+
+      // Sidebar
       toggleSidebar.addEventListener('click', () => {
         sidebar.classList.toggle('visible');
       });
