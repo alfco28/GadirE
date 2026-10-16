@@ -531,7 +531,7 @@ html, body {
         <a href="https://www.instagram.com/estudiantes.uca" target="_blank" title="Seguir al CEUCA en Instagram"><i class="fab fa-instagram"></i> @estudiantes.uca</a>
       </div>
 
-      <div class="version">v0.1.75-test</div>
+      <div class="version">v0.1.76-test</div>
     </footer>
   </aside>
   
@@ -1195,7 +1195,8 @@ function initMap() {
     return `
         <div class="popup-card">
           <h4>${p.nombre}</h4>
-          Descripción: ${p.descrip}<br><br>
+          #${p.idnum}<br><br>
+          ${p.descrip}<br><br>
           Planta ${p.planta}<br>
           Edificio: ${p.edificio}<br>
           Campus: ${p.campus}
@@ -1204,7 +1205,7 @@ function initMap() {
 
   // ================= CREAR MARKERS UNA SOLA VEZ =================
 
-  function featureKey(f) { // Función para crear un marker (casi) único para cada feature.
+  function featureKey(f) { // Función para crear un marker único para cada feature.
     const p = f.properties;
     return `${p.idnum}`;
   }
