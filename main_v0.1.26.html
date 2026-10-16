@@ -4,7 +4,11 @@
 <meta charset="UTF-8">
 <title>CEUCAtlas</title>
 
+<!-- Buena visibilidad multidispositivo -->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- Favicon -->
+<link rel="icon" href="https://ceuca.uca.es/wp-content/uploads/2025/12/ceucatlas.webp" type="image/webp">
 
 <!-- Leaflet -->
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
@@ -14,13 +18,20 @@
 <link rel="stylesheet" href="https://unpkg.com/leaflet-search/dist/leaflet-search.min.css">
 <script src="https://unpkg.com/leaflet-search/dist/leaflet-search.min.js"></script>
 
-<!-- Font Awesome para el icono de Instagram -->
+<!-- Font Awesome para el icono de WhatsApp e Instagram -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
 <style>
-body { margin:0; font-family: system-ui, Arial; }
+body {
+  margin:0;
+  font-family: system-ui, Arial;
+}
 
-#layout { display:flex; height:100vh; width: 100vw; }
+#layout {
+  display:flex;
+  height:100vh;
+  width: 100vw;
+}
 
 #sidebar {
   position: relative;
@@ -59,17 +70,30 @@ body { margin:0; font-family: system-ui, Arial; }
   overflow: hidden;
 }
 
-#sidebar h2 { margin:0 0 10px; }
-#sidebar h3 { margin:10px 0 5px; border-bottom:1px solid #374151; }
+#sidebar h2 {
+  margin:0 0 10px; 
+}
+
+#sidebar h3 {
+  margin:10px 0 5px;
+  border-bottom:1px solid #374151;
+}
 
 .sidebar-item {
   padding:4px 10px;
   cursor:pointer;
   font-size:14px;
 }
-.sidebar-item:hover { background:#374151; }
+.sidebar-item:hover { 
+  background:#374151; 
+}
 
-#map-container { flex:1; display:flex; flex-direction:column; position: relative; }
+#map-container {
+  flex:1; 
+  display:flex; 
+  flex-direction:column; 
+  position: relative; 
+}
 
 #filters {
   background: #f3f4f6;
@@ -113,8 +137,14 @@ body { margin:0; font-family: system-ui, Arial; }
 
 #map { flex:1; }
 
-.popup-card h4 { margin:0 0 5px; color:#2563eb; }
-.popup-card { font-size:14px; }
+.popup-card h4 {
+  margin:0 0 5px;
+  color:#2563eb;
+}
+
+.popup-card {
+  font-size:14px;
+}
 
 .version {
   position: absolute;
@@ -215,13 +245,14 @@ body { margin:0; font-family: system-ui, Arial; }
 </style>
 </head>
 
+
 <body>
 
 <div id="layout">
 
   <div id="sidebar">
       <div class="sidebar-header">
-        <div class="version">v0.1.25</div>
+        <div class="version">v0.1.26</div>
         <a href="https://ceuca.uca.es/ceucatlas" target="_blank" class="info-button" title="Información">
           <i class="fas fa-info-circle"></i>
         </a>
