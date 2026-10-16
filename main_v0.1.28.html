@@ -179,7 +179,7 @@ body {
 
 .version {
   position: absolute;
-  top: 10px;
+  bottom: 10px;
   right: 10px;
   color: #9ca3af;
   font-size: 12px;
@@ -299,7 +299,7 @@ body {
 
   <div id="sidebar">
       <div class="sidebar-header">
-        <div class="version">v0.1.27</div>
+        <div class="version">v0.1.28</div>
         <a href="https://ceuca.uca.es/ceucatlas" target="_blank" class="info-button" title="Información">
           <i class="fas fa-info-circle"></i>
         </a>
@@ -421,13 +421,13 @@ L.tileLayer(
 const campusGeoJSON = {
   "type":"FeatureCollection",
   "features":[
-    {"type":"Feature","properties":{"clase":"espacio","edificio":"FC","planta":"1","tipo":"aula","nombre":"Aula C-101", "campus": "Cádiz"},
+    {"type":"Feature","properties":{"clase":"espacio","edificio":"Facultad de Ciencias","planta":"1","tipo":"aula","nombre":"Aula C-101", "campus": "Cádiz"},
      "geometry":{"type":"Point","coordinates":[-6.2041,36.5301]}},
 
-    {"type":"Feature","properties":{"clase":"espacio","edificio":"FC","planta":"1","tipo":"aula","nombre":"Aula C-102", "campus": "Cádiz"},
+    {"type":"Feature","properties":{"clase":"espacio","edificio":"Facultad de Ciencias","planta":"1","tipo":"aula","nombre":"Aula C-102", "campus": "Cádiz"},
      "geometry":{"type":"Point","coordinates":[-6.2040,36.5300]}},
 
-    {"type":"Feature","properties":{"clase":"espacio","edificio":"ESI","planta":"baja","tipo":"cafe","nombre":"Fuente Patio ESI", "campus": "Puerto Real"},
+    {"type":"Feature","properties":{"clase":"espacio","edificio":"Escuela Superior de Ingeniería","planta":"baja","tipo":"cafete","nombre":"Fuente Patio ESI", "campus": "Puerto Real"},
      "geometry":{"type":"Point","coordinates":[-6.2028,36.5295]}},
 
   ]
@@ -476,7 +476,6 @@ function renderMap(features){
     m.bindPopup(`
       <div class="popup-card">
         <h4>${f.properties.nombre}</h4>
-        Tipo: ${f.properties.tipo}<br>
         Planta ${f.properties.planta}<br>
         Edificio: ${f.properties.edificio}<br>
         Campus: ${f.properties.campus}
