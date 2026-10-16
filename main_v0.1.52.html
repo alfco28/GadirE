@@ -474,7 +474,7 @@ html, body {
 
     <!-- Pie del sidebar -->
     <footer class="sidebar-footer">
-      <div class="version">v0.1.51</div>
+      <div class="version">v0.1.52</div>
 
       <div class="whatsapp">
         <i class="fab fa-whatsapp"></i>
@@ -639,7 +639,7 @@ const campusGeoJSON = {
     // ========== PLANTA BAJA ==========
     // CAFETE
     {"type":"Feature","properties":{"clase":"espacio",
-    "edificio":"Escuela Superior de Ingeniería",
+    "edificio":"Escuela Superior de Ingeniería (ESI)",
     "planta":"1",
     "tipo":"cafete",
     "nombre":"Cafetería ESI",
@@ -685,14 +685,45 @@ function initMap() {
     { maxZoom:20, attribution:'Map data from <a href="https://openstreetmap.org/copyright">OpenStreetMap</a>. © <a href="https://carto.com/about-carto/">rastertiles/voyager</a>' }
   ).addTo(map);
 
-  // ================= CAPA =================
-  const espaciosLayer = new L.LayerGroup().addTo(map);
+  // ================= CAPAS PERSISTENTES =================
+  const layersByTipo = {
+    descanso: L.layerGroup(),
+    aseo: L.layerGroup(),
+    aula: L.layerGroup(),
+    biblio: L.layerGroup(),
+    cafete: L.layerGroup(),
+    despacho: L.layerGroup(),
+    lab: L.layerGroup(),
+    repre: L.layerGroup(),
+    salon: L.layerGroup(),
+    transporte: L.layerGroup(),
+    unidad: L.layerGroup()
+  };
+
+  // Añadimos TODAS las capas al mapa inicialmente
+  Object.values(layersByTipo).forEach(l => l.addTo(map));
   let userLocationMarker = null;
   
   // ================= ICONOS =================
+  const COLORS = {
+    aula: "#16a34a",
+    cafete: "#ea580c",
+    biblio: "#2563eb",
+    repre: "#7c3aed",
+    lab: "#dc2626",
+    despacho: "#0f766e",
+    descanso: "#facc15",
+    aseo: "#64748b",
+    salon: "#9333ea",
+    transporte: "#0284c7",
+    unidad: "#334155"
+  };
+
   function icon(tipo){
-    const color = {aula:"#16a34a",cafete:"#ea580c"}[tipo] || "#6b7280";
-    return L.divIcon({html:`<div style="background:${color};width:14px;height:14px;border-radius:50%"></div>`});
+    const color = COLORS[tipo] || "#6b7280";
+    return L.divIcon({
+      html: `<div style="background:${color};width:14px;height:14px;border-radius:50%"></div>`
+    });
   }
   
   // ================= FILTRADO =================
@@ -719,22 +750,46 @@ function initMap() {
         </div>`;
   }
 
-  // ================= RENDER MAPA =================
-  function renderMap(features){
-    espaciosLayer.clearLayers();
-  
-    features.forEach(f=>{
-      const m=L.marker(
-        [f.geometry.coordinates[1],f.geometry.coordinates[0]],
-        {title:f.properties.nombre,icon:icon(f.properties.tipo)}
-      );
-    
-      m.bindPopup(popupHTML(f.properties));
-      
-      espaciosLayer.addLayer(m);
-    });
-  
-    searchControl.setLayer(espaciosLayer);
+  // ================= CREAR MARKERS UNA SOLA VEZ =================
+  const markersByNombre = {};
+
+  campusGeoJSON.features.forEach(f => {
+    const tipo = f.properties.tipo;
+    if (!layersByTipo[tipo]) return;
+
+    const marker = L.marker(
+      [f.geometry.coordinates[1], f.geometry.coordinates[0]],
+      {
+        title: f.properties.nombre,
+        icon: icon(tipo)
+      }
+    ).bindPopup(popupHTML(f.properties));
+    marker.feature = f;
+
+    layersByTipo[tipo].addLayer(marker);
+    markersByNombre[f.properties.nombre] = marker;
+  });
+
+  // =============== CAPAS VISIBLES EN EL MAPA ===============
+  function updateLayers() {
+    for (const tipo in layersByTipo) {
+      const layer = layersByTipo[tipo];
+
+      layer.eachLayer(marker => {
+        const f = marker.feature;
+        const visible =
+          (state.tipo === "todos" || f.properties.tipo === state.tipo) &&
+          (state.edificio === "todos" || f.properties.edificio === state.edificio) &&
+          (state.planta === "todas" || f.properties.planta === state.planta) &&
+          (state.campus === "todos" || f.properties.campus === state.campus);
+
+        if (visible) {
+          marker.addTo(map);
+        } else {
+          map.removeLayer(marker);
+        }
+      });
+    }
   }
   
   // ================= SIDEBAR =================
@@ -769,14 +824,17 @@ function initMap() {
   }
   
   // ================= BUSCADOR =================
-  const searchControl=new L.Control.Search({
-    layer: espaciosLayer,
+  const searchControl = new L.Control.Search({
+    layer: L.layerGroup(
+      Object.values(layersByTipo).flatMap(l => l.getLayers())
+    ),
     propertyName: 'title',
     zoom: FLY_ZOOM,
     textPlaceholder: 'Buscar...',
     marker: false
   });
-  searchControl.on('search:locationfound', e=>e.layer.openPopup());
+
+  searchControl.on('search:locationfound', e => e.layer.openPopup());
   map.addControl(searchControl);
   
   // ================= HELPER =================
@@ -786,28 +844,24 @@ function initMap() {
   
   // ================= FLY =================
   window.fly = function(nombre) {
-    espaciosLayer.eachLayer(l=>{
-      if(l.options.title===nombre){
-        map.flyTo(l.getLatLng(), FLY_ZOOM);
-        l.openPopup();
-      
-        //Cerrar sidebar SOLO en móvil
-        if (isMobileSidebar()) {
-          const sidebar = document.getElementById('sidebar');
-          const toggleButton = document.getElementById('toggle-sidebar');
-        
-          if (!sidebar.classList.contains('hidden')) {
-            sidebar.classList.add('hidden');
-            toggleButton.classList.remove('hide-when-sidebar-visible');
-          
-            setTimeout(() => {
-              map.invalidateSize();
-            }, SIDEBAR_ANIMATION_MS);
-          }
-        }
+    const marker = markersByNombre[nombre];
+    if (!marker) return;
+
+    map.flyTo(marker.getLatLng(), FLY_ZOOM);
+    marker.openPopup();
+
+    if (isMobile()) {
+      const sidebar = document.getElementById('sidebar');
+      const toggleButton = document.getElementById('toggle-sidebar');
+
+      if (!sidebar.classList.contains('hidden')) {
+        sidebar.classList.add('hidden');
+        toggleButton.classList.remove('hide-when-sidebar-visible');
+
+        setTimeout(() => map.invalidateSize(), SIDEBAR_ANIMATION_MS);
       }
-    });
-  }
+    }
+  };
   
   // ================= GEOLOCALIZACIÓN =================
   document.getElementById('geolocate').addEventListener('click', () => {
@@ -867,9 +921,9 @@ function initMap() {
   
   // ================= UPDATE =================
   function update(){
-    const feats=getFilteredFeatures();
-    renderMap(feats);
-    renderSidebar(feats);
+    const feats = getFilteredFeatures();
+    updateLayers();       // ← mapa
+    renderSidebar(feats); // ← sidebar
   }
   
   // ================= EVENTOS =================
@@ -881,14 +935,12 @@ function initMap() {
   update();
   
   // Al cargar la página, verifica el estado inicial del sidebar
-  document.addEventListener('DOMContentLoaded', () => {
-    const sidebar = document.getElementById('sidebar');
-    const toggleButton = document.getElementById('toggle-sidebar');
-  
-    if (!sidebar.classList.contains('hidden')) {
-      toggleButton.classList.add('hide-when-sidebar-visible');
-    }
-  });
+  const sidebar = document.getElementById('sidebar');
+  const toggleButton = document.getElementById('toggle-sidebar');
+
+  if (!sidebar.classList.contains('hidden')) {
+    toggleButton.classList.add('hide-when-sidebar-visible');
+  }
   
   // Evento para el botón de cerrar el sidebar
   document.getElementById('close-sidebar').addEventListener('click', () => {
