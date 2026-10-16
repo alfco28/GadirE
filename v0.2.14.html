@@ -342,7 +342,7 @@
       </div>
     </nav>
 
-    <div class="title-bar elemento-flotante">CEUCAtlas</div>
+    <div class="title-bar elemento-flotante" id="title-bar">CEUCAtlas</div>
 
     <aside id="sidebar">
       <header class="sidebar-header">
@@ -413,7 +413,7 @@
         <input type="checkbox" id="toggle-darkmode">
       </label>
       <h3>Sobre el CEUCAtlas</h3>
-      <p>v0.2.13</p>
+      <p>v0.2.14</p>
     </div>
 
     <div id="map"></div>
@@ -519,12 +519,29 @@
         settingsScreen.classList.remove('visible');
       }
 
-      // Icono activo del dock
+      // Función para actualizar el título según el icono seleccionado
+      function updateTitleBar(icon) {
+        const titleBar = document.getElementById('title-bar');
+        if (icon.id === 'toggle-sidebar') {
+          titleBar.textContent = 'Barra lateral';
+        } else if (icon.id === 'map-icon') {
+          titleBar.textContent = 'CEUCAtlas';
+        } else if (icon.id === 'home-icon') {
+          titleBar.textContent = 'Inicio';
+        } else if (icon.id === 'notifications-icon') {
+          titleBar.textContent = 'Notificaciones';
+        } else if (icon.id === 'settings-icon') {
+          titleBar.textContent = 'Configuración';
+        }
+      }
+      
+      // Función para establecer el icono activo y actualizar el título
       function setActiveIcon(activeIcon) {
         document.querySelectorAll('.dock-icon').forEach(icon => {
           icon.classList.remove('active');
         });
         activeIcon.classList.add('active');
+        updateTitleBar(activeIcon); // Actualiza el título
       }
       
       // Icono por defecto
@@ -575,6 +592,7 @@
       document.addEventListener('click', (e) => {
         if (!sidebar.contains(e.target) && !toggleSidebar.contains(e.target) && sidebar.classList.contains('visible')) {
           sidebar.classList.remove('visible');
+          setActiveIcon(mapIcon);
         }
       });
 
