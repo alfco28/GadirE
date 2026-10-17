@@ -17,6 +17,7 @@
         showGeolocateButton: true,
         showFilters: true,
         homePage: 'mapa',
+        localeLang: 'es_es',
         enablePushNotifications: false,
         showNotificationFilters: true,
       },
@@ -278,5 +279,6 @@
       document.getElementById('toggle-geolocate-button').checked = appConfig.get('showGeolocateButton');
       document.getElementById('toggle-filters').checked = appConfig.get('showFilters');
       document.getElementById('pagInicio').value = appConfig.get('homePage');
+      document.getElementById('localeLang').value = appConfig.get('localeLang');
       document.getElementById('enable-push-notifications').checked = appConfig.get('enablePushNotifications');
       document.getElementById('toggle-notification-filters').checked = appConfig.get('showNotificationFilters');
