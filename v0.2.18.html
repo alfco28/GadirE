@@ -42,6 +42,7 @@
       --color-texto-primario: rgba(38, 38, 38);
       --color-texto-secundario: rgba(124, 124, 124);
       --color-fondo-flotante: rgba(247, 247, 247, 0.2);
+      --color-fondo-flotante-fullscreen: rgba(247, 247, 247);
       --color-borde-flotante: rgba(247, 247, 247, 0.3);
       --color-fondo-elementos: rgba(255, 255, 255, 0.1);
       --color-fondo-elementos-hover: rgba(255, 255, 255, 0.4);
@@ -64,6 +65,7 @@
       --color-fondo-primario: rgba(28, 30, 32);
       --color-texto-primario: rgba(245, 245, 245);
       --color-fondo-flotante: rgba(42, 44, 46, 0.2);
+      --color-fondo-flotante-fullscreen: rgba(42, 44, 46);
       --color-borde-flotante: rgba(42, 44, 46, 0.3);
       --color-fondo-elementos: rgba(255, 255, 255, 0.08);
       --color-fondo-elementos-hover: rgba(0, 0, 0, 0.4);
@@ -151,6 +153,20 @@
       transform: scale(1.1);
       background: var(--color-fondo-elementos-hover);
       box-shadow: 0 4px 8px var(--color-sombra);
+    }
+
+    /* Configuración */
+    .setting {
+      padding: 5px 10px;
+      width: auto;
+      max-width: calc(100% - 80px);
+      background: var(--color-fondo-flotante);
+      backdrop-filter: blur(var(--difuminado));
+      border: 1px solid var(--color-borde-flotante);
+      box-shadow: 0 2px 4px var(--color-sombra);
+      border-radius: var(--radio-borde);
+      overflow: hidden;
+      z-index: var(--z-index-dock);
     }
 
     /* Sidebar */
@@ -414,14 +430,20 @@
 
     <div id="settings-screen" class="fullscreen-content">
       <h3>Privacidad</h3>
-      <p>Cookies</p>
+      <div class="setting">
+        <p>Cookies</p>
+      </div>
       <h3>Personalización</h3>
-      <label class="toggle">
-        <span>Modo oscuro</span>
-        <input type="checkbox" id="toggle-darkmode">
-      </label>
+      <div class="setting">
+        <label class="toggle">
+          <span>Modo oscuro</span>
+          <input type="checkbox" id="toggle-darkmode">
+        </label>
+      </div>
       <h3>Sobre el CEUCAtlas</h3>
-      <p>v0.2.17</p>
+      <div class="setting">
+        <p>v0.2.18</p>
+      </div>
     </div>
 
     <div id="map"></div>
