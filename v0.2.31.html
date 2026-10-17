@@ -56,12 +56,17 @@
       --duracion-transicion: 0.2s;
 
       --z-index-mapa: 100;
-      --z-index-sidebar: 200;
       --z-index-fullscreen: 300;
       --z-index-setting: 350;
       --z-index-dock: 400;
-      --z-index-title: 500;
+      --z-index-filters: 405;
+      --z-index-filter-pair: 406;
+      --z-index-geolocate: 410;
+      --z-index-sidebar: 500;
+      --z-index-title: 600;
       --z-index-cookie: 3000;
+
+      --margen: 10px;
     }
 
     /* Modo oscuro */
@@ -167,6 +172,39 @@
       color: var(--color-enfasis);
     }
 
+    /* Filters */
+    .filters {
+      visibility: visible;
+      position: fixed;
+      left: 0;
+      bottom: 86px;
+      padding: 10px 0 10px;
+      z-index: var(--z-index-filters);
+      white-space: nowrap;
+      overflow-x: auto;
+      width: 100%;
+      background-color: transparent;
+      display: flex;
+      flex-direction: row;
+      flex-wrap: nowrap;
+      gap: 10px;
+    }
+
+    .filter-pair {
+      visibility: visible;
+      padding: 4px;
+      font-size: 12px;
+      z-index: var(--z-index-filter-pair);
+      flex-shrink: 0;
+    }
+
+    /* Geolocate button */
+    .geolocate-button {
+      visibility: visible;
+      position: fixed;
+      right: var(--margen);
+    }
+
     /* Configuración */
     .setting {
       padding: 5px 10px;
@@ -228,11 +266,6 @@
       flex: 1;
       overflow-y: auto;
       padding: 0 10px;
-    }
-
-    .sidebar-footer {
-      padding: 10px;
-      flex-shrink: 0;
     }
 
     .sidebar-logo-ceucatlas {
@@ -391,6 +424,42 @@
         <i class="fas fa-gear"></i>
       </div>
     </nav>
+
+    <div class="filters">
+      <div class="filter-pair elemento-flotante">
+        Hola. filtro 1.
+      </div>
+      <div class="filter-pair elemento-flotante">
+        Hola. filtro 2.
+      </div>
+      <div class="filter-pair elemento-flotante">
+        Hola. filtro 3.
+      </div>
+      <div class="filter-pair elemento-flotante">
+        Hola. filtro 4.
+      </div>
+      <div class="filter-pair elemento-flotante">
+        Hola. filtro 5.
+      </div>
+      <div class="filter-pair elemento-flotante">
+        Hola. filtro 6.
+      </div>
+      <div class="filter-pair elemento-flotante">
+        Hola. filtro 7.
+      </div>
+      <div class="filter-pair elemento-flotante">
+        Hola. filtro 8.
+      </div>
+      <div class="filter-pair elemento-flotante">
+        Hola. filtro 9.
+      </div>
+      <div class="filter-pair elemento-flotante">
+        Hola. filtro 10.
+      </div>
+      <div class="filter-pair elemento-flotante">
+        Hola. filtro 11.
+      </div>
+    </div>
 
     <div class="title-bar elemento-flotante" id="title-bar">CEUCAtlas</div>
 
@@ -583,7 +652,7 @@
         <hr class="separador">
         <p>Contribuir</p>
         <hr class="separador">
-        <p>v0.2.30</p>
+        <p>v0.2.31</p>
       </div>
       <h3>Más del Consejo de Estudiantes</h3>
       <div class="setting">
