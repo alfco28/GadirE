@@ -278,6 +278,11 @@
       opacity: 0;
     }
 
+    .fullscreen-footer {
+      background-color: transparent;
+      height: 176px;
+    }
+
     /* Interruptores configuración */
     .toggle {
       display: flex;
@@ -394,7 +399,6 @@
 
     <!-- Pantallas completas -->
     <div id="home-screen" class="fullscreen-content">
-      <!-- Contenido de la pantalla de Inicio -->
       <p>Ejemplo</p>
       <p>Ejemplo</p>
       <p>Ejemplo</p>
@@ -432,12 +436,11 @@
       <p>Ejemplo</p>
       <p>Ejemplo</p>
       <p>Ejemplo</p>
-      <!-- Personaliza este contenido -->
+      <div class="fullscreen-footer"></div>
     </div>
 
     <div id="notifications-screen" class="fullscreen-content">
-      <!-- Contenido de la pantalla de Notificaciones -->
-      <!-- Personaliza este contenido -->
+       <div class="fullscreen-footer"></div>
     </div>
 
     <div id="settings-screen" class="fullscreen-content">
@@ -521,7 +524,7 @@
         <hr class="separador">
         <p>Contribuir</p>
         <hr class="separador">
-        <p>v0.2.24</p>
+        <p>v0.2.25</p>
       </div>
       <h3>Más del Consejo de Estudiantes</h3>
       <div class="setting">
@@ -531,6 +534,7 @@
         <hr class="separador">
         <p>Perfil de Instagram</p>
       </div>
+      <div class="fullscreen-footer"></div>
     </div>
 
     <div id="map"></div>
