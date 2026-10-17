@@ -232,10 +232,21 @@
       padding: 60px 20px 80px;
       overflow-y: auto;
       color: var(--color-texto-primario);
+      transition: transform var(--duracion-transicion) ease-in-out, opacity var(--duracion-transicion) ease-in-out;
+      transform: translateX(-100%);
+      opacity: 0;
     }
 
     .fullscreen-content.visible {
       display: block;
+      transform: translateX(0);
+      opacity: 1;
+    }
+    
+    /* Animación de salida */
+    .fullscreen-content.hidden {
+      transform: translateX(100%);
+      opacity: 0;
     }
 
     /* Interruptores configuración */
@@ -410,7 +421,7 @@
         <input type="checkbox" id="toggle-darkmode">
       </label>
       <h3>Sobre el CEUCAtlas</h3>
-      <p>v0.2.16</p>
+      <p>v0.2.17</p>
     </div>
 
     <div id="map"></div>
@@ -511,9 +522,15 @@
 
       // Función para ocultar todas las pantallas
       function hideAllScreens() {
-        homeScreen.classList.remove('visible');
-        notificationsScreen.classList.remove('visible');
-        settingsScreen.classList.remove('visible');
+        const screens = [homeScreen, notificationsScreen, settingsScreen];
+        screens.forEach(screen => {
+          if (screen.classList.contains('visible')) {
+            screen.classList.add('hidden');
+            setTimeout(() => {
+              screen.classList.remove('visible', 'hidden');
+            }, 200); // Tiempo igual a la duración de la animación
+          }
+        });
       }
 
       // Función para actualizar el título según el icono seleccionado
@@ -548,19 +565,25 @@
       // Eventos para los iconos del dock
       homeIcon.addEventListener('click', () => {
         hideAllScreens();
-        homeScreen.classList.add('visible');
+        setTimeout(() => {
+          homeScreen.classList.add('visible');
+        }, 50); // Pequeño retraso para permitir la animación de salida
         setActiveIcon(homeIcon);
       });
 
       notificationsIcon.addEventListener('click', () => {
         hideAllScreens();
-        notificationsScreen.classList.add('visible');
+        setTimeout(() => {
+          notificationsScreen.classList.add('visible');
+        }, 50);
         setActiveIcon(notificationsIcon);
       });
 
       settingsIcon.addEventListener('click', () => {
         hideAllScreens();
-        settingsScreen.classList.add('visible');
+        setTimeout(() => {
+          settingsScreen.classList.add('visible');
+        }, 50);
         setActiveIcon(settingsIcon);
       });
 
