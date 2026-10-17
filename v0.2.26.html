@@ -462,15 +462,40 @@
       </div>
       <h3>Accesibilidad</h3>
       <div class="setting">
-        <p>Tamaño de fuente</p>
+        <label class="toggle">
+          <p>Tamaño de fuente</p>
+          <select id="tamanoFuente">
+            <option value="porDefecto" selected>Por defecto</option>
+            <option value="grande">Grande</option>
+            <option value="muyGrande">Muy grande</option>
+          </select>
+        </label>
         <hr class="separador">
-        <p>Fuente de alto contraste</p>
+        <label class="toggle">
+          <p>Fuente de alto contraste</p>
+          <input type="checkbox" id="high-contrast-text">
+        </label>
         <hr class="separador">
-        <p>Fuente en negrita</p>
+        <label class="toggle">
+          <p>Fuente en negrita</p>
+          <input type="checkbox" id="bold-text">
+        </label>
         <hr class="separador">
-        <p>Habilitar transparencias</p>
+        <label class="toggle">
+          <p>Habilitar transparencias</p>
+          <input type="checkbox" id="enable-transparencies">
+        </label>
         <hr class="separador">
-        <p>Velocidad de animaciones</p>
+        <label class="toggle">
+          <p>Velocidad de animaciones</p>
+          <select id="velocidadAnimaciones">
+            <option value="sinAnimaciones">Sin animaciones</option>
+            <option value="rapida">Rápida</option>
+            <option value="porDefecto" selected>Por defecto</option>
+            <option value="lenta">Lenta</option>
+            <option value="muyLenta">Muy lenta</option>
+          </select>
+        </label>
       </div>
       <h3>Personalización</h3>
       <div class="setting">
@@ -479,9 +504,27 @@
           <input type="checkbox" id="toggle-darkmode">
         </label>
         <hr class="separador">
-        <p>Mapa base</p>
+        <label class="toggle">
+          <p>Mapa base</p>
+          <select id="mapaBase">
+            <option value="claro">Claro</option>
+            <option value="conTemaApp">Con el tema de la aplicación</option>
+            <option value="oscuro">Oscuro</option>
+          </select>
+        </label>
         <hr class="separador">
-        <p>Color de énfasis</p>
+        <label class="toggle">
+          <p>Color de énfasis</p>
+          <select id="colorEnfasis">
+            <option value="amarillo">Amarillo</option>
+            <option value="azul">Azul</option>
+            <option value="lila">Lila</option>
+            <option value="naranja" selected>Naranja</option>
+            <option value="rosa">Rosa</option>
+            <option value="turquesa">Turquesa</option>
+            <option value="verde">Verde</option>
+          </select>
+        </label>
         <hr class="separador">
         <label class="toggle">
           <p>Mostrar botones de zoom</p>
@@ -498,7 +541,17 @@
           <input type="checkbox" id="toggle-filters">
         </label>
         <hr class="separador">
-        <p>Página de inicio</p>
+        <label class="toggle">
+          <p>Página de inicio</p>
+          <select id="pagInicio">
+            <option value="barraLateral">Barra lateral</option>
+            <option value="mapa" selected>Mapa</option>
+            <option value="inicio">Inicio</option>
+            <option value="notificaciones">Notificaciones</option>
+            <option value="configuracion">Configuración</option>
+            <option value="ultimaVez">La de la última vez</option>
+          </select>
+        </label>
       </div>
       <h3>Notificaciones</h3>
       <div class="setting">
@@ -524,7 +577,7 @@
         <hr class="separador">
         <p>Contribuir</p>
         <hr class="separador">
-        <p>v0.2.25</p>
+        <p>v0.2.26</p>
       </div>
       <h3>Más del Consejo de Estudiantes</h3>
       <div class="setting">
@@ -672,8 +725,7 @@
       }
       
       // Icono por defecto
-      setActiveIcon(homeIcon);
-      homeScreen.classList.add('visible');
+      setActiveIcon(mapIcon);
 
       // Eventos para los iconos del dock
       homeIcon.addEventListener('click', () => {
