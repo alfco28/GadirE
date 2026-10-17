@@ -1,8 +1,17 @@
+// Variable global para almacenar las traducciones cargadas
+let currentTranslations = {};
+
 // Función para cargar el JSON según el idioma seleccionado
 async function loadTranslations(language) {
     const response = await fetch(`/locales/${language}.json`);
     const translations = await response.json();
+    currentTranslations = translations; // Guardar las traducciones cargadas
     return translations;
+}
+
+// Función para obtener una traducción por clave
+function getTranslation(key) {
+    return currentTranslations[key] || key; // Devuelve la traducción o la clave si no existe
 }
 
 // Función para actualizar el contenido de la página

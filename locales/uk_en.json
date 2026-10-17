@@ -1,4 +1,12 @@
 {
+    "t-search-title": "Search",
+    "t-map-title": "Map",
+    "t-home-title": "Home",
+    "t-calendar-title": "Calendar",
+    "t-notifications-title": "Notifications",
+    "t-settings-title": "Settings",
+    
+    
     "t-settings-privacy-title": "Privacy",
     "t-settings-privacy-cookies": "Cookies",
     "t-settings-privacy-cookiesPolicy": "Cookies policy",
@@ -7,6 +15,7 @@
     "t-settings-privacy-name": "Name",
     "t-settings-privacy-photo": "Photo",
     "t-settings-privacy-barCode": "Bar code",
+
     "t-settings-accessibility-title": "Accessibility",
     "t-settings-accessibility-fontSize": "Font size",
     "t-settings-accessibility-fontSize-default": "Default",
@@ -42,16 +51,19 @@
     "t-settings-personalisation-landingPage": "Landing page",
     "t-settings-personalisation-startingLocation": "Starting location",
     "t-settings-personalisation-language": "Language",
+
     "t-settings-notifications-title": "Notifications",
     "t-settings-notifications-enablePushNotifications": "Enable push notifications",
     "t-settings-notifications-topicSubscription": "Topic subscription",
     "t-settings-notifications-showFilters": "Show filters",
+
     "t-settings-aboutGadirE-title": "About GadirE",
     "t-settings-aboutGadirE-GadirE": "GadirE",
     "t-settings-aboutGadirE-webPage": "Web page",
     "t-settings-aboutGadirE-software": "Software",
     "t-settings-aboutGadirE-contribute": "Contribute",
     "t-settings-aboutGadirE-version": "Version",
+
     "t-settings-moreFromTheSU-title": "More from the Students' Union",
     "t-settings-moreFromTheSU-webSite": "Web site",
     "t-settings-moreFromTheSU-waChannel": "WhatsApp channel",

@@ -1,4 +1,12 @@
 {
+    "t-search-title": "Buscar",
+    "t-map-title": "Mapa",
+    "t-home-title": "Inicio",
+    "t-calendar-title": "Calendario",
+    "t-notifications-title": "Notificaciones",
+    "t-settings-title": "Configuración",
+
+    
     "t-settings-privacy-title": "Privacidad",
     "t-settings-privacy-cookies": "Cookies",
     "t-settings-privacy-cookiesPolicy": "Política de Cookies",
@@ -7,6 +15,7 @@
     "t-settings-privacy-name": "Nombre",
     "t-settings-privacy-photo": "Foto",
     "t-settings-privacy-barCode": "Código de barras",
+
     "t-settings-accessibility-title": "Accesibilidad",
     "t-settings-accessibility-fontSize": "Tamaño de fuente",
     "t-settings-accessibility-fontSize-default": "Por defecto",
@@ -21,7 +30,6 @@
     "t-settings-accessibility-animationSpeed-default": "Por defecto",
     "t-settings-accessibility-animationSpeed-slow": "Lenta",
     "t-settings-accessibility-animationSpeed-verySlow": "Muy lenta",
-
 
     "t-settings-personalisation-title": "Personalización",
     "t-settings-personalisation-darkMode": "Modo oscuro",
@@ -43,16 +51,19 @@
     "t-settings-personalisation-landingPage": "Página de inicio",
     "t-settings-personalisation-startingLocation": "Ubicación de inicio",
     "t-settings-personalisation-language": "Idioma",
+
     "t-settings-notifications-title": "Notificaciones",
     "t-settings-notifications-enablePushNotifications": "Habilitar notificaciones push",
     "t-settings-notifications-topicSubscription": "Suscripción a temas",
     "t-settings-notifications-showFilters": "Mostrar filtros",
+
     "t-settings-aboutGadirE-title": "Sobre GadirE",
     "t-settings-aboutGadirE-GadirE": "GadirE",
     "t-settings-aboutGadirE-webPage": "Página web",
     "t-settings-aboutGadirE-software": "Software",
     "t-settings-aboutGadirE-contribute": "Contribuir",
     "t-settings-aboutGadirE-version": "Versión",
+
     "t-settings-moreFromTheSU-title": "Más del Consejo de Estudiantes",
     "t-settings-moreFromTheSU-webSite": "Sitio web",
     "t-settings-moreFromTheSU-waChannel": "Canal de WhatsApp",

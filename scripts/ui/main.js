@@ -22,11 +22,11 @@ function hideAllScreens() {
 function updateTitleBar(icon) {
   const titleBar = document.getElementById('title-bar');
   if (icon.id === 'toggle-sidebar') {
-    titleBar.textContent = 'Barra lateral';
+    titleBar.textContent = 'Buscar';
     document.querySelector('.dock').classList.remove('fullscreen');
     document.querySelector('.title-bar').classList.remove('fullscreen');
   } else if (icon.id === 'map-icon') {
-    titleBar.textContent = 'CEUCAtlas';
+    titleBar.textContent = 'Mapa';
     document.querySelector('.dock').classList.remove('fullscreen');
     document.querySelector('.title-bar').classList.remove('fullscreen');
   } else if (icon.id === 'home-icon') {
