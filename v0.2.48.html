@@ -330,6 +330,18 @@
       margin: 5px 0;
     }
 
+    .two-sided-opt {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      justify-content: space-between;
+    }
+
+    /* Para interruptores */
+    .two-sided-opt input {
+      margin-left: auto;
+    }
+
     /* Sidebar */
     #sidebar {
       position: fixed;
@@ -454,17 +466,6 @@
     .fullscreen-footer {
       background-color: transparent;
       height: 176px;
-    }
-
-    /* Interruptores configuración */
-    .toggle {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .toggle input {
-      margin-left: auto;
     }
 
     /* Móvil */
@@ -698,7 +699,7 @@
         </div>
         <h3>Accesibilidad</h3>
         <div class="setting">
-          <label class="toggle">
+          <label class="two-sided-opt">
             <p>Tamaño de fuente</p>
             <select id="tamanoFuente">
               <option value="porDefecto" selected>Por defecto</option>
@@ -707,22 +708,22 @@
             </select>
           </label>
           <hr class="separador">
-          <label class="toggle">
+          <label class="two-sided-opt">
             <p>Fuente de alto contraste</p>
             <input type="checkbox" id="high-contrast-text">
           </label>
           <hr class="separador">
-          <label class="toggle">
+          <label class="two-sided-opt">
             <p>Fuente en negrita</p>
             <input type="checkbox" id="bold-text">
           </label>
           <hr class="separador">
-          <label class="toggle">
+          <label class="two-sided-opt">
             <p>Habilitar transparencias</p>
             <input type="checkbox" id="enable-transparencies">
           </label>
           <hr class="separador">
-          <label class="toggle">
+          <label class="two-sided-opt">
             <p>Velocidad de animaciones</p>
             <select id="velocidadAnimaciones">
               <option value="sinAnimaciones">Sin animaciones</option>
@@ -735,12 +736,12 @@
         </div>
         <h3>Personalización</h3>
         <div class="setting">
-          <label class="toggle">
+          <label class="two-sided-opt">
             <p>Modo oscuro</p>
             <input type="checkbox" id="toggle-darkmode">
           </label>
           <hr class="separador">
-          <label class="toggle">
+          <label class="two-sided-opt">
             <p>Mapa base</p>
             <select id="mapaBase">
               <option value="claro">Claro</option>
@@ -749,7 +750,7 @@
             </select>
           </label>
           <hr class="separador">
-          <label class="toggle">
+          <label class="two-sided-opt">
             <p>Color de énfasis</p>
             <select id="colorEnfasis">
               <option value="amarillo">Amarillo</option>
@@ -762,22 +763,22 @@
             </select>
           </label>
           <hr class="separador">
-          <label class="toggle">
+          <label class="two-sided-opt">
             <p>Mostrar botones de zoom</p>
             <input type="checkbox" id="toggle-zoom-buttons">
           </label>
           <hr class="separador">
-          <label class="toggle">
+          <label class="two-sided-opt">
             <p>Mostrar botón de mi ubicación</p>
             <input type="checkbox" id="toggle-geolocate-button">
           </label>
           <hr class="separador">
-          <label class="toggle">
+          <label class="two-sided-opt">
             <p>Mostrar filtros</p>
             <input type="checkbox" id="toggle-filters">
           </label>
           <hr class="separador">
-          <label class="toggle">
+          <label class="two-sided-opt">
             <p>Página de inicio</p>
             <select id="pagInicio">
               <option value="barraLateral">Barra lateral</option>
@@ -789,7 +790,7 @@
             </select>
           </label>
           <hr class="separador">
-          <label class="toggle">
+          <label class="two-sided-opt">
             <p>Ubicación de inicio</p>
             <select id="ubcInicio">
               <option value="cpBA">Campus Bahía de Algeciras</option>
@@ -800,7 +801,7 @@
             </select>
           </label>
           <hr class="separador">
-          <label class="toggle">
+          <label class="two-sided-opt">
             <p>Idioma</p>
             <select id="localeLang">
               <option value="es" selected>Español</option>
@@ -810,14 +811,14 @@
         </div>
         <h3>Notificaciones</h3>
         <div class="setting">
-          <label class="toggle">
+          <label class="two-sided-opt">
             <p>Habilitar notificaciones push</p>
             <input type="checkbox" id="enable-push-notifications">
           </label>
           <hr class="separador">
           <p>Suscripción a temas para notificaciones push</p>
           <hr class="separador">
-          <label class="toggle">
+          <label class="two-sided-opt">
             <p>Mostrar filtros</p>
             <input type="checkbox" id="toggle-notification-filters">
           </label>
@@ -832,9 +833,9 @@
           <hr class="separador">
           <p>Contribuir</p>
           <hr class="separador">
-          <div style="display: flex; justify-content: space-between; align-items: center;">
+          <div class="two-sided-opt">
             <p>Versión</p>
-            <p>0.2.47</p>
+            <p>0.2.48</p>
           </div>
         </div>
         <h3>Más del Consejo de Estudiantes</h3>
