@@ -577,7 +577,7 @@
         <hr class="separador">
         <p>Contribuir</p>
         <hr class="separador">
-        <p>v0.2.27</p>
+        <p>v0.2.28</p>
       </div>
       <h3>Más del Consejo de Estudiantes</h3>
       <div class="setting">
@@ -862,28 +862,6 @@
       document.getElementById('enable-push-notifications').checked = AppState.get('enablePushNotifications');
       document.getElementById('toggle-notification-filters').checked = AppState.get('showNotificationFilters');
 
-      // Cambio
-      function connectConfigElement(elementId, stateKey, isCheckbox = false) {
-        const element = document.getElementById(elementId);
-        if (!element) {
-          console.warn(`Elemento con ID ${elementId} no encontrado.`);
-          return;
-        }
-      
-        // Cargar el valor guardado en el elemento
-        if (isCheckbox) {
-          element.checked = AppState.get(stateKey);
-        } else {
-          element.value = AppState.get(stateKey);
-        }
-      
-        // Añadir el evento 'change'
-        element.addEventListener('change', (e) => {
-          const value = isCheckbox ? e.target.checked : e.target.value;
-          AppState.set(stateKey, value);
-        });
-      }
-
       // Función para ocultar todas las pantallas
       function hideAllScreens() {
         const screens = [homeScreen, notificationsScreen, settingsScreen];
@@ -896,22 +874,6 @@
           }
         });
       }
-
-      // Conectar todos los elementos de configuración
-      connectConfigElement('toggle-darkmode', 'darkMode', true);
-      connectConfigElement('tamanoFuente', 'fontSize');
-      connectConfigElement('high-contrast-text', 'highContrastText', true);
-      connectConfigElement('bold-text', 'boldText', true);
-      connectConfigElement('enable-transparencies', 'enableTransparencies', true);
-      connectConfigElement('velocidadAnimaciones', 'animationSpeed');
-      connectConfigElement('mapaBase', 'baseMap');
-      connectConfigElement('colorEnfasis', 'emphasisColor');
-      connectConfigElement('toggle-zoom-buttons', 'showZoomButtons', true);
-      connectConfigElement('toggle-geolocate-button', 'showGeolocateButton', true);
-      connectConfigElement('toggle-filters', 'showFilters', true);
-      connectConfigElement('pagInicio', 'homePage');
-      connectConfigElement('enable-push-notifications', 'enablePushNotifications', true);
-      connectConfigElement('toggle-notification-filters', 'showNotificationFilters', true);
 
       // Función para actualizar el título según el icono seleccionado
       function updateTitleBar(icon) {
