@@ -42,7 +42,8 @@
       --color-texto-primario: black;
       --color-texto-secundario: rgba(124, 124, 124);
       --color-fondo-flotante: rgba(247, 247, 247, 0.2);
-      --color-fondo-flotante-fullscreen: rgba(200, 200, 200, 0.2);
+      --color-fondo-flotante-fullscreen-transparente: rgba(200, 200, 200, 0.2);
+      --color-fondo-flotante-fullscreen: rgba(245, 245, 245);
       --color-borde-flotante: rgba(247, 247, 247, 0.3);
       --color-enfasis: orange;
       --color-fondo-elementos: rgba(255, 255, 255, 0.1);
@@ -76,7 +77,8 @@
       --color-fondo-primario: black;
       --color-texto-primario: white;
       --color-fondo-flotante: rgba(42, 44, 46, 0.2);
-      --color-fondo-flotante-fullscreen: rgba(42, 44, 46, 0.8);
+      --color-fondo-flotante-fullscreen-transparente: rgba(42, 44, 46, 0.8);
+      --color-fondo-flotante-fullscreen: rgba(42, 44, 46);
       --color-borde-flotante: rgba(42, 44, 46, 0.3);
       --color-fondo-elementos: rgba(255, 255, 255, 0.08);
       --color-fondo-elementos-hover: rgba(0, 0, 0, 0.4);
@@ -146,7 +148,7 @@
 
     .dock.fullscreen,
     .title-bar.fullscreen {
-      background: var(--color-fondo-flotante-fullscreen) !important;
+      background: var(--color-fondo-flotante-fullscreen-transparente) !important;
     }
 
     /* Iconos del Dock */
@@ -811,7 +813,7 @@
           <hr class="separador">
           <p>Contribuir</p>
           <hr class="separador">
-          <p>v0.2.44</p>
+          <p>v0.2.45</p>
         </div>
         <h3>Más del Consejo de Estudiantes</h3>
         <div class="setting">
