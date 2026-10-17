@@ -9,22 +9,17 @@ async function loadTranslations(language) {
 async function changeLanguage(language) {
     const translations = await loadTranslations(language);
 
-    document.getElementById("t-settings-personalisation-accentColour").textContent = translations["t-settings-personalisation-accentColour"];
-    document.getElementById("t-settings-personalisation-accentColour-yellow").textContent = translations["t-settings-personalisation-accentColour-yellow"];
-    document.getElementById("t-settings-personalisation-accentColour-blue").textContent = translations["t-settings-personalisation-accentColour-blue"];
-    document.getElementById("t-settings-personalisation-accentColour-purple").textContent = translations["t-settings-personalisation-accentColour-purple"];
-    document.getElementById("t-settings-personalisation-accentColour-orange").textContent = translations["t-settings-personalisation-accentColour-orange"];
-    document.getElementById("t-settings-personalisation-accentColour-pink").textContent = translations["t-settings-personalisation-accentColour-pink"];
-    document.getElementById("t-settings-personalisation-accentColour-turquoise").textContent = translations["t-settings-personalisation-accentColour-turquoise"];
-    document.getElementById("t-settings-personalisation-accentColour-green").textContent = translations["t-settings-personalisation-accentColour-green"];
-    document.getElementById("t-settings-personalisation-showZoomControls").textContent = translations["t-settings-personalisation-showZoomControls"];
-    document.getElementById("t-settings-personalisation-showMyLocationButton").textContent = translations["t-settings-personalisation-showMyLocationButton"];
-    document.getElementById("t-settings-personalisation-showFilters").textContent = translations["t-settings-personalisation-showFilters"];
-    document.getElementById("t-settings-personalisation-landingPage").textContent = translations["t-settings-personalisation-landingPage"];
-    document.getElementById("t-settings-personalisation-startingLocation").textContent = translations["t-settings-personalisation-startingLocation"];
-    document.getElementById("t-settings-personalisation-language").textContent = translations["t-settings-personalisation-language"];
-    document.getElementById("t-settings-notifications-title").textContent = translations["t-settings-notifications-title"];
-    
+    // Seleccionar todos los elementos con un atributo id
+    const elementsWithId = document.querySelectorAll("[id]");
+
+    // Recorrer los elementos y actualizar su contenido si hay una traducción disponible
+    elementsWithId.forEach(element => {
+        const translationKey = element.id; // Usar el id como clave
+        if (translations[translationKey]) {
+            element.textContent = translations[translationKey];
+        }
+    });
+
     appConfig.set('localeLang', language); // Guardar el idioma seleccionado en localStorage
 }
 
