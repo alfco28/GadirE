@@ -209,6 +209,15 @@
       visibility: visible;
       position: fixed;
       right: var(--margen);
+      bottom: 126px;
+      height: 38px;
+      width: 38px;
+      font-size: 22px;
+      padding: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: var(--z-index-geolocate);
     }
 
     /* Configuración */
@@ -467,6 +476,10 @@
       </div>
     </div>
 
+    <div class="geolocate-button elemento-flotante">
+      <i class="fa-regular fa-location-arrow"></i>
+    </div>
+
     <div class="title-bar elemento-flotante" id="title-bar">CEUCAtlas</div>
 
     <aside id="sidebar">
@@ -658,7 +671,7 @@
         <hr class="separador">
         <p>Contribuir</p>
         <hr class="separador">
-        <p>v0.2.33</p>
+        <p>v0.2.34</p>
       </div>
       <h3>Más del Consejo de Estudiantes</h3>
       <div class="setting">
