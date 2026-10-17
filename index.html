@@ -12,39 +12,15 @@
   <!-- Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-  <script id="pwa-manifest" type="application/json">
-    {
-      "name": "CEUCAtlas",
-      "short_name": "CEUCAtlas",
-      "description": "Mapa interactivo de la Universidad de Cádiz",
-      "start_url": "/",
-      "display": "standalone",
-      "background_color": "#1f2937",
-      "theme_color": "#1f2937",
-      "icons": [
-        {
-          "src": "https://ceuca.uca.es/wp-content/uploads/2025/12/ceucatlas.webp",
-          "sizes": "192x192",
-          "type": "image/webp"
-        },
-        {
-          "src": "https://ceuca.uca.es/wp-content/uploads/2025/12/ceucatlas.webp",
-          "sizes": "512x512",
-          "type": "image/webp"
-        }
-      ]
-    }
-  </script>
-
-<link rel="stylesheet" href="visuals/general/main.css">
-<link rel="stylesheet" href="visuals/general/dark_mode.css">
-<link rel="stylesheet" href="visuals/specific/map.css">
-<link rel="stylesheet" href="visuals/specific/home.css">
-<link rel="stylesheet" href="visuals/specific/calendar.css">
-<link rel="stylesheet" href="visuals/specific/notifications.css">
-<link rel="stylesheet" href="visuals/specific/settings.css">
-<link rel="stylesheet" href="visuals/general/responsive.css">
-<link rel="stylesheet" href="visuals/general/cookies.css">
+  <link rel="stylesheet" href="visuals/general/main.css">
+  <link rel="stylesheet" href="visuals/general/dark_mode.css">
+  <link rel="stylesheet" href="visuals/specific/map.css">
+  <link rel="stylesheet" href="visuals/specific/home.css">
+  <link rel="stylesheet" href="visuals/specific/calendar.css">
+  <link rel="stylesheet" href="visuals/specific/notifications.css">
+  <link rel="stylesheet" href="visuals/specific/settings.css">
+  <link rel="stylesheet" href="visuals/general/responsive.css">
+  <link rel="stylesheet" href="visuals/general/cookies.css">
 
 </head>
 
@@ -356,7 +332,7 @@
           <hr class="separador">
           <div class="two-sided-opt">
             <p>Versión</p>
-            <p>0.3.50-test</p>
+            <p>0.3.51-test</p>
           </div>
         </div>
         <h3>Más del Consejo de Estudiantes</h3>
@@ -374,16 +350,6 @@
     <div id="map"></div>
   </main>
 
-  <!-- Registro dinámico del manifest.json de la PWA -->
-  <script>
-    const manifestContent = document.getElementById('pwa-manifest').textContent;
-    const manifestBlob = new Blob([manifestContent], { type: 'application/json' });
-    const manifestURL = URL.createObjectURL(manifestBlob);
-    const link = document.createElement('link');
-    link.rel = 'manifest';
-    link.href = manifestURL;
-    document.head.appendChild(link);
-  </script>
 
   <script>
     // Estado de la aplicación (no se guarda)
