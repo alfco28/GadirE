@@ -44,14 +44,17 @@
       --color-fondo-flotante: rgba(247, 247, 247, 0.2);
       --color-fondo-flotante-fullscreen: rgba(200, 200, 200, 0.2);
       --color-borde-flotante: rgba(247, 247, 247, 0.3);
+      --color-enfasis: orange;
       --color-fondo-elementos: rgba(255, 255, 255, 0.1);
       --color-fondo-elementos-hover: rgba(255, 255, 255, 0.4);
       --color-sombra: rgba(0, 0, 0, 0.2);
+
       --difuminado: 8px;
       --radio-borde: 20px;
       --radio-borde-iconos: 20px;
       --tamano-iconos: 30px;
       --duracion-transicion: 0.2s;
+
       --z-index-mapa: 100;
       --z-index-sidebar: 200;
       --z-index-fullscreen: 300;
@@ -155,10 +158,13 @@
       font-size: var(--tamano-iconos);
     }
 
-    .dock-icon:hover, .dock-icon.active {
-      transform: scale(1.1);
-      background: var(--color-fondo-elementos-hover);
-      box-shadow: 0 4px 8px var(--color-sombra);
+    .dock-icon:hover {
+      transform: scale(1.2);
+    }
+    
+    .dock-icon.active {
+      transform: scale(1.2);
+      color: var(--color-enfasis);
     }
 
     /* Configuración */
@@ -577,7 +583,7 @@
         <hr class="separador">
         <p>Contribuir</p>
         <hr class="separador">
-        <p>v0.2.29</p>
+        <p>v0.2.30</p>
       </div>
       <h3>Más del Consejo de Estudiantes</h3>
       <div class="setting">
@@ -722,12 +728,13 @@
       },
     
       applyAnimationSpeed(speed) {
+        console.log('Cambiar valocidad de animaciones a:', speed);
         const duration = {
           'sinAnimaciones': '0s',
           'rapida': '0.1s',
           'porDefecto': '0.2s',
-          'lenta': '0.5s',
-          'muyLenta': '1s'
+          'lenta': '0.4s',
+          'muyLenta': '0.8s'
         }[speed];
         document.documentElement.style.setProperty('--duracion-transicion', duration);
       },
@@ -739,7 +746,16 @@
     
       applyEmphasisColor(color) {
         console.log('Cambiar color de énfasis a:', color);
-        // Aquí iría la lógica para cambiar el color de énfasis
+        const newColor = {
+          'amarillo': 'yellow',
+          'azul': 'blue',
+          'lila': 'purple',
+          'naranja': 'orange',
+          'rosa': 'pink',
+          'turquesa': 'turquoise',
+          'verde': 'green'
+        }[color];
+        document.documentElement.style.setProperty('--color-enfasis', newColor);
       },
     
       applyShowZoomButtons(show) {
