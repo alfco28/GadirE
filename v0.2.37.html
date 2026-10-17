@@ -60,10 +60,11 @@
       --z-index-filter-pair: 210;
       --z-index-geolocate: 220;
       --z-index-sidebar: 300;
-      --z-index-fullscreen: 400;
-      --z-index-setting: 500;
-      --z-index-dock: 600;
-      --z-index-title: 700;
+      --z-index-fullscreen-background: 400;
+      --z-indez-fullscreen-content: 500;
+      --z-index-setting: 600;
+      --z-index-dock: 700;
+      --z-index-title: 800;
       --z-index-cookie: 3000;
 
       --margen: 10px;
@@ -224,7 +225,6 @@
     .setting {
       padding: 5px 10px;
       width: auto;
-      max-width: calc(100% - 80px);
       background: var(--color-fondo-flotante-fullscreen);
       backdrop-filter: blur(var(--difuminado));
       border: 1px solid var(--color-borde-flotante);
@@ -302,32 +302,51 @@
     }
 
     /* Pantallas completas */
-    .fullscreen-content {
+    .fullscreen-background {
       position: fixed;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
       background: var(--color-fondo-primario);
-      backdrop-filter: blur(var(--difuminado));
-      z-index: var(--z-index-fullscreen);
-      display: none;
+      z-index: var(--z-index-fullscreen-background);
+      opacity: 0;
+      pointer-events: none;
+      transition: transform var(--duracion-transicion) ease-in-out, opacity var(--duracion-transicion) ease-in-out;
+    }
+
+    .fullscreen-background.visible {
+      opacity: 1;
+      transform: translateX(0);
+      pointer-events: all;
+    }
+
+    .fullscreen-content {
+      width: 100%;
+      max-width: 1080px;
+      height: 100%;
       padding: 60px 20px 80px;
       overflow-y: auto;
       color: var(--color-texto-primario);
-      transition: transform var(--duracion-transicion) ease-in-out, opacity var(--duracion-transicion) ease-in-out;
-      transform: translateX(-100%);
       opacity: 0;
+      transition: opacity var(--duracion-transicion) ease-in-out;
+      display: none;
     }
 
     .fullscreen-content.visible {
       display: block;
-      transform: translateX(0);
       opacity: 1;
     }
-    
+
     /* Animación de salida */
     .fullscreen-content.hidden {
+      opacity: 0;
+    }
+    
+    .fullscreen-background.hidden {
       transform: translateX(100%);
       opacity: 0;
     }
@@ -492,196 +511,198 @@
     </aside>
 
     <!-- Pantallas completas -->
-    <div id="home-screen" class="fullscreen-content">
-      <p>Ejemplo</p>
-      <p>Ejemplo</p>
-      <p>Ejemplo</p>
-      <p>Ejemplo</p>
-      <p>Ejemplo</p>
-      <p>Ejemplo</p>
-      <p>Ejemplo</p>
-      <p>Ejemplo</p>
-      <p>Ejemplo</p>
-      <p>Ejemplo</p>
-      <p>Ejemplo</p>
-      <p>Ejemplo</p>
-      <p>Ejemplo</p>
-      <p>Ejemplo</p>
-      <p>Ejemplo</p>
-      <p>Ejemplo</p>
-      <p>Ejemplo</p>
-      <p>Ejemplo</p>
-      <p>EjemploEjemploEjemploEj emploEjemploEjem  ploEjemploEjemploEjemploE  jemploEje mploEjemploEjemploEj emploE jemploEjemploEjemplo EjemploEjemploEjem ploEjemploEjemploEjemploEjemp loEjemploEjemploEjem ploEjemploEjemploEjemploEjempl oEjemploEjemploEje mploEjemploEje mploEjemplo</p>
-      <p>Ejemplo</p>
-      <p>Ejemplo</p>
-      <p>Ejemplo</p>
-      <p>Ejemplo</p>
-      <p>Ejemplo</p>
-      <p>Ejemplo</p>
-      <p>Ejemplo</p>
-      <p>Ejemplo</p>
-      <p>Ejemplo</p>
-      <p>Ejemplo</p>
-      <p>Ejemplo</p>
-      <p>Ejemplo</p>
-      <p>Ejemplo</p>
-      <p>Ejemplo</p>
-      <p>Ejemplo</p>
-      <p>Ejemplo</p>
-      <p>Ejemplo</p>
-      <p>Ejemplo</p>
-      <div class="fullscreen-footer"></div>
-    </div>
+    <div id="fullscreen-background" class="fullscreen-background">
+      <div id="home-screen" class="fullscreen-content">
+        <p>Ejemplo</p>
+        <p>Ejemplo</p>
+        <p>Ejemplo</p>
+        <p>Ejemplo</p>
+        <p>Ejemplo</p>
+        <p>Ejemplo</p>
+        <p>Ejemplo</p>
+        <p>Ejemplo</p>
+        <p>Ejemplo</p>
+        <p>Ejemplo</p>
+        <p>Ejemplo</p>
+        <p>Ejemplo</p>
+        <p>Ejemplo</p>
+        <p>Ejemplo</p>
+        <p>Ejemplo</p>
+        <p>Ejemplo</p>
+        <p>Ejemplo</p>
+        <p>Ejemplo</p>
+        <p>EjemploEjemploEjemploEj emploEjemploEjem  ploEjemploEjemploEjemploE  jemploEje mploEjemploEjemploEj emploE jemploEjemploEjemplo EjemploEjemploEjem ploEjemploEjemploEjemploEjemp loEjemploEjemploEjem ploEjemploEjemploEjemploEjempl oEjemploEjemploEje mploEjemploEje mploEjemplo</p>
+        <p>Ejemplo</p>
+        <p>Ejemplo</p>
+        <p>Ejemplo</p>
+        <p>Ejemplo</p>
+        <p>Ejemplo</p>
+        <p>Ejemplo</p>
+        <p>Ejemplo</p>
+        <p>Ejemplo</p>
+        <p>Ejemplo</p>
+        <p>Ejemplo</p>
+        <p>Ejemplo</p>
+        <p>Ejemplo</p>
+        <p>Ejemplo</p>
+        <p>Ejemplo</p>
+        <p>Ejemplo</p>
+        <p>Ejemplo</p>
+        <p>Ejemplo</p>
+        <p>Ejemplo</p>
+        <div class="fullscreen-footer"></div>
+      </div>
 
-    <div id="notifications-screen" class="fullscreen-content">
-       <div class="fullscreen-footer"></div>
-    </div>
+      <div id="notifications-screen" class="fullscreen-content">
+         <div class="fullscreen-footer"></div>
+      </div>
 
-    <div id="settings-screen" class="fullscreen-content">
-      <h3>Privacidad</h3>
-      <div class="setting">
-        <p>Cookies</p>
-        <hr class="separador">
-        <p>Política de cookies</p>
-        <hr class="separador">
-        <p>Política de privacidad</p>
-        <hr class="separador">
-        <p>Permitir acceso a ubicación</p>
-        <hr class="separador">
-        <p>Nombre</p>
-        <hr class="separador">
-        <p>Foto</p>
-        <hr class="separador">
-        <p>Código de barras</p>
+      <div id="settings-screen" class="fullscreen-content">
+        <h3>Privacidad</h3>
+        <div class="setting">
+          <p>Cookies</p>
+          <hr class="separador">
+          <p>Política de cookies</p>
+          <hr class="separador">
+          <p>Política de privacidad</p>
+          <hr class="separador">
+          <p>Permitir acceso a ubicación</p>
+          <hr class="separador">
+          <p>Nombre</p>
+          <hr class="separador">
+          <p>Foto</p>
+          <hr class="separador">
+          <p>Código de barras</p>
+        </div>
+        <h3>Accesibilidad</h3>
+        <div class="setting">
+          <label class="toggle">
+            <p>Tamaño de fuente</p>
+            <select id="tamanoFuente">
+              <option value="porDefecto" selected>Por defecto</option>
+              <option value="grande">Grande</option>
+              <option value="muyGrande">Muy grande</option>
+            </select>
+          </label>
+          <hr class="separador">
+          <label class="toggle">
+            <p>Fuente de alto contraste</p>
+            <input type="checkbox" id="high-contrast-text">
+          </label>
+          <hr class="separador">
+          <label class="toggle">
+            <p>Fuente en negrita</p>
+            <input type="checkbox" id="bold-text">
+          </label>
+          <hr class="separador">
+          <label class="toggle">
+            <p>Habilitar transparencias</p>
+            <input type="checkbox" id="enable-transparencies">
+          </label>
+          <hr class="separador">
+          <label class="toggle">
+            <p>Velocidad de animaciones</p>
+            <select id="velocidadAnimaciones">
+              <option value="sinAnimaciones">Sin animaciones</option>
+              <option value="rapida">Rápida</option>
+              <option value="porDefecto" selected>Por defecto</option>
+              <option value="lenta">Lenta</option>
+              <option value="muyLenta">Muy lenta</option>
+            </select>
+          </label>
+        </div>
+        <h3>Personalización</h3>
+        <div class="setting">
+          <label class="toggle">
+            <p>Modo oscuro</p>
+            <input type="checkbox" id="toggle-darkmode">
+          </label>
+          <hr class="separador">
+          <label class="toggle">
+            <p>Mapa base</p>
+            <select id="mapaBase">
+              <option value="claro">Claro</option>
+              <option value="conTemaApp">Con el tema de la aplicación</option>
+              <option value="oscuro">Oscuro</option>
+            </select>
+          </label>
+          <hr class="separador">
+          <label class="toggle">
+            <p>Color de énfasis</p>
+            <select id="colorEnfasis">
+              <option value="amarillo">Amarillo</option>
+              <option value="azul">Azul</option>
+              <option value="lila">Lila</option>
+              <option value="naranja" selected>Naranja</option>
+              <option value="rosa">Rosa</option>
+              <option value="turquesa">Turquesa</option>
+              <option value="verde">Verde</option>
+            </select>
+          </label>
+          <hr class="separador">
+          <label class="toggle">
+            <p>Mostrar botones de zoom</p>
+            <input type="checkbox" id="toggle-zoom-buttons">
+          </label>
+          <hr class="separador">
+          <label class="toggle">
+            <p>Mostrar botón de mi ubicación</p>
+            <input type="checkbox" id="toggle-geolocate-button">
+          </label>
+          <hr class="separador">
+          <label class="toggle">
+            <p>Mostrar filtros</p>
+            <input type="checkbox" id="toggle-filters">
+          </label>
+          <hr class="separador">
+          <label class="toggle">
+            <p>Página de inicio</p>
+            <select id="pagInicio">
+              <option value="barraLateral">Barra lateral</option>
+              <option value="mapa" selected>Mapa</option>
+              <option value="inicio">Inicio</option>
+              <option value="notificaciones">Notificaciones</option>
+              <option value="configuracion">Configuración</option>
+              <option value="ultimaVez">La de la última vez</option>
+            </select>
+          </label>
+        </div>
+        <h3>Notificaciones</h3>
+        <div class="setting">
+          <label class="toggle">
+            <p>Habilitar notificaciones push</p>
+            <input type="checkbox" id="enable-push-notifications">
+          </label>
+          <hr class="separador">
+          <p>Suscripción a temas para notificaciones push</p>
+          <hr class="separador">
+          <label class="toggle">
+            <p>Mostrar filtros</p>
+            <input type="checkbox" id="toggle-notification-filters">
+          </label>
+        </div>
+        <h3>Sobre el CEUCAtlas</h3>
+        <div class="setting">
+          <p>El CEUCAtlas</p>
+          <hr class="separador">
+          <p>Página web</p>
+          <hr class="separador">
+          <p>Software</p>
+          <hr class="separador">
+          <p>Contribuir</p>
+          <hr class="separador">
+          <p>v0.2.37</p>
+        </div>
+        <h3>Más del Consejo de Estudiantes</h3>
+        <div class="setting">
+          <p>Sitio web</p>
+          <hr class="separador">
+          <p>Canal de WhatsApp</p>
+          <hr class="separador">
+          <p>Perfil de Instagram</p>
+        </div>
+        <div class="fullscreen-footer"></div>
       </div>
-      <h3>Accesibilidad</h3>
-      <div class="setting">
-        <label class="toggle">
-          <p>Tamaño de fuente</p>
-          <select id="tamanoFuente">
-            <option value="porDefecto" selected>Por defecto</option>
-            <option value="grande">Grande</option>
-            <option value="muyGrande">Muy grande</option>
-          </select>
-        </label>
-        <hr class="separador">
-        <label class="toggle">
-          <p>Fuente de alto contraste</p>
-          <input type="checkbox" id="high-contrast-text">
-        </label>
-        <hr class="separador">
-        <label class="toggle">
-          <p>Fuente en negrita</p>
-          <input type="checkbox" id="bold-text">
-        </label>
-        <hr class="separador">
-        <label class="toggle">
-          <p>Habilitar transparencias</p>
-          <input type="checkbox" id="enable-transparencies">
-        </label>
-        <hr class="separador">
-        <label class="toggle">
-          <p>Velocidad de animaciones</p>
-          <select id="velocidadAnimaciones">
-            <option value="sinAnimaciones">Sin animaciones</option>
-            <option value="rapida">Rápida</option>
-            <option value="porDefecto" selected>Por defecto</option>
-            <option value="lenta">Lenta</option>
-            <option value="muyLenta">Muy lenta</option>
-          </select>
-        </label>
-      </div>
-      <h3>Personalización</h3>
-      <div class="setting">
-        <label class="toggle">
-          <p>Modo oscuro</p>
-          <input type="checkbox" id="toggle-darkmode">
-        </label>
-        <hr class="separador">
-        <label class="toggle">
-          <p>Mapa base</p>
-          <select id="mapaBase">
-            <option value="claro">Claro</option>
-            <option value="conTemaApp">Con el tema de la aplicación</option>
-            <option value="oscuro">Oscuro</option>
-          </select>
-        </label>
-        <hr class="separador">
-        <label class="toggle">
-          <p>Color de énfasis</p>
-          <select id="colorEnfasis">
-            <option value="amarillo">Amarillo</option>
-            <option value="azul">Azul</option>
-            <option value="lila">Lila</option>
-            <option value="naranja" selected>Naranja</option>
-            <option value="rosa">Rosa</option>
-            <option value="turquesa">Turquesa</option>
-            <option value="verde">Verde</option>
-          </select>
-        </label>
-        <hr class="separador">
-        <label class="toggle">
-          <p>Mostrar botones de zoom</p>
-          <input type="checkbox" id="toggle-zoom-buttons">
-        </label>
-        <hr class="separador">
-        <label class="toggle">
-          <p>Mostrar botón de mi ubicación</p>
-          <input type="checkbox" id="toggle-geolocate-button">
-        </label>
-        <hr class="separador">
-        <label class="toggle">
-          <p>Mostrar filtros</p>
-          <input type="checkbox" id="toggle-filters">
-        </label>
-        <hr class="separador">
-        <label class="toggle">
-          <p>Página de inicio</p>
-          <select id="pagInicio">
-            <option value="barraLateral">Barra lateral</option>
-            <option value="mapa" selected>Mapa</option>
-            <option value="inicio">Inicio</option>
-            <option value="notificaciones">Notificaciones</option>
-            <option value="configuracion">Configuración</option>
-            <option value="ultimaVez">La de la última vez</option>
-          </select>
-        </label>
-      </div>
-      <h3>Notificaciones</h3>
-      <div class="setting">
-        <label class="toggle">
-          <p>Habilitar notificaciones push</p>
-          <input type="checkbox" id="enable-push-notifications">
-        </label>
-        <hr class="separador">
-        <p>Suscripción a temas para notificaciones push</p>
-        <hr class="separador">
-        <label class="toggle">
-          <p>Mostrar filtros</p>
-          <input type="checkbox" id="toggle-notification-filters">
-        </label>
-      </div>
-      <h3>Sobre el CEUCAtlas</h3>
-      <div class="setting">
-        <p>El CEUCAtlas</p>
-        <hr class="separador">
-        <p>Página web</p>
-        <hr class="separador">
-        <p>Software</p>
-        <hr class="separador">
-        <p>Contribuir</p>
-        <hr class="separador">
-        <p>v0.2.36</p>
-      </div>
-      <h3>Más del Consejo de Estudiantes</h3>
-      <div class="setting">
-        <p>Sitio web</p>
-        <hr class="separador">
-        <p>Canal de WhatsApp</p>
-        <hr class="separador">
-        <p>Perfil de Instagram</p>
-      </div>
-      <div class="fullscreen-footer"></div>
     </div>
 
     <div id="map"></div>
@@ -981,15 +1002,12 @@
 
       // Función para ocultar todas las pantallas
       function hideAllScreens() {
-        const screens = [homeScreen, notificationsScreen, settingsScreen];
+        const background = document.getElementById('fullscreen-background');
+        const screens = document.querySelectorAll('.fullscreen-content');
         screens.forEach(screen => {
-          if (screen.classList.contains('visible')) {
-            screen.classList.add('hidden');
-            setTimeout(() => {
-              screen.classList.remove('visible', 'hidden');
-            }, 200); // Tiempo igual a la duración de la animación
-          }
+          screen.classList.remove('visible');
         });
+        background.classList.remove('visible');
       }
 
       // Función para actualizar el título según el icono seleccionado
@@ -1027,31 +1045,37 @@
       // Eventos para los iconos del dock
       homeIcon.addEventListener('click', () => {
         hideAllScreens();
+        const background = document.getElementById('fullscreen-background');
+        background.classList.add('visible');
         setTimeout(() => {
           homeScreen.classList.add('visible');
           document.querySelector('.dock').classList.add('fullscreen');
           document.querySelector('.title-bar').classList.add('fullscreen');
-        }, 50); // Pequeño retraso para permitir la animación de salida
+        }, 10);
         setActiveIcon(homeIcon);
       });
 
       notificationsIcon.addEventListener('click', () => {
         hideAllScreens();
+        const background = document.getElementById('fullscreen-background');
+        background.classList.add('visible');
         setTimeout(() => {
           notificationsScreen.classList.add('visible');
           document.querySelector('.dock').classList.add('fullscreen');
           document.querySelector('.title-bar').classList.add('fullscreen');
-        }, 50);
+        }, 10);
         setActiveIcon(notificationsIcon);
       });
 
       settingsIcon.addEventListener('click', () => {
         hideAllScreens();
+        const background = document.getElementById('fullscreen-background');
+        background.classList.add('visible');
         setTimeout(() => {
           settingsScreen.classList.add('visible');
           document.querySelector('.dock').classList.add('fullscreen');
           document.querySelector('.title-bar').classList.add('fullscreen');
-        }, 50);
+        }, 10);
         setActiveIcon(settingsIcon);
       });
 
