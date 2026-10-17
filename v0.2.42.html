@@ -63,8 +63,9 @@
       --z-index-fullscreen-background: 400;
       --z-indez-fullscreen-content: 500;
       --z-index-setting: 600;
-      --z-index-dock: 700;
-      --z-index-title: 800;
+      --z-index-selectec-home-tile: 700;
+      --z-index-dock: 800;
+      --z-index-title: 900;
       --z-index-cookie: 3000;
 
       --margen: 10px;
@@ -234,6 +235,7 @@
       grid-template-columns: 2fr 2fr 2fr;
       grid-auto-rows: 100px 100px;
       overflow-y: auto;
+      overflow-x: visible;
       gap: var(--margen);
     }
 
@@ -294,6 +296,12 @@
       box-shadow: 0 2px 4px var(--color-sombra);
       border-radius: var(--radio-borde);
       overflow: hidden;
+    }
+
+    .tile-1x1:hover, .tile-1x3:hover, .tile-1x2:hover, .tile-1x2-r:hover {
+      transform: scale(1.2);
+      transform-origin: center;
+      z-index: var(--z-index-selectec-home-tile);
     }
 
     /* Configuración */
@@ -406,6 +414,7 @@
       height: 100%;
       padding: 60px 20px 80px;
       overflow-y: auto;
+      overflow-x: visible;
       color: var(--color-texto-primario);
       transition: opacity var(--duracion-transicion) ease-in-out;
       opacity: 0;
@@ -798,7 +807,7 @@
           <hr class="separador">
           <p>Contribuir</p>
           <hr class="separador">
-          <p>v0.2.41</p>
+          <p>v0.2.42</p>
         </div>
         <h3>Más del Consejo de Estudiantes</h3>
         <div class="setting">
