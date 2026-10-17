@@ -2,7 +2,12 @@
 toggleSidebar.addEventListener('click', () => {
   hideAllScreens();
   sidebar.classList.toggle('visible');
-  setActiveIcon(toggleSidebar);
+  if (!sidebar.classList.contains('visible')) {
+    // Si el sidebar se oculta, selecciona el mapIcon como activo
+    setActiveIcon(mapIcon);
+  } else {
+    setActiveIcon(toggleSidebar);
+  }
 });
 
 // Ocultar sidebar al hacer clic en otro icono del dock
