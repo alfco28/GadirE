@@ -41,9 +41,9 @@
       --color-fondo-primario: white;
       --color-texto-primario: black;
       --color-texto-secundario: rgba(124, 124, 124);
-      --color-fondo-flotante: rgba(200, 200, 200, 0.2);
-      --color-fondo-flotante-fullscreen: rgba(200, 200, 200);
-      --color-borde-flotante: rgba(200, 200, 200, 0.3);
+      --color-fondo-flotante: rgba(247, 247, 247, 0.2);
+      --color-fondo-flotante-fullscreen: rgba(200, 200, 200, 0.2);
+      --color-borde-flotante: rgba(247, 247, 247, 0.3);
       --color-fondo-elementos: rgba(255, 255, 255, 0.1);
       --color-fondo-elementos-hover: rgba(255, 255, 255, 0.4);
       --color-sombra: rgba(0, 0, 0, 0.2);
@@ -52,21 +52,22 @@
       --radio-borde-iconos: 20px;
       --tamano-iconos: 30px;
       --duracion-transicion: 0.2s;
+      --z-index-mapa: 100;
+      --z-index-sidebar: 200;
+      --z-index-fullscreen: 300;
+      --z-index-setting: 350;
       --z-index-dock: 400;
       --z-index-title: 500;
-      --z-index-sidebar: 200;
       --z-index-cookie: 3000;
-      --z-index-mapa: 100;
-      --z-index-fullscreen: 300;
     }
 
     /* Modo oscuro */
     html.dark {
       --color-fondo-primario: black;
       --color-texto-primario: white;
-      --color-fondo-flotante: rgba(52, 54, 56, 0.2);
-      --color-fondo-flotante-fullscreen: rgba(52, 54, 56);
-      --color-borde-flotante: rgba(52, 54, 56, 0.3);
+      --color-fondo-flotante: rgba(42, 44, 46, 0.2);
+      --color-fondo-flotante-fullscreen: rgba(42, 44, 46, 0.8);
+      --color-borde-flotante: rgba(42, 44, 46, 0.3);
       --color-fondo-elementos: rgba(255, 255, 255, 0.08);
       --color-fondo-elementos-hover: rgba(0, 0, 0, 0.4);
       --color-sombra: rgba(0, 0, 0, 0.6);
@@ -133,6 +134,11 @@
       z-index: var(--z-index-dock);
     }
 
+    .dock.fullscreen,
+    .title-bar.fullscreen {
+      background: var(--color-fondo-flotante-fullscreen) !important;
+    }
+
     /* Iconos del Dock */
     .dock-icon {
       width: 50px;
@@ -160,13 +166,13 @@
       padding: 5px 10px;
       width: auto;
       max-width: calc(100% - 80px);
-      background: var(--color-fondo-flotante);
+      background: var(--color-fondo-flotante-fullscreen);
       backdrop-filter: blur(var(--difuminado));
       border: 1px solid var(--color-borde-flotante);
       box-shadow: 0 2px 4px var(--color-sombra);
       border-radius: var(--radio-borde);
       overflow: hidden;
-      z-index: var(--z-index-dock);
+      z-index: var(--z-index-setting);
     }
 
     /* Sidebar */
@@ -442,7 +448,7 @@
       </div>
       <h3>Sobre el CEUCAtlas</h3>
       <div class="setting">
-        <p>v0.2.19</p>
+        <p>v0.2.20</p>
       </div>
     </div>
 
@@ -560,8 +566,12 @@
         const titleBar = document.getElementById('title-bar');
         if (icon.id === 'toggle-sidebar') {
           titleBar.textContent = 'Barra lateral';
+          document.querySelector('.dock').classList.remove('fullscreen');
+          document.querySelector('.title-bar').classList.remove('fullscreen');
         } else if (icon.id === 'map-icon') {
           titleBar.textContent = 'CEUCAtlas';
+          document.querySelector('.dock').classList.remove('fullscreen');
+          document.querySelector('.title-bar').classList.remove('fullscreen');
         } else if (icon.id === 'home-icon') {
           titleBar.textContent = 'Inicio';
         } else if (icon.id === 'notifications-icon') {
@@ -589,6 +599,8 @@
         hideAllScreens();
         setTimeout(() => {
           homeScreen.classList.add('visible');
+          document.querySelector('.dock').classList.add('fullscreen');
+          document.querySelector('.title-bar').classList.add('fullscreen');
         }, 50); // Pequeño retraso para permitir la animación de salida
         setActiveIcon(homeIcon);
       });
@@ -597,6 +609,8 @@
         hideAllScreens();
         setTimeout(() => {
           notificationsScreen.classList.add('visible');
+          document.querySelector('.dock').classList.add('fullscreen');
+          document.querySelector('.title-bar').classList.add('fullscreen');
         }, 50);
         setActiveIcon(notificationsIcon);
       });
@@ -605,6 +619,8 @@
         hideAllScreens();
         setTimeout(() => {
           settingsScreen.classList.add('visible');
+          document.querySelector('.dock').classList.add('fullscreen');
+          document.querySelector('.title-bar').classList.add('fullscreen');
         }, 50);
         setActiveIcon(settingsIcon);
       });
