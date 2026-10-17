@@ -22,19 +22,19 @@ function hideAllScreens() {
 function updateTitleBar(icon) {
   const titleBar = document.getElementById('title-bar');
   if (icon.id === 'toggle-sidebar') {
-    titleBar.textContent = 'Buscar';
+    titleBar.textContent = getTranslation('t-search-title');
     document.querySelector('.dock').classList.remove('fullscreen');
     document.querySelector('.title-bar').classList.remove('fullscreen');
   } else if (icon.id === 'map-icon') {
-    titleBar.textContent = 'Mapa';
+    titleBar.textContent = 'Mapa'; //Hay que agregar la traducción para el título del mapa, pero deja de funcionar si se hace ¿?
     document.querySelector('.dock').classList.remove('fullscreen');
     document.querySelector('.title-bar').classList.remove('fullscreen');
   } else if (icon.id === 'home-icon') {
-    titleBar.textContent = 'Inicio';
+    titleBar.textContent = getTranslation('t-home-title');
   } else if (icon.id === 'notifications-icon') {
-    titleBar.textContent = 'Notificaciones';
+    titleBar.textContent = getTranslation('t-notifications-title');
   } else if (icon.id === 'settings-icon') {
-    titleBar.textContent = 'Configuración';
+    titleBar.textContent = getTranslation('t-settings-title');
   }
 }
       
