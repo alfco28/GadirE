@@ -1,0 +1,31 @@
+    /* Configuración */
+    .setting {
+      padding: 5px 10px;
+      width: auto;
+      background: var(--color-fondo-flotante-fullscreen);
+      backdrop-filter: blur(var(--difuminado));
+      border: 1px solid var(--color-borde-flotante);
+      box-shadow: 0 2px 4px var(--color-sombra);
+      border-radius: var(--radio-borde);
+      overflow: hidden;
+      z-index: var(--z-index-setting);
+    }
+
+    .separador {
+      border: none;
+      height: 1px;
+      background-color: rgba(127, 127, 127);
+      margin: 5px 0;
+    }
+
+    .two-sided-opt {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      justify-content: space-between;
+    }
+
+    /* Para interruptores */
+    .two-sided-opt input {
+      margin-left: auto;
+    }

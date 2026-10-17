@@ -1,0 +1,107 @@
+    /* Filters */
+    .filters {
+      visibility: visible;
+      position: fixed;
+      left: 0;
+      bottom: 86px;
+      padding: 10px;
+      z-index: var(--z-index-filters);
+      white-space: nowrap;
+      overflow-x: auto;
+      width: 100%;
+      background-color: transparent;
+      display: flex;
+      flex-direction: row;
+      flex-wrap: nowrap;
+      gap: 10px;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+    }
+
+    .filters::-webkit-scrollbar {
+      display: none;
+    }
+
+    .filter-pair {
+      visibility: visible;
+      padding: 4px;
+      font-size: 12px;
+      z-index: var(--z-index-filter-pair);
+      flex-shrink: 0;
+    }
+
+    /* Geolocate button */
+    .geolocate-button {
+      visibility: visible;
+      position: fixed;
+      right: var(--margen);
+      bottom: 126px;
+      height: 38px;
+      width: 38px;
+      font-size: 22px;
+      padding: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: var(--z-index-geolocate);
+    }
+
+    /* Sidebar */
+    #sidebar {
+      position: fixed;
+      top: 56px;
+      bottom: 96px;
+      left: 10px;
+      width: 320px;
+      height: auto;
+      background: var(--color-fondo-flotante);
+      backdrop-filter: blur(var(--difuminado));
+      border-radius: var(--radio-borde);
+      border: 1px solid var(--color-borde-flotante);
+      box-shadow: 2px 2px 8px var(--color-sombra);
+      color: var(--color-texto-secundario);
+      display: flex;
+      flex-direction: column;
+      z-index: var(--z-index-sidebar);
+      overflow: hidden;
+      transform: translateX(-100%);
+      transition: transform var(--duracion-transicion) ease-in-out;
+    }
+
+    #sidebar.visible {
+      transform: translateX(0);
+    }
+
+    #sidebar.hidden {
+      pointer-events: none;
+      transform: translateX(-100%);
+    }
+
+    .sidebar-header {
+      padding: 10px;
+      flex-shrink: 0;
+    }
+
+    .sidebar-body {
+      flex: 1;
+      overflow-y: auto;
+      padding: 0 10px;
+    }
+
+    .sidebar-logo-ceucatlas {
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+      width: 90%;
+      max-width: 300px;
+    }
+
+    /* Mapa */
+    #map {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: var(--z-index-mapa);
+    }

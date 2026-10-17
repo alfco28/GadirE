@@ -1,0 +1,20 @@
+/* Modo oscuro */
+html.dark {
+    --color-fondo-primario: black;
+    --color-texto-primario: white;
+    --color-fondo-flotante: rgba(42, 44, 46, 0.2);
+    --color-fondo-flotante-fullscreen-transparente: rgba(42, 44, 46, 0.8);
+    --color-fondo-flotante-fullscreen: rgba(42, 44, 46);
+    --color-borde-flotante: rgba(42, 44, 46, 0.3);
+    --color-fondo-elementos: rgba(255, 255, 255, 0.08);
+    --color-fondo-elementos-hover: rgba(0, 0, 0, 0.4);
+    --color-sombra: rgba(0, 0, 0, 0.6);
+}
+
+/* Transición a modo oscuro */
+* {
+    transition:
+        background-color var(--duracion-transicion) ease,
+        color var(--duracion-transicion) ease,
+        border-color var(--duracion-transicion) ease;
+}

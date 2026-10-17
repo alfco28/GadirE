@@ -1,0 +1,21 @@
+{
+    "name": "CEUCAtlas",
+    "short_name": "CEUCAtlas",
+    "description": "Mapa interactivo de la Universidad de Cádiz",
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#1f2937",
+    "theme_color": "#1f2937",
+    "icons": [
+    {
+        "src": "assets/logo_ceucatlas.webp",
+        "sizes": "192x192",
+        "type": "image/webp"
+    },
+    {
+        "src": "assets/logo_ceucatlas.webp",
+        "sizes": "512x512",
+        "type": "image/webp"
+    }
+    ]
+}

@@ -1,0 +1,188 @@
+:root {
+    --color-fondo-primario: white;
+    --color-texto-primario: black;
+    --color-texto-secundario: rgba(124, 124, 124);
+    --color-fondo-flotante: rgba(247, 247, 247, 0.2);
+    --color-fondo-flotante-fullscreen-transparente: rgba(200, 200, 200, 0.2);
+    --color-fondo-flotante-fullscreen: rgba(245, 245, 245);
+    --color-borde-flotante: rgba(247, 247, 247, 0.3);
+    --color-enfasis: orange;
+    --color-fondo-elementos: rgba(255, 255, 255, 0.1);
+    --color-fondo-elementos-hover: rgba(255, 255, 255, 0.4);
+    --color-sombra: rgba(0, 0, 0, 0.2);
+
+    --difuminado: 8px;
+    --radio-borde: 20px;
+    --radio-borde-iconos: 20px;
+    --tamano-iconos: 30px;
+    --duracion-transicion: 0.2s;
+
+    --z-index-mapa: 100;
+    --z-index-filters: 200;
+    --z-index-filter-pair: 210;
+    --z-index-geolocate: 220;
+    --z-index-sidebar: 300;
+    --z-index-fullscreen-background: 400;
+    --z-indez-fullscreen-content: 500;
+    --z-index-setting: 600;
+    --z-index-selectec-home-tile: 700;
+    --z-index-dock: 800;
+    --z-index-title: 900;
+    --z-index-cookie: 3000;
+
+    --margen: 10px;
+}
+
+body {
+    margin: 0;
+    font-family: system-ui, Arial;
+    background-color: var(--color-fondo-primario);
+    color: var(--color-texto-primario);
+    overflow: hidden;
+}
+
+#layout {
+    display: flex;
+    height: 100dvh;
+    width: 100%;
+    position: relative;
+}
+
+/* Estilo para elementos flotantes con blur */
+.elemento-flotante {
+    background: var(--color-fondo-flotante);
+    backdrop-filter: blur(var(--difuminado));
+    border: 1px solid var(--color-borde-flotante);
+    box-shadow: 0 2px 4px var(--color-sombra);
+    border-radius: var(--radio-borde);
+    overflow: hidden;
+    z-index: var(--z-index-dock);
+}
+
+/* Title Bar */
+.title-bar {
+    position: fixed;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 10px;
+    width: fit-content;
+    font-family: sans-serif;
+    font-weight: bold;
+    font-size: 16px;
+    z-index: var(--z-index-title);
+}
+
+/* Dock */
+.dock {
+    position: fixed;
+    bottom: 16px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 10px;
+    padding: 10px;
+    width: fit-content;
+    z-index: var(--z-index-dock);
+}
+
+.dock.fullscreen,
+.title-bar.fullscreen {
+    background: var(--color-fondo-flotante-fullscreen-transparente) !important;
+}
+
+/* Iconos del Dock */
+.dock-icon {
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radio-borde-iconos);
+    background: transparent;
+    transition: all var(--duracion-transicion) ease;
+    cursor: pointer;
+    user-select: none;
+    color: var(--color-texto-primario);
+    font-size: var(--tamano-iconos);
+}
+
+.dock-icon:hover {
+    transform: scale(1.2);
+}
+    
+.dock-icon.active {
+    transform: scale(1.2);
+    color: var(--color-enfasis);
+}
+
+/* Pantallas completas */
+.fullscreen-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    background: var(--color-fondo-primario);
+    z-index: var(--z-index-fullscreen-background);
+    pointer-events: none;
+    transition: transform var(--duracion-transicion) ease-in-out, opacity var(--duracion-transicion) ease-in-out;
+    opacity: 0;
+    display: flex;
+}
+
+.fullscreen-background.visible {
+    opacity: 1;
+    transform: translateX(0);
+    pointer-events: all;
+}
+
+.fullscreen-content {
+    width: 100%;
+    max-width: 720px;
+    height: 100%;
+    padding: 60px 20px 80px;
+    overflow-y: auto;
+    overflow-x: visible;
+    color: var(--color-texto-primario);
+    transition: opacity var(--duracion-transicion) ease-in-out;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.fullscreen-content.visible {
+    pointer-events: all;
+    display: block;
+    opacity: 1;
+}
+
+.fullscreen-content h3 {
+    margin-left: var(--margen);
+    padding-top: var(--margen);
+}
+
+/* Animación de salida */
+.fullscreen-content.hidden {
+    opacity: 0;
+    pointer-events: none;
+    display: none;
+}
+    
+.fullscreen-background.hidden {
+    transform: translateX(100%);
+    opacity: 0;
+    pointer-events: none;
+}
+
+.fullscreen-header {
+    background-color: transparent;
+    height: 86px;
+}
+
+.fullscreen-footer {
+    background-color: transparent;
+    height: 176px;
+}
