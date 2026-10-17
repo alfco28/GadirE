@@ -221,6 +221,81 @@
       z-index: var(--z-index-geolocate);
     }
 
+    /* Inicio */
+    #home-screen {
+      padding-left: 10px !important;
+      padding-right: 10px !important;
+    }
+
+    .home-grid {
+      background: transparent;
+      display: grid;
+      padding: var(--margen);
+      grid-template-columns: 2fr 2fr 2fr;
+      grid-auto-rows: 100px 100px;
+      overflow-y: auto;
+      gap: var(--margen);
+    }
+
+    .tile-1x1 {
+      display: flex;
+      padding: 10px;
+      width: auto;
+      justify-content: center;
+      align-items: center;
+      background: var(--color-fondo-flotante-fullscreen);
+      backdrop-filter: blur(var(--difuminado));
+      border: 1px solid var(--color-borde-flotante);
+      box-shadow: 0 2px 4px var(--color-sombra);
+      border-radius: var(--radio-borde);
+      overflow: hidden;
+    }
+
+    .tile-1x3 {
+      grid-column: 1 / 4;
+      display: flex;
+      padding: 10px;
+      width: auto;
+      justify-content: center;
+      align-items: center;
+      background: var(--color-fondo-flotante-fullscreen);
+      backdrop-filter: blur(var(--difuminado));
+      border: 1px solid var(--color-borde-flotante);
+      box-shadow: 0 2px 4px var(--color-sombra);
+      border-radius: var(--radio-borde);
+      overflow: hidden;
+    }
+
+    .tile-1x2 {
+      grid-column: 1 / 3;
+      display: flex;
+      padding: 10px;
+      width: auto;
+      justify-content: center;
+      align-items: center;
+      background: var(--color-fondo-flotante-fullscreen);
+      backdrop-filter: blur(var(--difuminado));
+      border: 1px solid var(--color-borde-flotante);
+      box-shadow: 0 2px 4px var(--color-sombra);
+      border-radius: var(--radio-borde);
+      overflow: hidden;
+    }
+
+    .tile-1x2-r {
+      grid-column: 2 / 4;
+      display: flex;
+      padding: 10px;
+      width: auto;
+      justify-content: center;
+      align-items: center;
+      background: var(--color-fondo-flotante-fullscreen);
+      backdrop-filter: blur(var(--difuminado));
+      border: 1px solid var(--color-borde-flotante);
+      box-shadow: 0 2px 4px var(--color-sombra);
+      border-radius: var(--radio-borde);
+      overflow: hidden;
+    }
+
     /* Configuración */
     .setting {
       padding: 5px 10px;
@@ -358,7 +433,7 @@
 
     .fullscreen-header {
       background-color: transparent;
-      height: 56px;
+      height: 86px;
     }
 
     .fullscreen-footer {
@@ -524,43 +599,62 @@
     <div id="fullscreen-background" class="fullscreen-background">
       <div id="home-screen" class="fullscreen-content">
         <div class="fullscreen-header"></div>
-        <p>Ejemplo</p>
-        <p>Ejemplo</p>
-        <p>Ejemplo</p>
-        <p>Ejemplo</p>
-        <p>Ejemplo</p>
-        <p>Ejemplo</p>
-        <p>Ejemplo</p>
-        <p>Ejemplo</p>
-        <p>Ejemplo</p>
-        <p>Ejemplo</p>
-        <p>Ejemplo</p>
-        <p>Ejemplo</p>
-        <p>Ejemplo</p>
-        <p>Ejemplo</p>
-        <p>Ejemplo</p>
-        <p>Ejemplo</p>
-        <p>Ejemplo</p>
-        <p>Ejemplo</p>
-        <p>EjemploEjemploEjemploEj emploEjemploEjem  ploEjemploEjemploEjemploE  jemploEje mploEjemploEjemploEj emploE jemploEjemploEjemplo EjemploEjemploEjem ploEjemploEjemploEjemploEjemp loEjemploEjemploEjem ploEjemploEjemploEjemploEjempl oEjemploEjemploEje mploEjemploEje mploEjemplo</p>
-        <p>Ejemplo</p>
-        <p>Ejemplo</p>
-        <p>Ejemplo</p>
-        <p>Ejemplo</p>
-        <p>Ejemplo</p>
-        <p>Ejemplo</p>
-        <p>Ejemplo</p>
-        <p>Ejemplo</p>
-        <p>Ejemplo</p>
-        <p>Ejemplo</p>
-        <p>Ejemplo</p>
-        <p>Ejemplo</p>
-        <p>Ejemplo</p>
-        <p>Ejemplo</p>
-        <p>Ejemplo</p>
-        <p>Ejemplo</p>
-        <p>Ejemplo</p>
-        <p>Ejemplo</p>
+        <div class="home-grid">
+          <div class="tile-1x3">
+            <p>Lorem ipsum</p>
+          </div>
+          <div class="tile-1x2">
+            <p>Lorem ipsum</p>
+          </div>
+          <div class="tile-1x1">
+            <p>Lorem ipsum</p>
+          </div>
+          <div class="tile-1x1">
+            <p>Lorem ipsum</p>
+          </div>
+          <div class="tile-1x1">
+            <p>Lorem ipsum</p>
+          </div>
+          <div class="tile-1x1">
+            <p>Lorem ipsum</p>
+          </div>
+          <div class="tile-1x1">
+            <p>Lorem ipsum</p>
+          </div>
+          <div class="tile-1x2-r">
+            <p>Lorem ipsum</p>
+          </div>
+          <div class="tile-1x1">
+            <p>Lorem ipsum</p>
+          </div>
+          <div class="tile-1x1">
+            <p>Lorem ipsum</p>
+          </div>
+          <div class="tile-1x1">
+            <p>Lorem ipsum</p>
+          </div>
+          <div class="tile-1x2">
+            <p>Lorem ipsum</p>
+          </div>
+          <div class="tile-1x1">
+            <p>Lorem ipsum</p>
+          </div>
+          <div class="tile-1x1">
+            <p>Lorem ipsum</p>
+          </div>
+          <div class="tile-1x1">
+            <p>Lorem ipsum</p>
+          </div>
+          <div class="tile-1x1">
+            <p>Lorem ipsum</p>
+          </div>
+          <div class="tile-1x1">
+            <p>Lorem ipsum</p>
+          </div>
+          <div class="tile-1x2-r">
+            <p>Lorem ipsum</p>
+          </div>
+        </div>
         <div class="fullscreen-footer"></div>
       </div>
 
@@ -704,7 +798,7 @@
           <hr class="separador">
           <p>Contribuir</p>
           <hr class="separador">
-          <p>v0.2.40</p>
+          <p>v0.2.41</p>
         </div>
         <h3>Más del Consejo de Estudiantes</h3>
         <div class="setting">
