@@ -188,6 +188,12 @@
       flex-direction: row;
       flex-wrap: nowrap;
       gap: 10px;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+    }
+
+    .filters::-webkit-scrollbar {
+      display: none;
     }
 
     .filter-pair {
@@ -425,7 +431,7 @@
       </div>
     </nav>
 
-    <div class="filters">
+    <div id="filters" class="filters">
       <div class="filter-pair elemento-flotante">
         Hola. filtro 1.
       </div>
@@ -652,7 +658,7 @@
         <hr class="separador">
         <p>Contribuir</p>
         <hr class="separador">
-        <p>v0.2.32</p>
+        <p>v0.2.33</p>
       </div>
       <h3>Más del Consejo de Estudiantes</h3>
       <div class="setting">
@@ -839,7 +845,9 @@
     
       applyShowFilters(show) {
         console.log('Mostrar filtros:', show);
-        // Aquí iría la lógica para mostrar/ocultar los filtros
+        document.querySelectorAll('.filter-pair').forEach(filter => {
+          filter.style.visibility = show ? 'visible' : 'hidden';
+        });
       },
     
       applyHomePage(page) {
