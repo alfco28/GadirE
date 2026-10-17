@@ -308,14 +308,15 @@
       left: 0;
       width: 100%;
       height: 100%;
-      display: flex;
+      display: none;
       justify-content: center;
       align-items: center;
       background: var(--color-fondo-primario);
       z-index: var(--z-index-fullscreen-background);
-      opacity: 0;
       pointer-events: none;
       transition: transform var(--duracion-transicion) ease-in-out, opacity var(--duracion-transicion) ease-in-out;
+      opacity: 0;
+      display: flex;
     }
 
     .fullscreen-background.visible {
@@ -326,17 +327,18 @@
 
     .fullscreen-content {
       width: 100%;
-      max-width: 1080px;
+      max-width: 720px;
       height: 100%;
       padding: 60px 20px 80px;
       overflow-y: auto;
       color: var(--color-texto-primario);
-      opacity: 0;
       transition: opacity var(--duracion-transicion) ease-in-out;
-      display: none;
+      opacity: 0;
+      pointer-events: none;
     }
 
     .fullscreen-content.visible {
+      pointer-events: all;
       display: block;
       opacity: 1;
     }
@@ -344,11 +346,14 @@
     /* Animación de salida */
     .fullscreen-content.hidden {
       opacity: 0;
+      pointer-events: none;
+      display: none;
     }
     
     .fullscreen-background.hidden {
       transform: translateX(100%);
       opacity: 0;
+      pointer-events: none;
     }
 
     .fullscreen-header {
@@ -699,7 +704,7 @@
           <hr class="separador">
           <p>Contribuir</p>
           <hr class="separador">
-          <p>v0.2.38</p>
+          <p>v0.2.39</p>
         </div>
         <h3>Más del Consejo de Estudiantes</h3>
         <div class="setting">
@@ -1012,12 +1017,52 @@
       function hideAllScreens() {
         const background = document.getElementById('fullscreen-background');
         const screens = document.querySelectorAll('.fullscreen-content');
+
+        // Ocultar el contenido de las pantallas completas
         screens.forEach(screen => {
           screen.classList.remove('visible');
+          screen.classList.add('hidden');
         });
+      
+        // Iniciar transición de salida del fondo
         background.classList.remove('visible');
+        background.classList.add('hidden');
+      
+        // Remover la clase 'fullscreen' del dock y title-bar
+        document.querySelector('.dock').classList.remove('fullscreen');
+        document.querySelector('.title-bar').classList.remove('fullscreen');
+      }
+/*
+      function showFullScreenBackground() {
+        const background = document.getElementById('fullscreen-background');
+        background.classList.remove('hidden');
+        background.classList.add('visible');
+
+        // Añadir la clase 'fullscreen' del dock y title-bar
+        document.querySelector('.dock').classList.add('fullscreen');
+        document.querySelector('.title-bar').classList.add('fullscreen');
+      };
+
+      function hideFullScreenContent() {
+        const screens = document.querySelectorAll('.fullscreen-content');
+
+        // Ocultar el contenido de las pantallas completas
+        screens.forEach(screen => {
+          screen.classList.remove('visible');
+          screen.classList.add('hidden');
+        });
       }
 
+      function showFullScreenContent() {
+        const screens = document.querySelectorAll('.fullscreen-content');
+
+        // Mostrar el contenido de las pantallas completas
+        screens.forEach(screen => {
+          screen.classList.remove('hidden');
+          screen.classList.add('visible');
+        });
+      }
+*/
       // Función para actualizar el título según el icono seleccionado
       function updateTitleBar(icon) {
         const titleBar = document.getElementById('title-bar');
@@ -1052,38 +1097,62 @@
 
       // Eventos para los iconos del dock
       homeIcon.addEventListener('click', () => {
-        hideAllScreens();
         const background = document.getElementById('fullscreen-background');
+        background.classList.remove('hidden');
         background.classList.add('visible');
-        setTimeout(() => {
-          homeScreen.classList.add('visible');
-          document.querySelector('.dock').classList.add('fullscreen');
-          document.querySelector('.title-bar').classList.add('fullscreen');
-        }, 10);
+
+        const notifications = document.getElementById('notifications-screen');
+        notifications.classList.remove('visible');
+        notifications.classList.add('hidden');
+
+        const settings = document.getElementById('settings-screen');
+        settings.classList.remove('visible');
+        settings.classList.add('hidden');
+
+        const home = document.getElementById('home-screen');
+        home.classList.remove('hidden');
+        home.classList.add('visible');
+        
         setActiveIcon(homeIcon);
       });
 
       notificationsIcon.addEventListener('click', () => {
-        hideAllScreens();
         const background = document.getElementById('fullscreen-background');
+        background.classList.remove('hidden');
         background.classList.add('visible');
-        setTimeout(() => {
-          notificationsScreen.classList.add('visible');
-          document.querySelector('.dock').classList.add('fullscreen');
-          document.querySelector('.title-bar').classList.add('fullscreen');
-        }, 10);
+
+        const home = document.getElementById('home-screen');
+        home.classList.remove('visible');
+        home.classList.add('hidden');
+
+        const settings = document.getElementById('settings-screen');
+        settings.classList.remove('visible');
+        settings.classList.add('hidden');
+
+        const notifications = document.getElementById('notifications-screen');
+        notifications.classList.remove('hidden');
+        notifications.classList.add('visible');
+        
         setActiveIcon(notificationsIcon);
       });
 
       settingsIcon.addEventListener('click', () => {
-        hideAllScreens();
         const background = document.getElementById('fullscreen-background');
+        background.classList.remove('hidden');
         background.classList.add('visible');
-        setTimeout(() => {
-          settingsScreen.classList.add('visible');
-          document.querySelector('.dock').classList.add('fullscreen');
-          document.querySelector('.title-bar').classList.add('fullscreen');
-        }, 10);
+
+        const notifications = document.getElementById('notifications-screen');
+        notifications.classList.remove('visible');
+        notifications.classList.add('hidden');
+
+        const home = document.getElementById('home-screen');
+        home.classList.remove('visible');
+        home.classList.add('hidden');
+
+        const settings = document.getElementById('settings-screen');
+        settings.classList.remove('hidden');
+        settings.classList.add('visible');
+        
         setActiveIcon(settingsIcon);
       });
 
