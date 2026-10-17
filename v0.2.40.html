@@ -704,7 +704,7 @@
           <hr class="separador">
           <p>Contribuir</p>
           <hr class="separador">
-          <p>v0.2.39</p>
+          <p>v0.2.40</p>
         </div>
         <h3>Más del Consejo de Estudiantes</h3>
         <div class="setting">
@@ -733,7 +733,11 @@
   </script>
 
   <script>
-    // Estado global de la aplicación
+    // Estado de la aplicación (no se guarda)
+    //const currentScreen = ; //Para controlar la axcepción del sidebar.
+    //Controlar filtros del mapa.
+
+    // Estado global de la aplicación (se guarda en localStorage)
     const AppState = {
       defaults: {
         darkMode: false,
@@ -1032,37 +1036,7 @@
         document.querySelector('.dock').classList.remove('fullscreen');
         document.querySelector('.title-bar').classList.remove('fullscreen');
       }
-/*
-      function showFullScreenBackground() {
-        const background = document.getElementById('fullscreen-background');
-        background.classList.remove('hidden');
-        background.classList.add('visible');
 
-        // Añadir la clase 'fullscreen' del dock y title-bar
-        document.querySelector('.dock').classList.add('fullscreen');
-        document.querySelector('.title-bar').classList.add('fullscreen');
-      };
-
-      function hideFullScreenContent() {
-        const screens = document.querySelectorAll('.fullscreen-content');
-
-        // Ocultar el contenido de las pantallas completas
-        screens.forEach(screen => {
-          screen.classList.remove('visible');
-          screen.classList.add('hidden');
-        });
-      }
-
-      function showFullScreenContent() {
-        const screens = document.querySelectorAll('.fullscreen-content');
-
-        // Mostrar el contenido de las pantallas completas
-        screens.forEach(screen => {
-          screen.classList.remove('hidden');
-          screen.classList.add('visible');
-        });
-      }
-*/
       // Función para actualizar el título según el icono seleccionado
       function updateTitleBar(icon) {
         const titleBar = document.getElementById('title-bar');
@@ -1089,7 +1063,8 @@
           icon.classList.remove('active');
         });
         activeIcon.classList.add('active');
-        updateTitleBar(activeIcon); // Actualiza el título
+
+        updateTitleBar(activeIcon);
       }
       
       // Icono por defecto
