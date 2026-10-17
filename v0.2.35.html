@@ -671,7 +671,7 @@
         <hr class="separador">
         <p>Contribuir</p>
         <hr class="separador">
-        <p>v0.2.34</p>
+        <p>v0.2.35</p>
       </div>
       <h3>Más del Consejo de Estudiantes</h3>
       <div class="setting">
@@ -853,7 +853,13 @@
     
       applyShowGeolocateButton(show) {
         console.log('Mostrar botón de geolocalización:', show);
-        // Aquí iría la lógica para mostrar/ocultar el botón de geolocalización
+        const geolocateButton = document.querySelector('.geolocate-button');
+        if (geolocateButton) {
+          geolocateButton.style.visibility = show ? 'visible' : 'hidden';
+          // Si los filtros están visibles, ajusta la posición
+          const filtersVisible = AppState.get('showFilters');
+          geolocateButton.style.bottom = filtersVisible ? '126px' : '86px';
+        }
       },
     
       applyShowFilters(show) {
@@ -861,8 +867,13 @@
         document.querySelectorAll('.filter-pair').forEach(filter => {
           filter.style.visibility = show ? 'visible' : 'hidden';
         });
+        // Actualiza la posición del botón de geolocalización según si los filtros están visibles
+        const geolocateButton = document.querySelector('.geolocate-button');
+        if (geolocateButton) {
+          geolocateButton.style.bottom = show ? '126px' : '86px';
+        }
       },
-    
+
       applyHomePage(page) {
         console.log('Página de inicio:', page);
         // Aquí iría la lógica para cambiar la página de inicio
