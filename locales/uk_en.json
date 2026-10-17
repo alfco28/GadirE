@@ -1,3 +1,17 @@
 {
-    "notifications-settings-title": "Notifications"
+    "t-settings-personalisation-accentColour": "Accent colour",
+    "t-settings-personalisation-accentColour-yellow": "Yellow",
+    "t-settings-personalisation-accentColour-blue": "Blue",
+    "t-settings-personalisation-accentColour-purple": "Purple",
+    "t-settings-personalisation-accentColour-orange": "Orange",
+    "t-settings-personalisation-accentColour-pink": "Pink",
+    "t-settings-personalisation-accentColour-turquoise": "Turquoise",
+    "t-settings-personalisation-accentColour-green": "Green",
+    "t-settings-personalisation-showZoomControls": "Show zoom controls",
+    "t-settings-personalisation-showMyLocationButton": "Show my location button",
+    "t-settings-personalisation-showFilters": "Show filters",
+    "t-settings-personalisation-landingPage": "Landing page",
+    "t-settings-personalisation-startingLocation": "Starting location",
+    "t-settings-personalisation-language": "Language",
+    "t-settings-notifications-title": "Notifications"
 }

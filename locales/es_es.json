@@ -1,3 +1,17 @@
 {
-    "notifications-settings-title": "Notificaciones"
+    "t-settings-personalisation-accentColour": "Color de énfasis",
+    "t-settings-personalisation-accentColour-yellow": "Amarillo",
+    "t-settings-personalisation-accentColour-blue": "Azul",
+    "t-settings-personalisation-accentColour-purple": "Lila",
+    "t-settings-personalisation-accentColour-orange": "Naranja",
+    "t-settings-personalisation-accentColour-pink": "Rosa",
+    "t-settings-personalisation-accentColour-turquoise": "Turquesa",
+    "t-settings-personalisation-accentColour-green": "Verde",
+    "t-settings-personalisation-showZoomControls": "Mostrar botones de zoom",
+    "t-settings-personalisation-showMyLocationButton": "Mostrar botón de mi ubicación",
+    "t-settings-personalisation-showFilters": "Mostrar filtros",
+    "t-settings-personalisation-landingPage": "Página de inicio",
+    "t-settings-personalisation-startingLocation": "Ubicación de inicio",
+    "t-settings-personalisation-language": "Idioma",
+    "t-settings-notifications-title": "Notificaciones"
 }
