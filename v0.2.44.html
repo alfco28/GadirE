@@ -811,7 +811,7 @@
           <hr class="separador">
           <p>Contribuir</p>
           <hr class="separador">
-          <p>v0.2.43</p>
+          <p>v0.2.44</p>
         </div>
         <h3>Más del Consejo de Estudiantes</h3>
         <div class="setting">
@@ -1196,6 +1196,8 @@
         home.classList.add('visible');
         
         setActiveIcon(homeIcon);
+        document.querySelector('.dock').classList.add('fullscreen');
+        document.querySelector('.title-bar').classList.add('fullscreen');
       });
 
       notificationsIcon.addEventListener('click', () => {
@@ -1216,6 +1218,8 @@
         notifications.classList.add('visible');
         
         setActiveIcon(notificationsIcon);
+        document.querySelector('.dock').classList.add('fullscreen');
+        document.querySelector('.title-bar').classList.add('fullscreen');
       });
 
       settingsIcon.addEventListener('click', () => {
@@ -1236,6 +1240,8 @@
         settings.classList.add('visible');
         
         setActiveIcon(settingsIcon);
+        document.querySelector('.dock').classList.add('fullscreen');
+        document.querySelector('.title-bar').classList.add('fullscreen');
       });
 
       mapIcon.addEventListener('click', () => {
