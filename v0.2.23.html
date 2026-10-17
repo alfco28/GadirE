@@ -124,7 +124,7 @@
     /* Dock */
     .dock {
       position: fixed;
-      bottom: 10px;
+      bottom: 16px;
       left: 50%;
       transform: translateX(-50%);
       display: flex;
@@ -186,7 +186,7 @@
     #sidebar {
       position: fixed;
       top: 56px;
-      bottom: 90px;
+      bottom: 96px;
       left: 10px;
       width: 320px;
       height: auto;
@@ -506,7 +506,7 @@
         <hr class="separador">
         <p>Contribuir</p>
         <hr class="separador">
-        <p>v0.2.22</p>
+        <p>v0.2.23</p>
       </div>
       <h3>Más del Consejo de Estudiantes</h3>
       <div class="setting">
@@ -748,13 +748,12 @@
     function initMap() {
       const map = L.map('map', {
         zoomControl: false,
-        attributionControl: false
       }).setView([36.5298, -6.2035], 16);
 
-      L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
-        maxZoom: 20,
-        attribution: 'Map data from <a href="https://openstreetmap.org/copyright">OpenStreetMap</a>. © <a href="https://carto.com/about-carto/">rastertiles/voyager</a>'
-      }).addTo(map);
+      L.tileLayer(
+        'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',
+        { maxZoom:20, attribution:'Map data from <a href="https://openstreetmap.org/copyright">OpenStreetMap</a>. © <a href="https://carto.com/about-carto/">rastertiles/voyager</a>' }
+      ).addTo(map);
     }
   </script>
 </body>
