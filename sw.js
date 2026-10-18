@@ -1,4 +1,4 @@
-const CACHE_NAME = 'pwa-cache-v2';
+const CACHE_NAME = 'pwa-cache-v3';
 
 const CACHE_GROUPS = {
   // Recursos necesarios para abrir y utilizar la aplicación sin conexión
@@ -24,6 +24,10 @@ const CACHE_GROUPS = {
     '/data/agenda_publica_presidencia_CEUCA.ics',
     '/data/festivos_Espana.ics',
     '/data/notifications.xml',
+
+    '/univ/menu.html',
+    '/univ/agenda.html',
+    '/univ/menu.js',
 
     '/libraries/marked/marked.umd.min.js',
     '/libraries/fusejs/fuse.min.js',
