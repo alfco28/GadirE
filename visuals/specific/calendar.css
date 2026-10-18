@@ -1,0 +1,6 @@
+#calendar {
+    width: min(calc(100vw - 40px), calc(720px - 40px));
+    padding: 0 auto;
+    margin: 0 auto;
+    aspect-ratio: 1 / 1;
+}
