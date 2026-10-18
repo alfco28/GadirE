@@ -78,6 +78,10 @@ homeIcon.addEventListener('click', () => {
   settings.classList.remove('visible');
   settings.classList.add('hidden');
 
+  const calendar = document.getElementById('calendar-screen');
+  calendar.classList.remove('visible');
+  calendar.classList.add('hidden');
+
   const home = document.getElementById('home-screen');
   home.classList.remove('hidden');
   home.classList.add('visible');
@@ -104,6 +108,10 @@ calendarIcon.addEventListener('click', () => {
   settings.classList.remove('visible');
   settings.classList.add('hidden');
 
+  const calendar = document.getElementById('calendar-screen');
+  calendar.classList.remove('hidden');
+  calendar.classList.add('visible');
+
   setActiveIcon(calendarIcon);
   document.querySelector('.dock').classList.add('fullscreen');
   document.querySelector('.title-bar').classList.add('fullscreen');
@@ -122,10 +130,15 @@ notificationsIcon.addEventListener('click', () => {
   settings.classList.remove('visible');
   settings.classList.add('hidden');
 
+  const calendar = document.getElementById('calendar-screen');
+  calendar.classList.remove('visible');
+  calendar.classList.add('hidden');
+
+  cargarFeed();
   const notifications = document.getElementById('notifications-screen');
   notifications.classList.remove('hidden');
   notifications.classList.add('visible');
-        
+
   setActiveIcon(notificationsIcon);
   document.querySelector('.dock').classList.add('fullscreen');
   document.querySelector('.title-bar').classList.add('fullscreen');

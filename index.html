@@ -11,6 +11,8 @@
 
   <!-- Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- FullCalendar -->
+  <link href='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.css' rel='stylesheet' />
 
   <link rel="stylesheet" href="visuals/general/main.css">
   <link rel="stylesheet" href="visuals/general/dark_mode.css">
@@ -171,6 +173,12 @@
             <p>Lorem ipsum</p>
           </div>
         </div>
+        <div class="fullscreen-footer"></div>
+      </div>
+
+      <div id="calendar-screen" class="fullscreen-content">
+        <div class="fullscreen-header"></div>
+        <div id="calendar"></div>
         <div class="fullscreen-footer"></div>
       </div>
 
@@ -342,7 +350,7 @@
           <hr class="separador">
           <div class="two-sided-opt">
             <p id="t-settings-aboutGadirE-version"></p>
-            <p>0.3.66-test</p>
+            <p>0.3.67-test</p>
           </div>
         </div>
         <h3 id="t-settings-moreFromTheSU-title" style="padding-bottom: 0; margin-bottom: 0;"></h3>
@@ -360,10 +368,13 @@
 
 
   <script src="/scripts/general/config.js" defer></script>
+  <script src="/scripts/notifications/rss_reader.js" defer></script>
   <script src="/scripts/ui/main.js" defer> </script>
   <script src="/scripts/ui/sidebar.js" defer> </script>
   <script src="/scripts/general/libraries.js" defer></script>
   <script src="/scripts/general/translation.js" defer></script>
-  <script src="/scripts/notifications/rss_reader.js" defer></script>
+
+  <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.js' defer></script>
+  <script src="/scripts/calendar/calendar.js" defer></script>
 </body>
 </html>
