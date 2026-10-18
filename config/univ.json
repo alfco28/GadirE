@@ -164,7 +164,7 @@
         "Facultad de Derecho",
         "Facultad de Enfermería",
         "Facultad de Enfermería y Fisioterapia",
-        "Facultad de Filosfía y Letras",
+        "Facultad de Filosofía y Letras",
         "Facultad de Medicina"
     ],
     "campus": [
@@ -297,7 +297,7 @@
                 },
                 {
                     "id": "feed16",
-                    "name": "Facultad de Filosfía y Letras",
+                    "name": "Facultad de Filosofía y Letras",
                     "url": "https://filosofia.uca.es/feed",
                     "checked": false
                 },
