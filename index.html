@@ -180,7 +180,9 @@
       <header class="sidebar-header">
         <img class="sidebar-logo-gadire" src="/assets/logo_gadire.webp" alt="GadirE">
       </header>
-      <input type="text" id="sidebar-search" placeholder="Buscar...">
+      <input type="text" id="sidebar-search-bar" placeholder="Buscar...">
+      <button id="sidebar-search-button">Buscar</button>
+      <div id="sidebar-search-results"></div>
       <div id="sidebar-content" class="sidebar-body"></div>
     </aside>
 
@@ -457,7 +459,7 @@
           <hr class="separador">
           <div class="two-sided-opt">
             <p id="t-settings-aboutGadirE-version"></p>
-            <p>0.3.81-test</p>
+            <p>0.3.82-test</p>
           </div>
         </div>
         <h3 id="t-settings-moreFromTheSU-title" style="padding-bottom: 0; margin-bottom: 0;"></h3>
@@ -481,6 +483,7 @@
   <script src="/scripts/map/sidebar.js" defer> </script>
   <script src="/scripts/map/filters.js" defer> </script>
   <script src="/scripts/map/map.js" defer></script>
+  <script src="/scripts/map/search_engine.js" defer></script>
   <script src="/scripts/general/translation.js" defer></script>
 
   <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.js' defer></script>

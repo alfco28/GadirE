@@ -6,6 +6,7 @@ const index = {
   tipo: {},
   all: new Set()
 };
+index.search = {}; // palabra -> Set(features)
 
 // ================= ESTADO =================
 const state = {
@@ -22,6 +23,68 @@ const FLY_ZOOM = 19;
 
 let searchControl = null;
 let campusGeoJSON = null;
+
+// ================= BUSQUEDA INDEXADA =================
+
+// Normaliza texto → minusculas sin acentos
+function normalizeText(str) {
+  return str
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "");
+}
+
+// Tokeniza palabras
+function tokenize(str) {
+  return normalizeText(str)
+    .split(/[^a-z0-9]+/)
+    .filter(Boolean);
+}
+
+// Indexar texto de features
+function buildSearchIndex(features) {
+  features.forEach(f => {
+    const p = f.properties;
+
+    const searchableText = `
+      ${p.nombre}
+      ${p.edificio}
+      ${p.tipo}
+      ${p.campus}
+      ${p.descrip || ""}
+    `;
+
+    const tokens = tokenize(searchableText);
+
+    tokens.forEach(token => {
+      if (!index.search[token]) index.search[token] = new Set();
+      index.search[token].add(f);
+    });
+  });
+}
+
+// Buscar con intersección de tokens
+function searchFeatures(query, baseFeatures) {
+  if (!query.trim()) return baseFeatures;
+
+  const tokens = tokenize(query);
+
+  if (!tokens.length) return baseFeatures;
+
+  let resultSets = tokens.map(t => index.search[t] || new Set());
+
+  let result = resultSets[0];
+
+  for (let i = 1; i < resultSets.length; i++) {
+    result = new Set([...result].filter(f => resultSets[i].has(f)));
+  }
+
+  // Intersección con filtros activos
+  const baseSet = new Set(baseFeatures);
+  result = new Set([...result].filter(f => baseSet.has(f)));
+
+  return Array.from(result);
+}
 
 // ================= CARGAR GEOJSON =================
 fetch('/data/map_data.geojson')
@@ -50,6 +113,7 @@ function processGeoJSON(data) {
     index.tipo[tipo].add(f);
   });
 
+  buildSearchIndex(campusGeoJSON.features);
   initMap();
 }
 
@@ -237,7 +301,7 @@ function initMap() {
   const { renderSidebar } = setupSidebar(map, markersByKey, featureKey);
   
   // ================= BUSCADOR =================
-  function rebuildSearch(features) {
+  /*function rebuildSearch(features) {
     if (searchControl) {
       map.removeControl(searchControl);
 
@@ -269,8 +333,68 @@ function initMap() {
     });
 
     map.addControl(searchControl);
-  }
+  }*/
   
+  // ================= BUSCADOR MANUAL =================
+
+  const searchInput = document.getElementById('sidebar-search-bar');
+  const searchButton = document.getElementById('sidebar-search-button');
+  const searchResults = document.getElementById('sidebar-search-results');
+
+  if (!searchInput || !searchButton || !searchResults) {
+    console.warn("Buscador no encontrado en el DOM");
+    return;
+  }
+
+  function renderSearchResults(features) {
+    searchResults.innerHTML = "";
+
+    if (!features.length) {
+      searchResults.innerHTML = "<p>No se encontraron resultados</p>";
+      return;
+    }
+
+    features.slice(0, 50).forEach(f => { // limite seguridad
+      const p = f.properties;
+
+      const div = document.createElement("div");
+      div.className = "search-result-item";
+      div.innerHTML = `
+        <strong>${p.nombre}</strong><br>
+        <small>${p.edificio} · Planta ${p.planta}</small>
+      `;
+
+      div.addEventListener("click", () => {
+        const key = featureKey(f);
+        window.fly(key);
+      });
+
+      searchResults.appendChild(div);
+    });
+  }
+
+  function performSearch() {
+    const query = searchInput.value;
+
+    const filtered = getFilteredFeatures(); // respeta filtros
+    const results = searchFeatures(query, filtered);
+
+    renderSearchResults(results);
+  }
+
+  // Buscar al escribir (con debounce)
+  let searchTimeout = null;
+
+  searchInput.addEventListener("input", () => {
+    clearTimeout(searchTimeout);
+
+    searchTimeout = setTimeout(() => {
+      performSearch();
+    }, 200);
+  });
+
+  searchButton.addEventListener("click", performSearch);
+
   // ================= HELPER =================
   function isMobile() {
     return window.matchMedia(`(max-width: ${MOBILE_BREAKPOINT}px)`).matches;
@@ -322,7 +446,8 @@ function initMap() {
     const feats = getFilteredFeatures();
     updateLayers(); // Mapa
     renderSidebar(feats); // Sidebar
-    rebuildSearch(feats); // Capa de búsqueda
+    //rebuildSearch(feats); // Capa de búsqueda
+    performSearch();
   }
   
   // ================= CAMBIO DE FILTROS =================
