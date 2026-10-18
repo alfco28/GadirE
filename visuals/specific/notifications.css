@@ -1,0 +1,12 @@
+.notification-item {
+    padding: 0 10px;
+    margin-top: 20px;
+    width: auto;
+    background: var(--color-fondo-flotante-fullscreen);
+    backdrop-filter: blur(var(--difuminado));
+    border: 1px solid var(--color-borde-flotante);
+    box-shadow: 0 2px 4px var(--color-sombra);
+    border-radius: var(--radio-borde);
+    overflow: hidden;
+    z-index: var(--z-index-setting);
+}
