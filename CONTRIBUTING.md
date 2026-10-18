@@ -23,7 +23,7 @@ Please describe what is incorrect and, where possible, provide the correct infor
 
 ## Report a bug
 
-For problems that are not about a particular place, please report them by email at **[alfonsofrancisco.gilgonzalez@alum.uca.es](mailto:alfonsofrancisco.gilgonzalez@alum.uca.es)**. This includes issues such as:
+For problems that are not about a particular place, please report them by email at **[t.digital.ceuca@uca.es](mailto:t.digital.ceuca@uca.es)**. This includes issues such as:
 
 - The map, search, filters or menus not working as expected.
 - Problems on a particular browser, device or screen size.
@@ -35,7 +35,7 @@ To help us investigate, please include a short description of what happened, wha
 
 ## Suggest an improvement or a new idea
 
-Ideas are welcome, whether they concern the map, the information it provides or the way people use it. You can suggest a new feature, an improvement to an existing workflow, a new data source, a translation, or any other idea by emailing **[alfonsofrancisco.gilgonzalez@alum.uca.es](mailto:alfonsofrancisco.gilgonzalez@alum.uca.es)**.
+Ideas are welcome, whether they concern the map, the information it provides or the way people use it. You can suggest a new feature, an improvement to an existing workflow, a new data source, a translation, or any other idea by emailing **[t.digital.ceuca@uca.es](mailto:t.digital.ceuca@uca.es)**.
 
 It is helpful to explain:
 
@@ -48,7 +48,7 @@ Ideas do not need to be fully developed before you share them. A clear descripti
 
 ## Contribute to the project
 
-The source code is available on **[GitLab](https://gitlab.com/alfco_28/gadire)**. It is publicly available for reference and collaboration, although the project is not distributed as free software. Please read the repository's licence and contribution conditions before reusing, redistributing or adapting the code.
+The source code is available on **[GitHub](https://github.com/alfco28/GadirE)**. It is publicly available for reference and collaboration, although the project is not distributed as free software. Please read the repository's licence and contribution conditions before reusing, redistributing or adapting the code.
 
 Depending on the change, useful contributions may include:
 
