@@ -269,7 +269,8 @@ function initMap() {
     repre: L.layerGroup(),
     salon: L.layerGroup(),
     transporte: L.layerGroup(),
-    unidad: L.layerGroup()
+    unidad: L.layerGroup(),
+    emergencia: L.layerGroup()
   };
 
   // Añadimos TODAS las capas al mapa inicialmente
