@@ -1,3 +1,8 @@
+.calendar-option {
+    display: block;
+    margin: 4px 0;
+}
+
 #calendar {
     width: min(calc(100vw - 40px), calc(720px - 40px));
     padding: 0 auto;

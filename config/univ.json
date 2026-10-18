@@ -18,5 +18,51 @@
                 }
             ]
         }
+    },
+    "feeds": {
+        "byTheme": {
+            "Representación Estudiantil": [
+                {
+                    "id": "feed1",
+                    "name": "CEUCA",
+                    "url": "https://ceuca.uca.es/feed",
+                    "checked": true
+                },
+                {
+                    "id": "feed6",
+                    "name": "Blog de Prueba",
+                    "url": "https://prueba-gadire.blogspot.com/feeds/posts/default",
+                    "checked": false
+                }
+            ],
+            "UCA": [
+                {
+                    "id": "feed2",
+                    "name": "Facultad de Ciencias",
+                    "url": "https://ciencias.uca.es/feed",
+                    "checked": true
+                },
+                {
+                    "id": "feed3",
+                    "name": "Escuela Superior de Ingeniería",
+                    "url": "https://esingenieria.uca.es/feed",
+                    "checked": true
+                }
+            ],
+            "Noticias": [
+                {
+                    "id": "feed4",
+                    "name": "BBC News",
+                    "url": "http://feeds.bbci.co.uk/news/rss.xml",
+                    "checked": false
+                },
+                {
+                    "id": "feed5",
+                    "name": "NASA",
+                    "url": "https://www.nasa.gov/rss/dyn/breaking_news.rss",
+                    "checked": false
+                }
+            ]
+        }
     }
 }

@@ -1,5 +1,96 @@
 // Array para almacenar las URLs de los feeds seleccionados
-let selectedFeedUrls = ["https://ceuca.uca.es/feed"];
+let selectedFeedUrls = [];
+let selectedFeeds = {}; // Objeto para almacenar los feeds seleccionados
+
+// Cargar el JSON y generar el selector de feeds
+fetch('/config/univ.json')
+    .then(response => response.json())
+    .then(data => {
+        generateFeedSelector(data.feeds);
+        loadSavedFeedSelections();
+        loadCheckedFeeds();
+    })
+    .catch(error => console.error('Error al cargar el JSON:', error));
+
+// Generar selector de feeds
+function generateFeedSelector(feedsData) {
+    const selector = document.getElementById('feed-options');
+    selector.innerHTML = ''; // Limpiar contenido previo
+
+    for (const [theme, feeds] of Object.entries(feedsData.byTheme)) {
+        const themeDiv = document.createElement('div');
+        themeDiv.className = 'theme-section';
+
+        const themeTitle = document.createElement('h3');
+        themeTitle.textContent = theme;
+        themeDiv.appendChild(themeTitle);
+
+        feeds.forEach(feed => {
+            const label = document.createElement('label');
+            label.className = 'feed-option';
+
+            const checkbox = document.createElement('input');
+            checkbox.type = 'checkbox';
+            checkbox.name = 'feed';
+            checkbox.value = feed.url;
+            checkbox.id = feed.id;
+            checkbox.checked = feed.checked;
+
+            const span = document.createElement('span');
+            span.textContent = feed.name;
+
+            label.appendChild(checkbox);
+            label.appendChild(span);
+            themeDiv.appendChild(label);
+        });
+
+        selector.appendChild(themeDiv);
+    }
+}
+
+// Guardar selección de feeds en localStorage
+function saveFeedSelection(id, isChecked) {
+    const selections = JSON.parse(localStorage.getItem('feedSelections') || '{}');
+    selections[id] = isChecked;
+    localStorage.setItem('feedSelections', JSON.stringify(selections));
+}
+
+// Cargar selección de feeds guardada en localStorage
+function loadSavedFeedSelections() {
+    const selections = JSON.parse(localStorage.getItem('feedSelections') || '{}');
+    document.querySelectorAll('input[name="feed"]').forEach(checkbox => {
+        if (selections[checkbox.id] !== undefined) {
+            checkbox.checked = selections[checkbox.id];
+        }
+    });
+}
+
+// Cargar feeds marcados (por defecto o localStorage)
+function loadCheckedFeeds() {
+    selectedFeedUrls = []; // Limpiar el array antes de cargar los feeds seleccionados
+    document.querySelectorAll('input[name="feed"]:checked').forEach(checkbox => {
+        if (!selectedFeedUrls.includes(checkbox.value)) {
+            selectedFeedUrls.push(checkbox.value);
+        }
+    });
+    cargarFeedsSeleccionados();
+}
+
+// Escuchar cambios en los checkboxes de feeds
+document.getElementById('feed-options').addEventListener('change', function(e) {
+    if (e.target.name === 'feed') {
+        const checkbox = e.target;
+        saveFeedSelection(checkbox.id, checkbox.checked);
+
+        if (checkbox.checked && !selectedFeedUrls.includes(checkbox.value)) {
+            selectedFeedUrls.push(checkbox.value);
+        } else if (!checkbox.checked) {
+            selectedFeedUrls = selectedFeedUrls.filter(url => url !== checkbox.value);
+        }
+
+        cargarFeedsSeleccionados();
+    }
+});
 
 // Cargar y mezclar feeds seleccionados
 function cargarFeedsSeleccionados() {

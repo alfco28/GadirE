@@ -1,3 +1,8 @@
+.feed-option {
+    display: block;
+    margin: 4px 0;
+}
+
 .notification-item {
     padding: 0 10px;
     margin-top: 20px;
