@@ -1,0 +1,7 @@
+/* Arreglar para encajar con ele stilo, esto es la versión antigua*/
+.sidebar-item {
+    padding:4px 12px;
+    cursor:pointer;
+    font-size:14px;
+    transition: background-color 0.2s ease;
+}

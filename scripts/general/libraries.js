@@ -3,7 +3,7 @@ loadExternalScripts(initMap);
 
 function loadExternalScripts(callback) {
   let loadedCount = 0;
-  const totalScripts = 2;
+  const totalScripts = 4;
 
   function checkAllLoaded() {
     loadedCount++;
@@ -24,15 +24,17 @@ function loadExternalScripts(callback) {
   leafletJS.src = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js';
   leafletJS.onload = checkAllLoaded;
   document.head.appendChild(leafletJS);
-}
 
-function initMap() {
-  const map = L.map('map', {
-    zoomControl: false,
-  }).setView([36.5298, -6.2035], 16);
+  // Cargar Leaflet Search CSS
+  const searchCSS = document.createElement('link');
+  searchCSS.rel = 'stylesheet';
+  searchCSS.href = 'https://unpkg.com/leaflet-search/dist/leaflet-search.min.css';
+  searchCSS.onload = checkAllLoaded;
+  document.head.appendChild(searchCSS);
 
-  L.tileLayer(
-    'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',
-    { maxZoom:20, attribution:'Map data from <a href="https://openstreetmap.org/copyright">OpenStreetMap</a>. © <a href="https://carto.com/about-carto/">rastertiles/voyager</a>' }
-  ).addTo(map);
+  // Cargar Leaflet Search JS
+  const searchJS = document.createElement('script');
+  searchJS.src = 'https://unpkg.com/leaflet-search/dist/leaflet-search.min.js';
+  searchJS.onload = checkAllLoaded;
+  document.head.appendChild(searchJS);
 }
