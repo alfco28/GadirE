@@ -52,6 +52,9 @@
     "t-settings-personalisation-startingLocation": "Ubicación de inicio",
     "t-settings-personalisation-language": "Idioma",
 
+    "t-settings-calendar-title": "Calendario",
+    "t-settings-calendar-calendarSubscription": "Suscripción a calendarios",
+
     "t-settings-notifications-title": "Notificaciones",
     "t-settings-notifications-enablePushNotifications": "Habilitar notificaciones push",
     "t-settings-notifications-topicSubscription": "Suscripción a temas",
