@@ -1,4 +1,3 @@
-
 document.addEventListener('DOMContentLoaded', function() {
     var calendarEl = document.getElementById('calendar');
     var selectedCalendars = {}; // Objeto para almacenar eventos por URL de calendario

@@ -1,0 +1,45 @@
+body {
+    font-family: Arial, sans-serif;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+#prompt, #password {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+button {
+    padding: 10px 20px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+button:hover {
+    background-color: #0056b3;
+}
+#response {
+    margin-top: 20px;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    min-height: 100px;
+    white-space: pre-wrap;
+}
+.loading {
+    color: #666;
+    font-style: italic;
+}
+.error {
+    color: #dc3545;
+    margin-top: 10px;
+}
+.container {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+.form-group {
+    margin-bottom: 15px;
+}
