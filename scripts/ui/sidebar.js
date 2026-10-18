@@ -1,5 +1,4 @@
-// Sidebar
-toggleSidebar.addEventListener('click', () => {
+function toggleSidebarVisib() {
   hideAllScreens();
   sidebar.classList.toggle('visible');
   if (!sidebar.classList.contains('visible')) {
@@ -8,9 +7,12 @@ toggleSidebar.addEventListener('click', () => {
   } else {
     setActiveIcon(toggleSidebar);
   }
-});
+}
 
-// Ocultar sidebar al hacer clic en otro icono del dock
+// Mostrar/ocultar al hacer click en su icono
+toggleSidebar.addEventListener('click', () => toggleSidebarVisib());
+
+// Ocultar sidebar al hacer click en otro icono del dock
 document.querySelectorAll('.dock-icon:not(#toggle-sidebar)').forEach(icon => {
   icon.addEventListener('click', () => {
     if (sidebar.classList.contains('visible')) {
@@ -19,7 +21,7 @@ document.querySelectorAll('.dock-icon:not(#toggle-sidebar)').forEach(icon => {
   });
 });
 
-// Ocultar sidebar al hacer clic fuera
+// Ocultar sidebar al hacer click fuera
 document.addEventListener('click', (e) => {
   if (!sidebar.contains(e.target) && !toggleSidebar.contains(e.target) && sidebar.classList.contains('visible')) {
     sidebar.classList.remove('visible');

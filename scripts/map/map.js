@@ -490,6 +490,27 @@ function initMap() {
   });
 }
 
+// ================= BUSCAR CON COMMAND + K =================
+// Escucha el evento 'keydown' en todo el documento
+document.addEventListener('keydown', function(event) {
+  // Comprueba si se ha pulsado Command + K o Control + K
+  if ((event.metaKey || event.ctrlKey) && event.key === 'k') {
+    event.preventDefault(); // Evita que el navegador ejecute su comportamiento por defecto
+
+    // Mostrar el sidebar si está oculto
+    if (!document.getElementById('sidebar').classList.contains('visible')) {
+      toggleSidebarVisib();
+    }
+
+    // Selecciona el input de búsqueda y enfócate en él
+    const searchInput = document.getElementById('sidebar-search-bar');
+    if (searchInput) {
+      searchInput.focus();
+      searchInput.select(); // Opcional: selecciona todo el texto existente
+    }
+  }
+});
+
 // ================= FLY DESDE URL =================
 // Función para obtener el hash de la URL (sin el #)
 function getUrlHash() {
