@@ -134,7 +134,7 @@ notificationsIcon.addEventListener('click', () => {
   calendar.classList.remove('visible');
   calendar.classList.add('hidden');
 
-  cargarFeed();
+  cargarFeedsSeleccionados();
   const notifications = document.getElementById('notifications-screen');
   notifications.classList.remove('hidden');
   notifications.classList.add('visible');

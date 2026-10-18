@@ -1,65 +1,100 @@
-// URL del feed RSS
-let feedUrl = "https://ceuca.uca.es/feed";
+// Array para almacenar las URLs de los feeds seleccionados
+let selectedFeedUrls = ["https://ceuca.uca.es/feed"];
 
-// Cargar el feed
-function cargarFeed() {
-    const proxyUrl = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(feedUrl)}`; // Usamos RSS-to-JSON para convertir el feed a JSON
-    document.getElementById("feed").innerHTML = ""; // Limpiar el feed antes de recargar
-    fetch(proxyUrl)
-        .then(response => response.json())
-        .then(data => {
-            const feedElement = document.getElementById("feed");
+// Cargar y mezclar feeds seleccionados
+function cargarFeedsSeleccionados() {
+    document.getElementById("feed").innerHTML = "";
+    const feedElement = document.getElementById("feed");
 
-            // Mostrar metadatos del canal
-            const channelInfo = document.createElement("div");
-            channelInfo.innerHTML = `
-                <h2>${data.feed.title}</h2>
-                <p>${data.feed.description}</p>
-                ${data.feed.image ? `<img src="${data.feed.image}" alt="Logo del canal" style="max-width: 200px;" />` : ''}
-            `;
-            feedElement.appendChild(channelInfo);
+    // Si no hay feeds seleccionados, mostrar mensaje
+    if (selectedFeedUrls.length === 0) {
+        feedElement.innerHTML = "<p>Selecciona al menos un feed para mostrar contenido.</p>";
+        return;
+    }
 
-            // Mostrar cada entrada
-            data.items.forEach(item => {
-                const itemElement = document.createElement("div");
-                itemElement.className = "entry";
-                itemElement.innerHTML = `
-                    <div class="notification-item">
-                        <h3><a href="${item.link}" target="_blank">${item.title}</a></h3>
-                        ${item.thumbnail ? `<img src="${item.thumbnail}" alt="Portada" />` : ''}
-                        <p>${item.description}</p>
-                        <p><small>Publicado: ${item.pubDate} | Autor: ${item.author || 'Desconocido'}</small></p>
-                        <p><strong>Categorías:</strong> ${item.categories ? item.categories.join(", ") : 'Ninguna'}</p>
-                    </div>
+    // Array para almacenar todas las entradas con su fuente
+    let allItems = [];
+
+    // Promesas para cargar cada feed
+    const fetchPromises = selectedFeedUrls.map(feedUrl => {
+        const proxyUrl = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(feedUrl)}`;
+        return fetch(proxyUrl)
+            .then(response => response.json())
+            .then(data => {
+                // Añadir metadatos del canal
+                const channelInfo = document.createElement("div");
+                channelInfo.className = "channel-info";
+                channelInfo.innerHTML = `
+                    <h2>${data.feed.title}</h2>
+                    <p>${data.feed.description}</p>
+                    ${data.feed.image ? `<img src="${data.feed.image}" alt="Logo del canal" style="max-width: 200px;" />` : ''}
                 `;
-                feedElement.appendChild(itemElement);
+                feedElement.appendChild(channelInfo);
+
+                // Añadir entradas al array global, incluyendo el nombre del feed
+                data.items.forEach(item => {
+                    allItems.push({
+                        ...item,
+                        feedSource: data.feed.title // Añadir la fuente de la entrada
+                    });
+                });
+            })
+            .catch(error => {
+                console.error(`Error al cargar el feed ${feedUrl}:`, error);
             });
-        })
-        .catch(error => {
-            console.error("Error al cargar el feed:", error);
-            document.getElementById("feed").innerHTML = "<p>Error al cargar el feed. Verifica la URL.</p>";
+    });
+
+    // Esperar a que todos los feeds se carguen
+    Promise.all(fetchPromises).then(() => {
+        // Ordenar todas las entradas por fecha (de más reciente a más antigua)
+        allItems.sort((a, b) => new Date(b.pubDate) - new Date(a.pubDate));
+
+        // Mostrar entradas ordenadas
+        allItems.forEach(item => {
+            const itemElement = document.createElement("div");
+            itemElement.className = "entry";
+            itemElement.innerHTML = `
+                <div class="notification-item">
+                    <div class="feed-source" style="background-color: #f0f0f0; padding: 2px 5px; display: inline-block; margin-bottom: 5px;">
+                        ${item.feedSource}
+                    </div>
+                    <h3><a href="${item.link}" target="_blank">${item.title}</a></h3>
+                    ${item.thumbnail ? `<img src="${item.thumbnail}" alt="Portada" style="max-width: 100%;" />` : ''}
+                    <p>${item.description}</p>
+                    <p><small>Publicado: ${item.pubDate} | Autor: ${item.author || 'Desconocido'}</small></p>
+                    <p><strong>Categorías:</strong> ${item.categories ? item.categories.join(", ") : 'Ninguna'}</p>
+                </div>
+            `;
+            feedElement.appendChild(itemElement);
         });
+    });
 }
 
-// Cambiar el feed al seleccionar una nueva opción
-function cambiarFeed() {
-    const selector = document.getElementById("feed-selector");
-    feedUrl = selector.value;
-    cargarFeed();
+// Actualizar la lista de feeds seleccionados
+function actualizarFeedsSeleccionados() {
+    const checkboxes = document.querySelectorAll('input[name="feed"]:checked');
+    selectedFeedUrls = Array.from(checkboxes).map(checkbox => checkbox.value);
+    cargarFeedsSeleccionados();
 }
 
+// Inicializar event listeners
+function inicializarEventListeners() {
+    // Event listener para los checkboxes de feeds
+    const feedCheckboxes = document.querySelectorAll('input[name="feed"]');
+    feedCheckboxes.forEach(checkbox => {
+        checkbox.addEventListener("change", actualizarFeedsSeleccionados);
+    });
+
+    // Event listener para el botón de recargar
+    const refreshButton = document.getElementById("refresh-notifications");
+    if (refreshButton) {
+        refreshButton.addEventListener("click", cargarFeedsSeleccionados);
+    }
+}
+
+// Cargar todo cuando el DOM esté listo
 document.addEventListener("DOMContentLoaded", function() {
-    const feedSelector = document.getElementById("feed-selector");
-    feedSelector.addEventListener("change", cambiarFeed);
+    inicializarEventListeners();
+    cargarFeedsSeleccionados();
+    setInterval(cargarFeedsSeleccionados, 300000);
 });
-
-// Recargar el feed al hacer click en el icono de recargar
-document.getElementById("refresh-notifications").addEventListener("click", () => {
-    cargarFeed();
-});
-
-// Cargar el feed al iniciar la aplicación
-cargarFeed();
-
-// Actualizar cada 5 minutos (300.000 milisegundos)
-setInterval(cargarFeed, 300000);
