@@ -116,26 +116,30 @@ body {
     color: var(--color-enfasis);
 }
 
-.top-right-icon-fs {
+/* Iconos del botones pantalla completa */
+.top-right-icon-fs,
+.top-left-icon-fs {
     position: fixed;
-    top: 10px;
-    right: 10px;
+    top: var(--margen);
     padding: 8px;
-    width: fit-content;
     font-size: 20px;
+    width: fit-content;
     z-index: var(--z-index-title);
     background: var(--color-fondo-flotante-fullscreen-transparente) !important;
 }
 
+.top-right-icon-fs {
+    right: var(--margen);
+}
+
 .top-left-icon-fs {
-    position: fixed;
-    top: 10px;
-    left: 10px;
-    padding: 8px;
-    width: fit-content;
-    font-size: 20px;
-    z-index: var(--z-index-title);
-    background: var(--color-fondo-flotante-fullscreen-transparente) !important;
+    left: var(--margen);
+}
+
+.top-right-icon-fs:hover,
+.top-left-icon-fs:hover {
+    transform: scale(1.2);
+    transition: all var(--duracion-transicion) ease-in-out;
 }
 
 /* Pantallas completas */
