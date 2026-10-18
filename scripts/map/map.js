@@ -299,10 +299,9 @@ function initMap() {
   // ================= BUSCADOR =================
 
   const searchInput = document.getElementById('sidebar-search-bar');
-  const searchButton = document.getElementById('sidebar-search-button');
   const searchResults = document.getElementById('sidebar-search-results');
 
-  if (!searchInput || !searchButton || !searchResults) {
+  if (!searchInput || !searchResults) {
     console.warn("Buscador no encontrado en el DOM");
     return;
   }
@@ -321,8 +320,10 @@ function initMap() {
       const div = document.createElement("div");
       div.className = "search-result-item";
       div.innerHTML = `
-        <strong>${p.nombre}</strong><br>
-        <small>${p.edificio} · Planta ${p.planta}</small>
+        <div class="sidebar-item">
+          <h4>${p.nombre}</h4>
+          <span>Planta ${p.planta} - ${p.edificio}</span>
+        </div>
       `;
 
       div.addEventListener("click", () => {
@@ -353,8 +354,6 @@ function initMap() {
       performSearch();
     }, 200);
   });
-
-  searchButton.addEventListener("click", performSearch);
   
   // ================= FLY =================
   window.featureKey = featureKey;

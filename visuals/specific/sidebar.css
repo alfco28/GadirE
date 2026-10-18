@@ -1,28 +1,38 @@
-/* Arreglar para encajar con el estilo, esto es la versión antigua*/
 .sidebar-item {
-    padding:4px 12px;
-    cursor:pointer;
-    font-size:14px;
-    transition: background-color 0.2s ease;
+    padding: 4px var(--margen);
+    cursor: pointer;
+    font-size: var(--tamano-fuente);
+    transition: background-color var(--duracion-transicion) ease-in-out;
 }
 
-#sidebar-content h3 {
+.sidebar-body h3 {
     font-weight: bold;
     font-size: calc(var(--tamano-fuente) + 4px);
     color: var(--color-texto-primario);
     margin: 8px 0 4px 0;
-    cursor: default;
 }
 
-#sidebar-content h4 {
+.sidebar-body h4 {
     font-size: var(--tamano-fuente);
     font-weight: bold;
     color: var(--color-texto-primario);
     margin: 4px 0;
+}
+
+#sidebar-content h3,
+#sidebar-content h4 {
     cursor: default;
 }
 
-#sidebar-content .sidebar-item {
+#sidebar-search-results h4 {
+    cursor: pointer;
+}
+
+#sidebar-search-results span {
+    font-weight: lighter;
+}
+
+.sidebar-body .sidebar-item {
     font-size: var(--tamano-fuente);
     color: var(--color-texto-primario);
     margin: 2px 0;
@@ -30,6 +40,7 @@
     border-radius: var(--radio-borde);
 }
 
-#sidebar-content .sidebar-item:hover {
+.sidebar-body .sidebar-item:hover {
     background-color: var(--color-sombra);
 }
+
