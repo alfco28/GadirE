@@ -22,14 +22,14 @@ function cargarFeedsSeleccionados() {
             .then(response => response.json())
             .then(data => {
                 // Añadir metadatos del canal
-                const channelInfo = document.createElement("div");
+                /*const channelInfo = document.createElement("div");
                 channelInfo.className = "channel-info";
                 channelInfo.innerHTML = `
                     <h2>${data.feed.title}</h2>
                     <p>${data.feed.description}</p>
                     ${data.feed.image ? `<img src="${data.feed.image}" alt="Logo del canal" style="max-width: 200px;" />` : ''}
                 `;
-                feedElement.appendChild(channelInfo);
+                feedElement.appendChild(channelInfo);*/
 
                 // Añadir entradas al array global, incluyendo el nombre del feed
                 data.items.forEach(item => {
@@ -51,18 +51,34 @@ function cargarFeedsSeleccionados() {
 
         // Mostrar entradas ordenadas
         allItems.forEach(item => {
+            // Dar formato a la fecha
+            const fechaFormateada = new Intl.DateTimeFormat('es-ES', {
+                day: '2-digit',
+                month: '2-digit',
+                year: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit',
+                hour12: false
+            }).format(new Date(item.pubDate));
+
+            // Controlar la imagen
+            let imagenHTML = '';
+            if (item.thumbnail) {
+                imagenHTML = `<img src="${item.thumbnail}" alt="Portada" class="feed-image" onerror="this.src='/assets/logo_gadire.webp';" />`;
+            } else if (item.enclosure && item.enclosure.link) {
+                imagenHTML = `<img src="${item.enclosure.link}" alt="Portada" class="feed-image" onerror="this.src='/assets/logo_gadire.webp';" />`;
+            }
+
             const itemElement = document.createElement("div");
             itemElement.className = "entry";
             itemElement.innerHTML = `
                 <div class="notification-item">
-                    <div class="feed-source" style="background-color: #f0f0f0; padding: 2px 5px; display: inline-block; margin-bottom: 5px;">
-                        ${item.feedSource}
-                    </div>
+                    <p class="feed-source">
+                        ${fechaFormateada} - ${item.feedSource}
+                    </p>
                     <h3><a href="${item.link}" target="_blank" class="enlace-con-icono">${item.title}</a></h3>
-                    ${item.thumbnail ? `<img src="${item.thumbnail}" alt="Portada" style="max-width: 100%;" />` : ''}
+                    ${imagenHTML}
                     <p>${item.description}</p>
-                    <p><small>Publicado: ${item.pubDate} | Autor: ${item.author || 'Desconocido'}</small></p>
-                    <p><strong>Categorías:</strong> ${item.categories ? item.categories.join(", ") : 'Ninguna'}</p>
                 </div>
             `;
             feedElement.appendChild(itemElement);

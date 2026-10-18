@@ -10,3 +10,27 @@
     overflow: hidden;
     z-index: var(--z-index-setting);
 }
+
+.feed-source {
+    text-align: right;
+    font-weight: lighter;
+    margin: 8px 0 4px 0;
+}
+
+.notification-item h3 {
+    padding: 0;
+    margin: 4px 0;
+}
+
+.feed-image {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    margin: 4px auto;
+    border-radius: var(--radio-borde);
+    max-height: 200px;
+}
+
+.notification-item p {
+    margin: 4px 0 8px 0;
+}
