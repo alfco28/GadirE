@@ -31,19 +31,25 @@
 }
 
 /* Geolocate button */
-.geolocate-button {
+#geolocate-button {
   visibility: visible;
   position: fixed;
   right: var(--margen);
   bottom: 126px;
-  height: 38px;
-  width: 38px;
-  font-size: 22px;
-  padding: 0;
+  height: fit-content;
+  width: fit-content;
+  font-size: 20px;
+  padding: 8px;
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: var(--z-index-geolocate);
+}
+
+#geolocate-button:hover {
+    transform: scale(1.2);
+    transition: all var(--duracion-transicion) ease-in-out;
+    cursor: pointer;
 }
 
 /* Sidebar */

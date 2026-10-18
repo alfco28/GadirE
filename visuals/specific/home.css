@@ -82,4 +82,5 @@
   transform: scale(1.2);
   transform-origin: center;
   z-index: var(--z-index-selectec-home-tile);
+  cursor: pointer;
 }

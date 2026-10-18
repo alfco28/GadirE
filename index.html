@@ -9,6 +9,18 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 
+  <!-- LeafLet CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+    crossorigin=""/>
+  <!-- LeafLet JS -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+    integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+    crossorigin=""></script>
+  <!-- LeafLet Search CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet-search/dist/leaflet-search.min.css"/>
+  <!-- LeafLet Search JS -->
+  <script src="https://unpkg.com/leaflet-search/dist/leaflet-search.min.js"></script>
   <!-- Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <!-- FullCalendar -->
@@ -157,7 +169,7 @@
       </div>
     </div>
 
-    <div id="geolocate-button" class="geolocate-button elemento-flotante">
+    <div id="geolocate-button" class="elemento-flotante">
       <i class="fa-regular fa-location-arrow"></i>
     </div>
 
@@ -444,7 +456,7 @@
           <hr class="separador">
           <div class="two-sided-opt">
             <p id="t-settings-aboutGadirE-version"></p>
-            <p>0.3.79-test</p>
+            <p>0.3.80-test</p>
           </div>
         </div>
         <h3 id="t-settings-moreFromTheSU-title" style="padding-bottom: 0; margin-bottom: 0;"></h3>
@@ -468,7 +480,6 @@
   <script src="/scripts/map/sidebar.js" defer> </script>
   <script src="/scripts/map/filters.js" defer> </script>
   <script src="/scripts/map/map.js" defer></script>
-  <script src="/scripts/general/libraries.js" defer></script>
   <script src="/scripts/general/translation.js" defer></script>
 
   <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.js' defer></script>
