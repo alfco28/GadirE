@@ -1,13 +1,17 @@
-// URL del feed RSS (cámbiala por la tuya)
-const feedUrl = "http://feeds.bbci.co.uk/news/rss.xml";
+// URL del feed RSS
+//const feedUrl = "https://www.nasa.gov/rss/dyn/breaking_news.rss";
+const feedUrl = "https://prueba-gadire.blogspot.com/feeds/posts/default";
+//const feedUrl = "http://feeds.bbci.co.uk/news/rss.xml";
 // Usamos RSS-to-JSON para convertir el feed a JSON
 const proxyUrl = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(feedUrl)}`;
 
 // Cargar el feed
 function cargarFeed() {
+    document.getElementById("feed").innerHTML = ""; // Limpiar el feed antes de recargar
     fetch(proxyUrl)
         .then(response => response.json())
         .then(data => {
+            console.log(data); // Para depuración, muestra la estructura del feed en la consola
             const feedElement = document.getElementById("feed");
 
             // Mostrar metadatos del canal
@@ -43,7 +47,6 @@ function cargarFeed() {
 
 // Recargar el feed al hacer click en el icono de recargar
 document.getElementById("refresh-notifications").addEventListener("click", () => {
-    document.getElementById("feed").innerHTML = ""; // Limpiar el feed antes de recargar
     cargarFeed();
 });
 
