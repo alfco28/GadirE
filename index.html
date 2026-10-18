@@ -36,6 +36,7 @@
   <link rel="stylesheet" href="visuals/general/responsive.css">
   <link rel="stylesheet" href="visuals/general/cookies.css">
   <link rel="stylesheet" href="visuals/specific/sidebar.css">
+  <link rel="stylesheet" href="visuals/general/modal_window.css">
 
 </head>
 
@@ -49,6 +50,17 @@
         <button id="reject-cookies" class="cookie-button cookie-reject">Rechazar</button>
         <button id="accept-cookies" class="cookie-button cookie-accept">Aceptar</button>
       </div>
+    </div>
+  </div>
+
+  <!-- VENTANA MODAL -->
+  <div id="modal-window">
+    <div id="mw-content" class="elemento-flotante">
+      <div id="mw-close" class="top-right-icon-fs elemento-flotante">
+        <i class="fa-solid fa-xmark"></i>
+      </div>
+      <p id="mw-title" class="elemento-flotante"></p>
+      <div id="mw-body" class="elemento-flotante"></div>
     </div>
   </div>
 
@@ -463,7 +475,7 @@
           <hr class="separador">
           <div class="two-sided-opt">
             <p id="t-settings-aboutGadirE-version"></p>
-            <p>0.3.89-test</p>
+            <p>0.3.90-test</p>
           </div>
         </div>
         <h3 id="t-settings-moreFromTheSU-title" style="padding-bottom: 0; margin-bottom: 0;"></h3>
@@ -488,6 +500,7 @@
   <script src="/scripts/map/filters.js" defer> </script>
   <script src="/scripts/map/map.js" defer></script>
   <script src="/scripts/general/translation.js" defer></script>
+  <script src="/scripts/general/modal_window.js" defer></script>
 
   <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.js' defer></script>
   <script type="module" src="/scripts/calendar/calendar.js"></script>

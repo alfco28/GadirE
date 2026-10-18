@@ -30,6 +30,7 @@
     --z-index-selectec-home-tile: 700;
     --z-index-dock: 800;
     --z-index-title: 900;
+    --z-index-modal-window: 2000;
     --z-index-cookie: 3000;
 
     --margen: 10px;
@@ -125,7 +126,8 @@ body {
     top: var(--margen);
     padding: 8px;
     font-size: 20px;
-    width: fit-content;
+    width: 20px;
+    text-align: center;
     z-index: var(--z-index-title);
     background: var(--color-fondo-flotante-fullscreen-transparente) !important;
 }
