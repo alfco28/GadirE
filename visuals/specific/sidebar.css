@@ -24,6 +24,10 @@
     cursor: default;
 }
 
+#sidebar-search-bar {
+    margin: 0 var(--margen) 4px var(--margen);
+}
+
 #sidebar-search-results h4 {
     cursor: pointer;
 }
@@ -32,7 +36,7 @@
     font-weight: lighter;
 }
 
-.sidebar-body .sidebar-item {
+.sidebar-item {
     font-size: var(--tamano-fuente);
     color: var(--color-texto-primario);
     margin: 2px 0;
@@ -40,7 +44,7 @@
     border-radius: var(--radio-borde);
 }
 
-.sidebar-body .sidebar-item:hover {
+.sidebar-item:hover {
     background-color: var(--color-sombra);
 }
 

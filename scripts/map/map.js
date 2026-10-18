@@ -360,12 +360,10 @@ function initMap() {
       const p = f.properties;
 
       const div = document.createElement("div");
-      div.className = "search-result-item";
+      div.className = "sidebar-item";
       div.innerHTML = `
-        <div class="sidebar-item">
-          <h4>${p.nombre}</h4>
-          <span>Planta ${p.planta} - ${p.edificio}</span>
-        </div>
+        <h4>${p.nombre}</h4>
+        <span>Planta ${p.planta} - ${p.edificio}</span>
       `;
 
       div.addEventListener("click", () => {
