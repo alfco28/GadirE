@@ -15,6 +15,7 @@
     "t-settings-privacy-name": "Nombre",
     "t-settings-privacy-photo": "Foto",
     "t-settings-privacy-barCode": "Código de barras",
+    "t-settings-privacy-includeMyPersonalDataWhenExportingCurrentConfiguration": "Incluir mi información personal al exportar la configuración actual",
 
     "t-settings-accessibility-title": "Accesibilidad",
     "t-settings-accessibility-fontSize": "Tamaño de fuente",

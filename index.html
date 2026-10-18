@@ -63,6 +63,24 @@
 
     <div id="filters" class="filters">
       <div class="filter-pair elemento-flotante">
+        <label>Tipo:</label>
+        <select id="fTipo">
+          <option value="todos">Todos</option>
+          <option value="descanso">Área de descanso</option>
+          <option value="aseo">Aseo o vestuario</option>
+          <option value="aula">Aula</option>
+          <option value="biblio">Biblioteca o sala de estudio</option>
+          <option value="cafete">Cafetería, fuente o máquina</option>
+          <option value="despacho">Despacho</option>
+          <option value="lab">Laboratorio o taller</option>
+          <option value="repre">Representación de estudiantes</option>
+          <option value="emergencia">Salida de emergencia o punto de encuentro</option>
+          <option value="salon">Salón</option>
+          <option value="transporte">Transporte</option>
+          <option value="unidad">Unidades o servicios</option>
+        </select>
+      </div>
+      <div class="filter-pair elemento-flotante">
         <label>Campus:</label>
         <select id="fCampus">
           <option value="todos">Todos</option>
@@ -137,24 +155,6 @@
           <option value="7">Planta 7</option>
         </select>
       </div>
-      <div class="filter-pair elemento-flotante">
-        <label>Tipo:</label>
-        <select id="fTipo">
-          <option value="todos">Todos</option>
-          <option value="descanso">Área de descanso</option>
-          <option value="aseo">Aseo o vestuario</option>
-          <option value="aula">Aula</option>
-          <option value="biblio">Biblioteca o sala de estudio</option>
-          <option value="cafete">Cafetería, fuente o máquina</option>
-          <option value="despacho">Despacho</option>
-          <option value="lab">Laboratorio o taller</option>
-          <option value="repre">Representación de estudiantes</option>
-          <option value="emergencia">Salida de emergencia o punto de encuentro</option>
-          <option value="salon">Salón</option>
-          <option value="transporte">Transporte</option>
-          <option value="unidad">Unidades o servicios</option>
-        </select>
-      </div>
     </div>
 
     <div id="geolocate-button" class="geolocate-button elemento-flotante">
@@ -167,9 +167,8 @@
       <header class="sidebar-header">
         <img class="sidebar-logo-gadire" src="/assets/logo_gadire.webp" alt="GadirE">
       </header>
-      <div id="sidebar-content" class="sidebar-body">
-        <!-- Contenido dinámico -->
-      </div>
+      <input type="text" id="sidebar-search" placeholder="Buscar...">
+      <div id="sidebar-content" class="sidebar-body"></div>
     </aside>
 
     <!-- Pantallas completas -->
@@ -266,13 +265,30 @@
           <hr class="separador">
           <p id="t-settings-privacy-privacyPolicy"></p>
           <hr class="separador">
-          <p id="t-settings-privacy-allowAccessToLocation"></p>
+          <label class="two-sided-opt">
+            <p id="t-settings-privacy-allowAccessToLocation"></p>
+            <input type="checkbox">
+          </label>
           <hr class="separador">
-          <p id="t-settings-privacy-name"></p>
+          <label class="two-sided-opt">
+            <p id="t-settings-privacy-name"></p>
+            <input type="text" placeholder="Fulanito/a">
+          </label>
           <hr class="separador">
-          <p id="t-settings-privacy-photo"></p>
+          <label class="two-sided-opt">
+            <p id="t-settings-privacy-photo"></p>
+            <input type="file" accept="image/*">
+          </label>
           <hr class="separador">
-          <p id="t-settings-privacy-barCode"></p>
+          <label class="two-sided-opt">
+            <p id="t-settings-privacy-barCode"></p>
+            <input type="text" placeholder="12345678">
+          </label>
+          <hr class="separador">
+          <label class="two-sided-opt">
+            <p id="t-settings-privacy-includeMyPersonalDataWhenExportingCurrentConfiguration"></p>
+            <input type="checkbox">
+          </label>
         </div>
         <h3 id="t-settings-accessibility-title"></h3>
         <div class="setting">
@@ -388,13 +404,11 @@
         </div>
         <h3 id="t-settings-calendar-title"></h3>
         <div class="setting">
-          <label class="two-sided-opt">
-            <p id="t-settings-calendar-calendarSubscription"></p>
-            <div id="calendar-options">
-              <label><input type="checkbox" name="calendar" value="/data/festivos_Espana.ics" checked> Festivos España</label>
-              <label><input type="checkbox" name="calendar" value="/data/agenda_publica_presidencia_CEUCA.ics"> Agenda pública del Presidente del CEUCA</label>
-            </div>
-          </label>
+          <p id="t-settings-calendar-calendarSubscription"></p>
+          <div id="calendar-options">
+            <label><input type="checkbox" name="calendar" value="/data/festivos_Espana.ics" checked> Festivos España</label><br>
+            <label><input type="checkbox" name="calendar" value="/data/agenda_publica_presidencia_CEUCA.ics"> Agenda pública del Presidente del CEUCA</label>
+          </div>
         </div>
         <h3 id="t-settings-notifications-title"></h3>
         <div class="setting">
@@ -403,17 +417,15 @@
             <input type="checkbox" id="enable-push-notifications">
           </label>
           <hr class="separador">
-          <label class="two-sided-opt">
-              <p id="t-settings-notifications-topicSubscription"></p>
-              <div id="feed-options">
-              <label><input type="checkbox" name="feed" value="https://ceuca.uca.es/feed" checked> CEUCA</label>
-              <label><input type="checkbox" name="feed" value="https://www.nasa.gov/rss/dyn/breaking_news.rss"> NASA</label>
-              <label><input type="checkbox" name="feed" value="https://prueba-gadire.blogspot.com/feeds/posts/default"> Blog de Prueba</label>
-              <label><input type="checkbox" name="feed" value="http://feeds.bbci.co.uk/news/rss.xml"> BBC News</label>
-              <label><input type="checkbox" name="feed" value="https://ciencias.uca.es/feed" checked> Facultad de Ciencais</label>
-              <label><input type="checkbox" name="feed" value="https://esingenieria.uca.es/feed" checked> Escuela Superior de Ingeniería</label>
-            </div>
-          </label>
+          <p id="t-settings-notifications-topicSubscription"></p>
+          <div id="feed-options">
+            <label><input type="checkbox" name="feed" value="https://ceuca.uca.es/feed" checked> CEUCA</label><br>
+            <label><input type="checkbox" name="feed" value="https://www.nasa.gov/rss/dyn/breaking_news.rss"> NASA</label><br>
+            <label><input type="checkbox" name="feed" value="https://prueba-gadire.blogspot.com/feeds/posts/default"> Blog de Prueba</label><br>
+            <label><input type="checkbox" name="feed" value="http://feeds.bbci.co.uk/news/rss.xml"> BBC News</label><br>
+            <label><input type="checkbox" name="feed" value="https://ciencias.uca.es/feed" checked> Facultad de Ciencais</label><br>
+            <label><input type="checkbox" name="feed" value="https://esingenieria.uca.es/feed" checked> Escuela Superior de Ingeniería</label>
+          </div>
           <hr class="separador">
           <label class="two-sided-opt">
             <p id="t-settings-notifications-showFilters"></p>
@@ -432,7 +444,7 @@
           <hr class="separador">
           <div class="two-sided-opt">
             <p id="t-settings-aboutGadirE-version"></p>
-            <p>0.3.77-test</p>
+            <p>0.3.78-test</p>
           </div>
         </div>
         <h3 id="t-settings-moreFromTheSU-title" style="padding-bottom: 0; margin-bottom: 0;"></h3>
