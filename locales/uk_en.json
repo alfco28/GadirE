@@ -15,7 +15,7 @@
     "t-settings-privacy-name": "Name",
     "t-settings-privacy-photo": "Photo",
     "t-settings-privacy-barCode": "Bar code",
-    "t-settings-privacy-includeMyPersonalDataWhenExportingCurrentConfiguration": "Include my personal data when exporting current configuration",
+    "t-settings-privacy-includeMyPersonalDataWhenExportingCurrentConfiguration": "Include my personal data when exporting current settings",
 
     "t-settings-accessibility-title": "Accessibility",
     "t-settings-accessibility-fontSize": "Font size",
@@ -60,6 +60,11 @@
     "t-settings-notifications-enablePushNotifications": "Enable push notifications",
     "t-settings-notifications-topicSubscription": "Topic subscription",
     "t-settings-notifications-showFilters": "Show filters",
+
+    "t-settings-transfer-title": "Transfer current settings",
+    "t-settings-transfer-import": "Import",
+    "t-settings-transfer-export": "Export",
+    "t-settings-transfer-personalData": "Your personal data will be included, or not, according to your privacy settings",
 
     "t-settings-aboutGadirE-title": "About GadirE",
     "t-settings-aboutGadirE-GadirE": "GadirE",

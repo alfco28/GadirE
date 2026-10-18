@@ -61,6 +61,11 @@
     "t-settings-notifications-topicSubscription": "Suscripción a temas",
     "t-settings-notifications-showFilters": "Mostrar filtros",
 
+    "t-settings-transfer-title": "Transferir configuración actual",
+    "t-settings-transfer-import": "Importar",
+    "t-settings-transfer-export": "Exportar",
+    "t-settings-transfer-personalData": "Tus datos personales se incluirán, o no, de acuerdo a tu configuración de privacidad",
+
     "t-settings-aboutGadirE-title": "Sobre GadirE",
     "t-settings-aboutGadirE-GadirE": "GadirE",
     "t-settings-aboutGadirE-webPage": "Página web",
