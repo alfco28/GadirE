@@ -8,6 +8,7 @@ document.addEventListener('DOMContentLoaded', function() {
         initialView: 'dayGridMonth',
         locale: 'es',
         editable: false,
+        firstDay: 1,
         events: [], // Eventos iniciales (vacío)
     });
 
