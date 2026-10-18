@@ -40,6 +40,8 @@ function updateTitleBar(icon) {
     titleBar.textContent = 'Mapa'; //Hay que agregar la traducción para el título del mapa, pero deja de funcionar si se hace ¿?
   } else if (icon.id === 'home-icon') {
     titleBar.textContent = getTranslation('t-home-title');
+  } else if (icon.id === 'calendar-icon') {
+    titleBar.textContent = getTranslation('t-calendar-title');
   } else if (icon.id === 'notifications-icon') {
     titleBar.textContent = getTranslation('t-notifications-title');
   } else if (icon.id === 'settings-icon') {

@@ -116,7 +116,7 @@ body {
     color: var(--color-enfasis);
 }
 
-.top-right-icon {
+.top-right-icon-fs {
     position: fixed;
     top: 10px;
     right: 10px;
@@ -124,9 +124,10 @@ body {
     width: fit-content;
     font-size: 20px;
     z-index: var(--z-index-title);
+    background: var(--color-fondo-flotante-fullscreen-transparente) !important;
 }
 
-.top-left-icon {
+.top-left-icon-fs {
     position: fixed;
     top: 10px;
     left: 10px;
@@ -134,6 +135,7 @@ body {
     width: fit-content;
     font-size: 20px;
     z-index: var(--z-index-title);
+    background: var(--color-fondo-flotante-fullscreen-transparente) !important;
 }
 
 /* Pantallas completas */
