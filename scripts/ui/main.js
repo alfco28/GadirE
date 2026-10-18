@@ -63,9 +63,6 @@ function setActiveIcon(activeIcon) {
 
   updateTitleBar(activeIcon);
 }
-      
-// Icono por defecto
-setActiveIcon(mapIcon);
 
 // Eventos para los iconos del dock
 homeIcon.addEventListener('click', () => {
@@ -162,3 +159,6 @@ mapIcon.addEventListener('click', () => {
   hideAllScreens();
   setActiveIcon(mapIcon);
 });
+
+// Página de inicio
+setActiveIcon(mapIcon);
