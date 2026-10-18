@@ -25,14 +25,14 @@ const appConfig = {
   state: {},
 
   load() {
-    const saved = localStorage.getItem('ceucatlas_state');
+    const saved = localStorage.getItem('gadire_state');
     this.state = saved
       ? { ...this.defaults, ...JSON.parse(saved) }
       : { ...this.defaults };
   },
 
   save() {
-    localStorage.setItem('ceucatlas_state', JSON.stringify(this.state));
+    localStorage.setItem('gadire_state', JSON.stringify(this.state));
   },
 
   set(key, value) {
