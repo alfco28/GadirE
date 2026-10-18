@@ -1,17 +1,13 @@
 // URL del feed RSS
-//const feedUrl = "https://www.nasa.gov/rss/dyn/breaking_news.rss";
-const feedUrl = "https://prueba-gadire.blogspot.com/feeds/posts/default";
-//const feedUrl = "http://feeds.bbci.co.uk/news/rss.xml";
-// Usamos RSS-to-JSON para convertir el feed a JSON
-const proxyUrl = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(feedUrl)}`;
+let feedUrl = "https://ceuca.uca.es/feed";
 
 // Cargar el feed
 function cargarFeed() {
+    const proxyUrl = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(feedUrl)}`; // Usamos RSS-to-JSON para convertir el feed a JSON
     document.getElementById("feed").innerHTML = ""; // Limpiar el feed antes de recargar
     fetch(proxyUrl)
         .then(response => response.json())
         .then(data => {
-            console.log(data); // Para depuración, muestra la estructura del feed en la consola
             const feedElement = document.getElementById("feed");
 
             // Mostrar metadatos del canal
@@ -44,6 +40,18 @@ function cargarFeed() {
             document.getElementById("feed").innerHTML = "<p>Error al cargar el feed. Verifica la URL.</p>";
         });
 }
+
+// Cambiar el feed al seleccionar una nueva opción
+function cambiarFeed() {
+    const selector = document.getElementById("feed-selector");
+    feedUrl = selector.value;
+    cargarFeed();
+}
+
+document.addEventListener("DOMContentLoaded", function() {
+    const feedSelector = document.getElementById("feed-selector");
+    feedSelector.addEventListener("change", cambiarFeed);
+});
 
 // Recargar el feed al hacer click en el icono de recargar
 document.getElementById("refresh-notifications").addEventListener("click", () => {
