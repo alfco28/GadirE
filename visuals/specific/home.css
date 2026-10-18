@@ -9,7 +9,6 @@
   display: grid;
   padding: var(--margen);
   grid-template-columns: 2fr 2fr 2fr;
-  grid-auto-rows: 100px 100px;
   overflow-y: auto;
   overflow-x: visible;
   gap: var(--margen);
@@ -28,6 +27,7 @@
   border-radius: var(--radio-borde);
   overflow: hidden;
   transition: transform var(--duracion-transicion) ease;
+  aspect-ratio: 1 / 1;
 }
 
 .tile-1x3 {
@@ -44,6 +44,7 @@
   border-radius: var(--radio-borde);
   overflow: hidden;
   transition: transform var(--duracion-transicion) ease;
+  aspect-ratio: 3 / 1;
 }
 
 .tile-1x2 {
@@ -60,6 +61,7 @@
   border-radius: var(--radio-borde);
   overflow: hidden;
   transition: transform var(--duracion-transicion) ease;
+  aspect-ratio: 2 / calc(1 - var(--margen));
 }
 
 .tile-1x2-r {
@@ -76,6 +78,7 @@
   border-radius: var(--radio-borde);
   overflow: hidden;
   transition: transform var(--duracion-transicion) ease;
+  aspect-ratio: 2 / calc(1 - var(--margen));
 }
 
 .tile-1x1:hover, .tile-1x3:hover, .tile-1x2:hover, .tile-1x2-r:hover {
