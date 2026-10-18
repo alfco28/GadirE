@@ -1,3 +1,4 @@
+import ICAL from "https://unpkg.com/ical.js/dist/ical.min.js";
 
 document.addEventListener('DOMContentLoaded', function() {
     var calendarEl = document.getElementById('calendar');
