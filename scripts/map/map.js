@@ -63,27 +63,68 @@ function buildSearchIndex(features) {
   });
 }
 
+// Índice para Fuse.js (búsqueda difusa)
+let fuseIndex = null;
+
+function buildFuseIndex(features) {
+  const searchableData = features.map(f => {
+    const p = f.properties;
+    return {
+      id: p.idnum,
+      nombre: p.nombre,
+      edificio: p.edificio,
+      tipo: p.tipo,
+      campus: p.campus,
+      descrip: p.descrip || "",
+      planta: p.planta,
+      searchableText: `${p.nombre} ${p.edificio} ${p.tipo} ${p.campus} ${p.descrip || ""}`
+    };
+  });
+
+  fuseIndex = new Fuse(searchableData, {
+    keys: ["searchableText"],
+    includeScore: true,
+    threshold: 0.4, // Umbral de similitud (0 = exacto, 1 = muy difuso)
+    minMatchCharLength: 2, // Mínimo de caracteres para coincidencia
+  });
+}
+
 // Buscar con intersección de tokens
 function searchFeatures(query, baseFeatures) {
   if (!query.trim()) return baseFeatures;
 
+  // 1. Búsqueda exacta (como antes)
   const tokens = tokenise(query);
+  if (tokens.length === 0) return baseFeatures;
 
-  if (!tokens.length) return baseFeatures;
-
-  let resultSets = tokens.map(t => index.search[t] || new Set());
-
-  let result = resultSets[0];
-
-  for (let i = 1; i < resultSets.length; i++) {
-    result = new Set([...result].filter(f => resultSets[i].has(f)));
+  let exactResults = tokens.map(t => index.search[t] || new Set());
+  let exactResult = exactResults[0];
+  for (let i = 1; i < exactResults.length; i++) {
+    exactResult = new Set([...exactResult].filter(f => exactResults[i].has(f)));
   }
 
-  // Intersección con filtros activos
-  const baseSet = new Set(baseFeatures);
-  result = new Set([...result].filter(f => baseSet.has(f)));
+  // 2. Búsqueda difusa (Fuse.js)
+  let fuzzyResult = new Set();
+  try {
+    if (fuseIndex) {
+      const fuseResults = fuseIndex.search(query).map(result => result.item.id);
+      fuzzyResult = new Set(
+        campusGeoJSON.features.filter(f => fuseResults.includes(f.properties.idnum))
+      );
+    }
+  } catch (e) {
+    console.error("Error en búsqueda difusa:", e);
+    // Si falla, fuzzyResult sigue siendo un Set vacío
+  }
 
-  return Array.from(result);
+  // 3. Combinar resultados (priorizar exactos)
+  const combinedResult = new Set([...exactResult, ...fuzzyResult]);
+
+  // 4. Filtrar por features base (filtros activos)
+  const baseSet = new Set(baseFeatures);
+  const finalResult = new Set([...combinedResult].filter(f => baseSet.has(f)));
+
+  return Array.from(finalResult);
 }
 
 // ================= FILTRADO =================
@@ -193,6 +234,7 @@ function processGeoJSON(data) {
   });
 
   buildSearchIndex(campusGeoJSON.features);
+  buildFuseIndex(campusGeoJSON.features)
   initMap();
 }
 
