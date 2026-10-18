@@ -44,3 +44,10 @@
     background-color: var(--color-sombra);
 }
 
+#sidebar-search-results {
+    display: none;
+}
+
+#sidebar-content {
+    display: block;
+}

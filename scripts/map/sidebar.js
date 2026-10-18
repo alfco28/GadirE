@@ -1,4 +1,4 @@
-// ================= RENDER SIDEBAR =================
+// ================= RENDER SIDEBAR CONTENT =================
 function setupSidebar(map, markersByKey, featureKey) {
     function renderSidebar(features){
         const cont=document.getElementById("sidebar-content");
@@ -32,3 +32,29 @@ function setupSidebar(map, markersByKey, featureKey) {
 
     return { renderSidebar };
 }
+
+// ================= ALTERNAR VISIBILIDAD CONTENT/SEARCH RESULTS =================
+function toggleSidebarVisibility() {
+    const searchInput = document.getElementById('sidebar-search-bar');
+    const searchResults = document.getElementById('sidebar-search-results');
+    const sidebarContent = document.getElementById('sidebar-content');
+
+    if (searchInput.value.trim() === '') {
+        // Si el input está vacío
+        searchResults.style.display = 'none';
+        sidebarContent.style.display = 'block';
+    } else {
+        // Si el input tiene texto
+        searchResults.style.display = 'block';
+        sidebarContent.style.display = 'none';
+    }
+}
+
+// Escuchar el evento 'input' en el buscador
+const searchInput = document.getElementById('sidebar-search-bar');
+if (searchInput) {
+    searchInput.addEventListener('input', toggleSidebarVisibility);
+}
+
+// Llamar a la función al cargar la página para establecer el estado inicial
+document.addEventListener('DOMContentLoaded', toggleSidebarVisibility);
