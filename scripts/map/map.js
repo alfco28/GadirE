@@ -289,7 +289,8 @@ function initMap() {
     aseo: "#64748b",
     salon: "#9333ea",
     transporte: "#16a34a",
-    unidad: "#334155"
+    unidad: "#334155",
+    emergencia: "#db2777"
   };
 
   function icon(tipo){
