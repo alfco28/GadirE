@@ -6,7 +6,7 @@ const index = {
   tipo: {},
   all: new Set()
 };
-index.search = {}; // palabra -> Set(features)
+index.search = {};
 
 // ================= ESTADO =================
 const state = {
@@ -26,8 +26,8 @@ let campusGeoJSON = null;
 
 // ================= BUSQUEDA INDEXADA =================
 
-// Normaliza texto → minusculas sin acentos
-function normalizeText(str) {
+// Normaliza texto: minusculas sin tildes
+function normaliseText(str) {
   return str
     .toLowerCase()
     .normalize("NFD")
@@ -35,8 +35,8 @@ function normalizeText(str) {
 }
 
 // Tokeniza palabras
-function tokenize(str) {
-  return normalizeText(str)
+function tokenise(str) {
+  return normaliseText(str)
     .split(/[^a-z0-9]+/)
     .filter(Boolean);
 }
@@ -54,7 +54,7 @@ function buildSearchIndex(features) {
       ${p.descrip || ""}
     `;
 
-    const tokens = tokenize(searchableText);
+    const tokens = tokenise(searchableText);
 
     tokens.forEach(token => {
       if (!index.search[token]) index.search[token] = new Set();
@@ -67,7 +67,7 @@ function buildSearchIndex(features) {
 function searchFeatures(query, baseFeatures) {
   if (!query.trim()) return baseFeatures;
 
-  const tokens = tokenize(query);
+  const tokens = tokenise(query);
 
   if (!tokens.length) return baseFeatures;
 
@@ -84,6 +84,85 @@ function searchFeatures(query, baseFeatures) {
   result = new Set([...result].filter(f => baseSet.has(f)));
 
   return Array.from(result);
+}
+
+// ================= FILTRADO =================
+function getFilteredFeatures() {
+  let sets = [];
+
+  if (state.campus !== "todos") {
+    sets.push(index.campus[state.campus] || new Set());
+  }
+  if (state.edificio !== "todos") {
+    sets.push(index.edificio[state.edificio] || new Set());
+  }
+  if (state.planta !== "todas") {
+    sets.push(index.planta[state.planta] || new Set());
+  }
+  if (state.tipo !== "todos") {
+    sets.push(index.tipo[state.tipo] || new Set());
+  }
+
+  // Si no hay filtros activos → todos
+  if (sets.length === 0) {
+    return Array.from(index.all);
+  }
+
+  // Intersección de sets
+  let result = sets[0];
+  for (let i = 1; i < sets.length; i++) {
+    result = new Set([...result].filter(f => sets[i].has(f)));
+  }
+
+  return Array.from(result);
+}
+
+// =============== POPUP en HTML ===============
+function popupHTML(p) {
+  const currentUrl = window.location.href.split('#')[0]; // Obtiene la URL sin hash
+  const shareUrl = `${currentUrl}#${p.idnum}`; // Crea la URL con el hash
+  const buttonId = `shareButton_${p.idnum}`; // Identificador único para el botón
+
+  return `
+      <div class="popup-card">
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+          <h4>${p.nombre}</h4>
+          <button
+              id="${buttonId}"
+              style="padding: 6px 8px; margin: 0 0 0 4px; background: #3b82f6; color: white; border: none; border-radius: 4px; cursor: pointer;">
+            <i class="fa-solid fa-share-nodes"></i>
+          </button>
+        </div>
+        <p>${p.descrip}</p>
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+          <span>Planta ${p.planta}</span>
+          <span style="color: #A0A0A0; font-size: 10px;">#${p.idnum}</span>
+        </div>
+        <span>Edificio: ${p.edificio}</span>
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+          <span>Campus: ${p.campus}</span>
+          <a href="https://docs.google.com/forms/d/e/1FAIpQLSdEZjtvKMVmpLC3zcajTqxQdqtVs6yuITLAooP6FPez8nhKoQ/viewform?usp=pp_url&entry.2020790469=${p.idnum}" 
+              style="text-decoration: none; color: #A0A0A0; transition: color 0.2s;"
+              target="_blank"
+              rel="noopener noreferrer"
+              onmouseover="this.style.color='#808080'" 
+              onmouseout="this.style.color='#A0A0A0'">
+            <i class="fa-solid fa-circle-exclamation"></i>
+          </a>
+        </div>
+      </div>`;
+}
+
+// ================= CREAR MARKERS UNA SOLA VEZ =================
+
+function featureKey(f) { // Función para crear un marker único para cada feature.
+  const p = f.properties;
+  return `${p.idnum}`;
+}
+
+// ================= HELPER =================
+function isMobile() {
+  return window.matchMedia(`(max-width: ${MOBILE_BREAKPOINT}px)`).matches;
 }
 
 // ================= CARGAR GEOJSON =================
@@ -120,16 +199,7 @@ function processGeoJSON(data) {
 function initMap() {
   const map = L.map('map', {
     zoomControl: false,
-  }).setView([36.5298, -6.2035], 16);
-
-  // Añade el control de zoom en la esquina inferior derecha
-  /*L.control.zoom({
-    position: 'bottomright',
-    zoomInText: '+',
-    zoomInTitle: 'Acercar',
-    zoomOutText: '-',
-    zoomOutTitle: 'Alejar'
-  }).addTo(map);*/
+  }).setView([36.5297, -6.2118], 16);
 
   L.tileLayer(
     'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',
@@ -175,80 +245,6 @@ function initMap() {
     return L.divIcon({
       html: `<div style="background:${colour};width:14px;height:14px;border-radius:50%"></div>`
     });
-  }
-  
-  // ================= FILTRADO =================
-  function getFilteredFeatures() {
-    let sets = [];
-
-    if (state.campus !== "todos") {
-      sets.push(index.campus[state.campus] || new Set());
-    }
-    if (state.edificio !== "todos") {
-      sets.push(index.edificio[state.edificio] || new Set());
-    }
-    if (state.planta !== "todas") {
-      sets.push(index.planta[state.planta] || new Set());
-    }
-    if (state.tipo !== "todos") {
-      sets.push(index.tipo[state.tipo] || new Set());
-    }
-
-    // Si no hay filtros activos → todos
-    if (sets.length === 0) {
-      return Array.from(index.all);
-    }
-
-    // Intersección de sets
-    let result = sets[0];
-    for (let i = 1; i < sets.length; i++) {
-      result = new Set([...result].filter(f => sets[i].has(f)));
-    }
-
-    return Array.from(result);
-  }
-  
-  // =============== POPUP en HTML ===============
-  function popupHTML(p) {
-    const currentUrl = window.location.href.split('#')[0]; // Obtiene la URL sin hash
-    const shareUrl = `${currentUrl}#${p.idnum}`; // Crea la URL con el hash
-    const buttonId = `shareButton_${p.idnum}`; // Identificador único para el botón
-
-    return `
-        <div class="popup-card">
-          <div style="display: flex; justify-content: space-between; align-items: center;">
-            <h4>${p.nombre}</h4>
-            <button
-                id="${buttonId}"
-                style="padding: 6px 8px; margin: 0 0 0 4px; background: #3b82f6; color: white; border: none; border-radius: 4px; cursor: pointer;">
-              <i class="fa-solid fa-share-nodes"></i>
-            </button>
-          </div>
-          <p>${p.descrip}</p>
-          <div style="display: flex; justify-content: space-between; align-items: center;">
-            <span>Planta ${p.planta}</span>
-            <span style="color: #A0A0A0; font-size: 10px;">#${p.idnum}</span>
-          </div>
-          <span>Edificio: ${p.edificio}</span>
-          <div style="display: flex; justify-content: space-between; align-items: center;">
-            <span>Campus: ${p.campus}</span>
-            <a href="https://docs.google.com/forms/d/e/1FAIpQLSdEZjtvKMVmpLC3zcajTqxQdqtVs6yuITLAooP6FPez8nhKoQ/viewform?usp=pp_url&entry.2020790469=${p.idnum}" 
-                style="text-decoration: none; color: #A0A0A0; transition: color 0.2s;"
-                target="_blank"
-                rel="noopener noreferrer"
-                onmouseover="this.style.color='#808080'" 
-                onmouseout="this.style.color='#A0A0A0'">
-              <i class="fa-solid fa-circle-exclamation"></i>
-            </a>
-          </div>
-        </div>`;
-  }
-
-  // ================= CREAR MARKERS UNA SOLA VEZ =================
-
-  function featureKey(f) { // Función para crear un marker único para cada feature.
-    const p = f.properties;
-    return `${p.idnum}`;
   }
 
   const markersByKey = {};
@@ -301,41 +297,6 @@ function initMap() {
   const { renderSidebar } = setupSidebar(map, markersByKey, featureKey);
   
   // ================= BUSCADOR =================
-  /*function rebuildSearch(features) {
-    if (searchControl) {
-      map.removeControl(searchControl);
-
-      map.dragging.enable();
-      map.touchZoom.enable();
-      map.doubleClickZoom.enable();
-      map.scrollWheelZoom.enable();
-
-      searchControl = null;
-    }
-
-    const searchLayer = L.layerGroup();
-
-    features.forEach(f => {
-      const marker = markersByKey[featureKey(f)];
-      if (marker) searchLayer.addLayer(marker);
-    });
-
-    searchControl = new L.Control.Search({
-      layer: searchLayer,
-      propertyName: 'title',
-      zoom: FLY_ZOOM,
-      marker: false,
-      textPlaceholder: 'Buscar...'
-    });
-
-    searchControl.on('search:locationfound', e => {
-      e.layer.openPopup();
-    });
-
-    map.addControl(searchControl);
-  }*/
-  
-  // ================= BUSCADOR MANUAL =================
 
   const searchInput = document.getElementById('sidebar-search-bar');
   const searchButton = document.getElementById('sidebar-search-button');
@@ -394,11 +355,6 @@ function initMap() {
   });
 
   searchButton.addEventListener("click", performSearch);
-
-  // ================= HELPER =================
-  function isMobile() {
-    return window.matchMedia(`(max-width: ${MOBILE_BREAKPOINT}px)`).matches;
-  }
   
   // ================= FLY =================
   window.featureKey = featureKey;
@@ -446,7 +402,6 @@ function initMap() {
     const feats = getFilteredFeatures();
     updateLayers(); // Mapa
     renderSidebar(feats); // Sidebar
-    //rebuildSearch(feats); // Capa de búsqueda
     performSearch();
   }
   
