@@ -116,6 +116,26 @@ body {
     color: var(--color-enfasis);
 }
 
+.top-right-icon {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    padding: 8px;
+    width: fit-content;
+    font-size: 20px;
+    z-index: var(--z-index-title);
+}
+
+.top-left-icon {
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    padding: 8px;
+    width: fit-content;
+    font-size: 20px;
+    z-index: var(--z-index-title);
+}
+
 /* Pantallas completas */
 .fullscreen-background {
     position: fixed;

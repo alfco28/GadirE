@@ -194,17 +194,6 @@
       },
     };
 
-      const sidebar = document.getElementById('sidebar');
-      const toggleSidebar = document.getElementById('toggle-sidebar');
-      const homeIcon = document.getElementById('home-icon');
-      const notificationsIcon = document.getElementById('notifications-icon');
-      const settingsIcon = document.getElementById('settings-icon');
-      const mapIcon = document.getElementById('map-icon');
-
-      const homeScreen = document.getElementById('home-screen');
-      const notificationsScreen = document.getElementById('notifications-screen');
-      const settingsScreen = document.getElementById('settings-screen');
-
       // Cargar el estado guardado de la aplicación, si lo hay
       appConfig.load();
       appConfig.applyAll();

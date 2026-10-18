@@ -4,16 +4,6 @@
       padding-right: 10px !important;
     }
 
-    .settings-icon {
-      position: fixed;
-      top: 10px;
-      right: 10px;
-      padding: 8px;
-      width: fit-content;
-      font-size: 20px;
-      z-index: var(--z-index-title);
-    }
-
     .home-grid {
       background: transparent;
       display: grid;

@@ -1,3 +1,16 @@
+const sidebar = document.getElementById('sidebar');
+const toggleSidebar = document.getElementById('toggle-sidebar');
+const homeIcon = document.getElementById('home-icon');
+const calendarIcon = document.getElementById('calendar-icon');
+const notificationsIcon = document.getElementById('notifications-icon');
+const settingsIcon = document.getElementById('settings-icon');
+const backToHomeIcon = document.getElementById('back-to-home');
+const mapIcon = document.getElementById('map-icon');
+
+const homeScreen = document.getElementById('home-screen');
+const notificationsScreen = document.getElementById('notifications-screen');
+const settingsScreen = document.getElementById('settings-screen');
+
 // Función para ocultar todas las pantallas
 function hideAllScreens() {
   const background = document.getElementById('fullscreen-background');
@@ -75,6 +88,28 @@ homeIcon.addEventListener('click', () => {
   document.querySelector('.title-bar').classList.add('fullscreen');
 });
 
+calendarIcon.addEventListener('click', () => {
+  const background = document.getElementById('fullscreen-background');
+  background.classList.remove('hidden');
+  background.classList.add('visible');
+
+  const notifications = document.getElementById('notifications-screen');
+  notifications.classList.remove('visible');
+  notifications.classList.add('hidden');
+
+  const home = document.getElementById('home-screen');
+  home.classList.remove('visible');
+  home.classList.add('hidden');
+
+  const settings = document.getElementById('settings-screen');
+  settings.classList.remove('visible');
+  settings.classList.add('hidden');
+
+  setActiveIcon(calendarIcon);
+  document.querySelector('.dock').classList.add('fullscreen');
+  document.querySelector('.title-bar').classList.add('fullscreen');
+});
+
 notificationsIcon.addEventListener('click', () => {
   const background = document.getElementById('fullscreen-background');
   background.classList.remove('hidden');
@@ -98,14 +133,6 @@ notificationsIcon.addEventListener('click', () => {
 });
 
 settingsIcon.addEventListener('click', () => {
-  const background = document.getElementById('fullscreen-background');
-  background.classList.remove('hidden');
-  background.classList.add('visible');
-
-  const notifications = document.getElementById('notifications-screen');
-  notifications.classList.remove('visible');
-  notifications.classList.add('hidden');
-
   const home = document.getElementById('home-screen');
   home.classList.remove('visible');
   home.classList.add('hidden');
@@ -114,9 +141,19 @@ settingsIcon.addEventListener('click', () => {
   settings.classList.remove('hidden');
   settings.classList.add('visible');
 
-  setActiveIcon(settingsIcon);
-  document.querySelector('.dock').classList.add('fullscreen');
-  document.querySelector('.title-bar').classList.add('fullscreen');
+  updateTitleBar(settingsIcon);
+});
+
+backToHomeIcon.addEventListener('click', () => {
+  const settings = document.getElementById('settings-screen');
+  settings.classList.remove('visible');
+  settings.classList.add('hidden');
+
+  const home = document.getElementById('home-screen');
+  home.classList.remove('hidden');
+  home.classList.add('visible');
+
+  updateTitleBar(homeIcon);
 });
 
 mapIcon.addEventListener('click', () => {
