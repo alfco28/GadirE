@@ -11,6 +11,37 @@ document.addEventListener('DOMContentLoaded', function() {
         editable: false,
         firstDay: 1,
         events: [], // Eventos iniciales (vacío)
+        eventClick: function(info) {
+            const event = info.event;
+            const title = event.title;
+            const isAllDay = event.allDay;
+            const start = event.start;
+            const end = event.end;
+            const location = event.extendedProps.location || 'No especificada';
+            const description = event.extendedProps.description || 'No hay descripción';
+
+            // Formatear fecha/hora según si es "todo el día"
+            let dateInfo = '';
+            if (isAllDay) {
+                dateInfo = `<p><strong>Día:</strong> ${start.toLocaleDateString('es-ES', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}</p>`;
+            } else {
+                dateInfo = `
+                    <p><strong>Inicio:</strong> ${start.toLocaleString('es-ES', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' })}</p>
+                    <p><strong>Fin:</strong> ${end ? end.toLocaleString('es-ES', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' }) : 'No especificado'}</p>
+                `;
+            }
+        
+            // Contenido de la ventana modal
+            const content = `
+                ${dateInfo}
+                <p><strong>Ubicación:</strong> ${location}</p>
+                <p><strong>Descripción:</strong> ${description}</p>
+            `;
+        
+            // Abrir la ventana modal
+            openMW(title, content);
+            info.jsEvent.preventDefault();
+        }
     });
 
     calendar.render();
@@ -27,8 +58,11 @@ document.addEventListener('DOMContentLoaded', function() {
                 start: e.startDate.toJSDate(),
                 end: e.endDate ? e.endDate.toJSDate() : null,
                 allDay: e.startDate.isDate,
-                // Añadir un identificador único para el evento (por ejemplo, UID del ICS)
-                id: e.uid || Math.random().toString(36).substring(2, 15),
+                id: e.uid || Math.random().toString(36).substring(2, 15), // Añadir un identificador único para el evento (por ejemplo, UID del ICS)
+                extendedProps: {
+                    description: e.description || '',
+                    location: e.location || ''
+                }
             };
         });
     }

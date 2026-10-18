@@ -27,8 +27,3 @@ window.addEventListener("click", (event) => {
     closeMW();
     }
 });
-
-// Ejemplo de uso con JS
-/*document.getElementById("refresh-notifications").addEventListener("click", () => {
-    openMW("Título personalizado", "<p>Contenido dinámico con <button>botones</button> o imágenes.Contenido dinámico con <button>botones</button> o imágenes.Contenido dinámico con <button>botones</button> o imágenes.Contenido dinámico con <button>botones</button> o imágenes.Contenido dinámico con <button>botones</button> o imágenes.</p>");
-});*/
