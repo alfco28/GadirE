@@ -5,12 +5,12 @@
 // Configuración global de la aplicación (se guarda en localStorage)
 const appConfig = {
   defaults: {
-    darkMode: false,
     fontSize: 'porDefecto',
     highContrastText: false,
     boldText: false,
     enableTransparencies: true,
     animationSpeed: 'porDefecto',
+    darkMode: false,
     baseMap: 'claro',
     emphasisColor: 'naranja',
     showZoomButtons: false,
@@ -47,9 +47,6 @@ const appConfig = {
 
   apply(key, value) {
     switch (key) {
-      case 'darkMode':
-        document.documentElement.classList.toggle('dark', value);
-        break;
       case 'fontSize':
         this.applyFontSize(value);
         break;
@@ -64,6 +61,9 @@ const appConfig = {
         break;
       case 'animationSpeed':
         this.applyAnimationSpeed(value);
+        break;
+      case 'darkMode':
+        document.documentElement.classList.toggle('dark', value);
         break;
       case 'baseMap':
         this.applyBaseMap(value);
@@ -199,10 +199,6 @@ appConfig.load();
 appConfig.applyAll();
 
 // Conectar todos los elementos de configuración
-document.getElementById('toggle-darkmode').addEventListener('change', (e) => {
-  appConfig.set('darkMode', e.target.checked);
-});
-
 document.getElementById('tamanoFuente').addEventListener('change', (e) => {
   appConfig.set('fontSize', e.target.value);
 });
@@ -221,6 +217,10 @@ document.getElementById('enable-transparencies').addEventListener('change', (e) 
 
 document.getElementById('velocidadAnimaciones').addEventListener('change', (e) => {
   appConfig.set('animationSpeed', e.target.value);
+});
+
+document.getElementById('toggle-darkmode').addEventListener('change', (e) => {
+  appConfig.set('darkMode', e.target.checked);
 });
 
 document.getElementById('mapaBase').addEventListener('change', (e) => {
@@ -256,12 +256,12 @@ document.getElementById('toggle-notification-filters').addEventListener('change'
 });
 
 // Cargar el estado de los elementos de configuración
-document.getElementById('toggle-darkmode').checked = appConfig.get('darkMode');
 document.getElementById('tamanoFuente').value = appConfig.get('fontSize');
 document.getElementById('high-contrast-text').checked = appConfig.get('highContrastText');
 document.getElementById('bold-text').checked = appConfig.get('boldText');
 document.getElementById('enable-transparencies').checked = appConfig.get('enableTransparencies');
 document.getElementById('velocidadAnimaciones').value = appConfig.get('animationSpeed');
+document.getElementById('toggle-darkmode').checked = appConfig.get('darkMode');
 document.getElementById('mapaBase').value = appConfig.get('baseMap');
 document.getElementById('colorEnfasis').value = appConfig.get('emphasisColor');
 document.getElementById('toggle-zoom-buttons').checked = appConfig.get('showZoomButtons');
