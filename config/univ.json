@@ -1,0 +1,22 @@
+{
+    "calendars": {
+        "byTheme": {
+            "Representación Estudiantil": [
+                {
+                    "id": "cal1",
+                    "name": "Agenda pública del Presidente del CEUCA",
+                    "path": "/data/agenda_publica_presidencia_CEUCA.ics",
+                    "checked": true
+                }
+            ],
+            "Festivos": [
+                {
+                    "id": "cal2",
+                    "name": "Festivos España",
+                    "path": "/data/festivos_Espana.ics",
+                    "checked": true
+                }
+            ]
+        }
+    }
+}
