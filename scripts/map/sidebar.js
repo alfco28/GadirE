@@ -17,11 +17,11 @@ function setupSidebar(map, markersByKey, featureKey) {
         for(const e in estructura){
             html += `<h3>${e}</h3>`;
             for(const p in estructura[e]){
-            html += `<h4>Planta ${p}</h4>`;
+            html += `<hr class="separador"><h4>Planta ${p}</h4>`;
             estructura[e][p].forEach(f => {
                 html += `
                 <div class="sidebar-item" onclick="fly('${featureKey(f)}')">
-                    • ${f.properties.nombre}
+                    - ${f.properties.nombre}
                 </div>`;
             });
             }

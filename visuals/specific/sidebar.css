@@ -5,3 +5,31 @@
     font-size:14px;
     transition: background-color 0.2s ease;
 }
+
+#sidebar-content h3 {
+    font-weight: bold;
+    font-size: calc(var(--tamano-fuente) + 4px);
+    color: var(--color-texto-primario);
+    margin: 8px 0 4px 0;
+    cursor: default;
+}
+
+#sidebar-content h4 {
+    font-size: var(--tamano-fuente);
+    font-weight: bold;
+    color: var(--color-texto-primario);
+    margin: 4px 0;
+    cursor: default;
+}
+
+#sidebar-content .sidebar-item {
+    font-size: var(--tamano-fuente);
+    color: var(--color-texto-primario);
+    margin: 2px 0;
+    cursor: pointer;
+    border-radius: var(--radio-borde);
+}
+
+#sidebar-content .sidebar-item:hover {
+    background-color: var(--color-sombra);
+}

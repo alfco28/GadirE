@@ -17,6 +17,8 @@
     --tamano-iconos: 30px;
     --duracion-transicion: 0.2s;
 
+    --tamano-fuente: 14px;
+
     --z-index-mapa: 100;
     --z-index-filters: 200;
     --z-index-filter-pair: 210;
@@ -244,7 +246,7 @@ a:active {
     color: var(--color-enfasis);
 }
 
-a::after {
+a.enlace-con-icono::after {
     content: "";
     display: inline-block;
     width: 12px;

@@ -58,7 +58,7 @@ function cargarFeedsSeleccionados() {
                     <div class="feed-source" style="background-color: #f0f0f0; padding: 2px 5px; display: inline-block; margin-bottom: 5px;">
                         ${item.feedSource}
                     </div>
-                    <h3><a href="${item.link}" target="_blank">${item.title}</a></h3>
+                    <h3><a href="${item.link}" target="_blank" class="enlace-con-icono">${item.title}</a></h3>
                     ${item.thumbnail ? `<img src="${item.thumbnail}" alt="Portada" style="max-width: 100%;" />` : ''}
                     <p>${item.description}</p>
                     <p><small>Publicado: ${item.pubDate} | Autor: ${item.author || 'Desconocido'}</small></p>

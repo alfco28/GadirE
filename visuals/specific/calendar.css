@@ -4,3 +4,25 @@
     margin: 0 auto;
     aspect-ratio: 1 / 1;
 }
+
+/* Arreglar a partir de aquí para que encaje con el estilo flotante */
+.fc .fc-button-primary {
+    background-color: var(--color-enfasis);
+    border: 0;
+}
+
+.fc .fc-button-primary:hover {
+    background-color: var(--color-enfasis);
+    transform: scale(1.2);
+    transition: all var(--duracion-transicion) ease-in-out;
+}
+
+.fc .fc-button-primary:active {
+    background-color: var(--color-enfasis);
+    transform: scale(1.2);
+}
+
+.fc .fc-button-primary:disabled {
+    background-color: var(--color-enfasis);
+    border: 0;
+}
