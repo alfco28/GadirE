@@ -356,6 +356,7 @@ function initMap() {
       }
     ).bindPopup(popupHTML(f.properties), {
       className: 'gadire-map-popup',
+      closeOnClick: true,
       maxWidth: 360,
       minWidth: 230,
       autoPanPaddingTopLeft: [20, 50],
@@ -650,7 +651,27 @@ function initMap() {
   update();
 
   // ================= Evento para detectar clicks en el mapa =================
+  let popupIsOpen = false;
+  let popupWasOpenBeforeMapClick = false;
+
+  map.on('popupopen', () => {
+    popupIsOpen = true;
+  });
+  map.on('popupclose', () => {
+    popupIsOpen = false;
+  });
+
+  // Leaflet cierra el popup durante el click; preclick conserva el estado previo.
+  map.on('preclick', () => {
+    popupWasOpenBeforeMapClick = popupIsOpen;
+  });
+
   map.on('click', function(e) {
+    if (popupWasOpenBeforeMapClick) {
+      popupWasOpenBeforeMapClick = false;
+      return;
+    }
+
     if (!document.getElementById("filter-options-popup").hidden) return;
 
     const { lat, lng } = e.latlng;
@@ -684,6 +705,7 @@ function initMap() {
 
       L.popup({
         className: 'gadire-map-popup',
+        closeOnClick: true,
         maxWidth: 360,
         minWidth: 230,
         autoPanPaddingTopLeft: [20, 50],
