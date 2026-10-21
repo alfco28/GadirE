@@ -20,6 +20,7 @@ const state = {
 const MOBILE_BREAKPOINT = 768;
 const DEFAULT_ZOOM = 16;
 const FLY_ZOOM = 19;
+const FUZZY_SEARCH_THRESHOLD = 0.4;
 
 let searchControl = null;
 let campusGeoJSON = null;
@@ -41,20 +42,25 @@ function tokenise(str) {
     .filter(Boolean);
 }
 
+function getSearchableText(properties) {
+  // Se excluyen el id tecnico y la clase generica "espacio", que comparten todos los puntos.
+  return [
+    properties.nombre,
+    properties.descrip,
+    properties.enlace,
+    properties.tipo,
+    properties.planta,
+    properties.edificio,
+    properties.campus
+  ]
+    .filter(value => value !== null && value !== undefined && String(value).trim() !== "")
+    .join(" ");
+}
+
 // Indexar texto de features
 function buildSearchIndex(features) {
   features.forEach(f => {
-    const p = f.properties;
-
-    const searchableText = `
-      ${p.nombre}
-      ${p.edificio}
-      ${p.tipo}
-      ${p.campus}
-      ${p.descrip || ""}
-    `;
-
-    const tokens = tokenise(searchableText);
+    const tokens = tokenise(getSearchableText(f.properties));
 
     tokens.forEach(token => {
       if (!index.search[token]) index.search[token] = new Set();
@@ -77,14 +83,14 @@ function buildFuseIndex(features) {
       campus: p.campus,
       descrip: p.descrip || "",
       planta: p.planta,
-      searchableText: `${p.nombre} ${p.edificio} ${p.tipo} ${p.campus} ${p.descrip || ""}`
+      searchableText: getSearchableText(p)
     };
   });
 
   fuseIndex = new Fuse(searchableData, {
     keys: ["searchableText"],
     includeScore: true,
-    threshold: 0.4, // Umbral de similitud (0 = exacto, 1 = muy difuso)
+    threshold: FUZZY_SEARCH_THRESHOLD, // Umbral de similitud (0 = exacto, 1 = muy difuso)
     minMatchCharLength: 2, // Mínimo de caracteres para coincidencia
     ignoreLocation: true, // Permite coincidencias parciales aunque aparezcan al final del texto.
   });
@@ -108,7 +114,10 @@ function searchFeatures(query, baseFeatures) {
   let fuzzyResult = new Set();
   try {
     if (fuseIndex) {
-      const fuseResults = fuseIndex.search(query).map(result => result.item.id);
+      // Descarta candidatos cuyo score supera el umbral para evitar falsos positivos.
+      const fuseResults = fuseIndex.search(query)
+        .filter(result => result.score <= FUZZY_SEARCH_THRESHOLD)
+        .map(result => result.item.id);
       fuzzyResult = new Set(
         campusGeoJSON.features.filter(f => fuseResults.includes(f.properties.idnum))
       );
