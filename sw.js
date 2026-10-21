@@ -1,4 +1,4 @@
-const CACHE_NAME = 'pwa-cache-v9';
+const CACHE_NAME = 'pwa-cache-v11';
 
 const CACHE_GROUPS = {
   // Recursos necesarios para abrir y utilizar la aplicación sin conexión

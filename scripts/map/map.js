@@ -196,29 +196,41 @@ function popupHTML(p) {
 
   return `
       <div class="popup-card">
-        <div style="display: flex; justify-content: space-between; align-items: center;">
+        <div class="popup-header">
           <h4>${p.nombre}</h4>
           <button
               id="${buttonId}"
-              style="padding: 6px 8px; margin: 0 0 0 4px; background: #3b82f6; color: white; border: none; border-radius: 4px; cursor: pointer;">
-            <i class="fa-solid fa-share-nodes"></i>
+              class="popup-action-button"
+              type="button"
+              aria-label="Compartir ${p.nombre}"
+              title="Compartir">
+            <i class="fa-solid fa-share-nodes" aria-hidden="true"></i>
           </button>
         </div>
-        <p>${p.descrip}</p>
-        <div style="display: flex; justify-content: space-between; align-items: center;">
-          <span>Planta ${p.planta}</span>
-          <span style="color: #A0A0A0; font-size: 10px;">#${p.idnum}</span>
+        <p class="popup-description">${p.descrip}</p>
+        <div class="popup-meta">
+          <div class="popup-meta-row">
+            <i class="fa-solid fa-layer-group" aria-hidden="true"></i>
+            <span>Planta ${p.planta}</span>
+          </div>
+          <div class="popup-meta-row">
+            <i class="fa-solid fa-building" aria-hidden="true"></i>
+            <span>${p.edificio}</span>
+          </div>
+          <div class="popup-meta-row">
+            <i class="fa-solid fa-location-dot" aria-hidden="true"></i>
+            <span>${p.campus}</span>
+          </div>
         </div>
-        <span>Edificio: ${p.edificio}</span>
-        <div style="display: flex; justify-content: space-between; align-items: center;">
-          <span>Campus: ${p.campus}</span>
+        <div class="popup-footer">
+          <span class="popup-id">#${p.idnum}</span>
           <a href="https://docs.google.com/forms/d/e/1FAIpQLSdEZjtvKMVmpLC3zcajTqxQdqtVs6yuITLAooP6FPez8nhKoQ/viewform?usp=pp_url&entry.2020790469=${p.idnum}" 
-              style="text-decoration: none; color: #A0A0A0; transition: color 0.2s;"
+              class="popup-action-button popup-report-link"
+              aria-label="Reportar un error en ${p.nombre}"
+              title="Reportar un error"
               target="_blank"
-              rel="noopener noreferrer"
-              onmouseover="this.style.color='#808080'" 
-              onmouseout="this.style.color='#A0A0A0'">
-            <i class="fa-solid fa-circle-exclamation"></i>
+              rel="noopener noreferrer">
+            <i class="fa-solid fa-circle-exclamation" aria-hidden="true"></i>
           </a>
         </div>
       </div>`;
@@ -342,7 +354,13 @@ function initMap() {
         title: `${f.properties.nombre}, ${f.properties.edificio}`,
         icon: icon(tipo)
       }
-    ).bindPopup(popupHTML(f.properties));
+    ).bindPopup(popupHTML(f.properties), {
+      className: 'gadire-map-popup',
+      maxWidth: 360,
+      minWidth: 230,
+      autoPanPaddingTopLeft: [20, 50],
+      autoPanPaddingBottomRight: [20, 175]
+    });
     marker.feature = f;
 
     // Añadir el evento de click al botón de compartir cuando se abra el popup
@@ -655,16 +673,22 @@ function initMap() {
     // Si no hay marcador, muestra el popup personalizado
     if (!markerFound) {
       const popupContent = `
-        <div class="popup-card">
+        <div class="popup-card popup-report-card">
           <h4>¿Falta algún lugar aquí?</h4>
           <p>Puedes reportarlo aquí:</p>
-          <button onclick="window.open('https://docs.google.com/forms/d/e/1FAIpQLSdgbuxXkLoHbwkBDh5i6TF-OzIHC7WK_Y6LDy4tCTiSR3Sg5Q/viewform?usp=pp_url&entry.339440483=${lat}&entry.736856326=${lng}')" style="padding: 8px 12px; background: #3b82f6; color: white; border: none; border-radius: 4px; cursor: pointer;">
+          <button class="popup-report-action" onclick="window.open('https://docs.google.com/forms/d/e/1FAIpQLSdgbuxXkLoHbwkBDh5i6TF-OzIHC7WK_Y6LDy4tCTiSR3Sg5Q/viewform?usp=pp_url&entry.339440483=${lat}&entry.736856326=${lng}')">
             Reportar falta de lugar
           </button>
         </div>
       `;
 
-      L.popup()
+      L.popup({
+        className: 'gadire-map-popup',
+        maxWidth: 360,
+        minWidth: 230,
+        autoPanPaddingTopLeft: [20, 50],
+        autoPanPaddingBottomRight: [20, 175]
+      })
         .setLatLng([lat, lng])
         .setContent(popupContent)
         .openOn(map);

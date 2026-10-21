@@ -1,9 +1,9 @@
 function setupFilters(state, update) {
     const filters = [
-        { id: "fTipo", stateKey: "tipo" },
-        { id: "fCampus", stateKey: "campus" },
-        { id: "fEdificio", stateKey: "edificio" },
-        { id: "fPlanta", stateKey: "planta" }
+        { id: "fTipo", stateKey: "tipo", defaultValue: "todos", icon: "fa-shapes" },
+        { id: "fCampus", stateKey: "campus", defaultValue: "todos", icon: "fa-location-dot" },
+        { id: "fEdificio", stateKey: "edificio", defaultValue: "todos", icon: "fa-building" },
+        { id: "fPlanta", stateKey: "planta", defaultValue: "todas", icon: "fa-layer-group" }
     ];
     const optionsPopup = document.createElement("div");
     optionsPopup.id = "filter-options-popup";
@@ -75,12 +75,13 @@ function setupFilters(state, update) {
         }
     }
 
-    filters.forEach(({ id, stateKey }) => {
+    filters.forEach(({ id, stateKey, defaultValue, icon }) => {
         const select = document.getElementById(id);
         const filterPair = select.closest(".filter-pair");
         const label = filterPair.querySelector("label");
         const filterName = label.textContent.trim().replace(/:$/, "");
         const trigger = document.createElement("button");
+        const filterIcon = document.createElement("i");
         const triggerLabel = document.createElement("span");
         const chevron = document.createElement("i");
 
@@ -90,11 +91,13 @@ function setupFilters(state, update) {
         trigger.setAttribute("aria-controls", optionsPopup.id);
         trigger.setAttribute("aria-expanded", "false");
         trigger.setAttribute("aria-label", filterName);
+        filterIcon.className = `fa-solid ${icon} filter-icon`;
+        filterIcon.setAttribute("aria-hidden", "true");
         triggerLabel.className = "filter-trigger-label";
         triggerLabel.textContent = filterName;
         chevron.className = "fa-solid fa-chevron-down";
         chevron.setAttribute("aria-hidden", "true");
-        trigger.append(triggerLabel, chevron);
+        trigger.append(filterIcon, triggerLabel, chevron);
 
         label.hidden = true;
         select.hidden = true;
@@ -103,12 +106,14 @@ function setupFilters(state, update) {
 
         function updateTriggerLabel() {
             const selectedOption = select.options[select.selectedIndex];
-            const isDefault = select.value === "todos" || select.value === "todas";
+            const isDefault = select.value === defaultValue;
             const displayedValue = isDefault ? filterName : selectedOption.textContent;
 
             triggerLabel.textContent = displayedValue;
             trigger.setAttribute("aria-label", isDefault ? filterName : `${filterName}: ${displayedValue}`);
             trigger.title = displayedValue;
+            // Solo resalta la burbuja cuando su valor difiere de la opcion inicial.
+            filterPair.classList.toggle("is-active", !isDefault);
         }
 
         select.addEventListener("change", updateTriggerLabel);
