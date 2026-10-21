@@ -21,9 +21,19 @@ const MOBILE_BREAKPOINT = 768;
 const DEFAULT_ZOOM = 16;
 const FLY_ZOOM = 19;
 const FUZZY_SEARCH_THRESHOLD = 0.4;
+const SEARCH_FIELDS = [
+  { name: "nombre" },
+  { name: "edificio" },
+  { name: "descrip" },
+  { name: "campus" },
+  { name: "tipo" },
+  { name: "planta" },
+  { name: "enlace" }
+];
 
 let searchControl = null;
 let campusGeoJSON = null;
+let featuresById = new Map();
 
 // ================= BUSQUEDA INDEXADA =================
 
@@ -44,17 +54,30 @@ function tokenise(str) {
 
 function getSearchableText(properties) {
   // Se excluyen el id tecnico y la clase generica "espacio", que comparten todos los puntos.
-  return [
-    properties.nombre,
-    properties.descrip,
-    properties.enlace,
-    properties.tipo,
-    properties.planta,
-    properties.edificio,
-    properties.campus
-  ]
+  return SEARCH_FIELDS.map(({ name }) => properties[name])
     .filter(value => value !== null && value !== undefined && String(value).trim() !== "")
     .join(" ");
+}
+
+function getExactFieldPriority(feature, tokens) {
+  const priority = SEARCH_FIELDS.findIndex(({ name }) => {
+    const fieldTokens = tokenise(String(feature.properties[name] ?? ""));
+    return tokens.some(token => fieldTokens.includes(token));
+  });
+
+  return priority === -1 ? SEARCH_FIELDS.length : priority;
+}
+
+function getFuzzyFieldPriority(result) {
+  let priority = SEARCH_FIELDS.length;
+
+  result.matches.forEach(match => {
+    const fieldName = typeof match.key === "string" ? match.key : match.key.name;
+    const matchPriority = SEARCH_FIELDS.findIndex(field => field.name === fieldName);
+    if (matchPriority !== -1) priority = Math.min(priority, matchPriority);
+  });
+
+  return priority;
 }
 
 // Indexar texto de features
@@ -73,23 +96,20 @@ function buildSearchIndex(features) {
 let fuseIndex = null;
 
 function buildFuseIndex(features) {
+  featuresById = new Map(features.map(feature => [feature.properties.idnum, feature]));
+
   const searchableData = features.map(f => {
     const p = f.properties;
     return {
       id: p.idnum,
-      nombre: p.nombre,
-      edificio: p.edificio,
-      tipo: p.tipo,
-      campus: p.campus,
-      descrip: p.descrip || "",
-      planta: p.planta,
-      searchableText: getSearchableText(p)
+      ...Object.fromEntries(SEARCH_FIELDS.map(({ name }) => [name, p[name] ?? ""]))
     };
   });
 
   fuseIndex = new Fuse(searchableData, {
-    keys: ["searchableText"],
+    keys: SEARCH_FIELDS.map(({ name }) => name),
     includeScore: true,
+    includeMatches: true,
     threshold: FUZZY_SEARCH_THRESHOLD, // Umbral de similitud (0 = exacto, 1 = muy difuso)
     minMatchCharLength: 2, // Mínimo de caracteres para coincidencia
     ignoreLocation: true, // Permite coincidencias parciales aunque aparezcan al final del texto.
@@ -110,31 +130,31 @@ function searchFeatures(query, baseFeatures) {
     exactResult = new Set([...exactResult].filter(f => exactResults[i].has(f)));
   }
 
-  // 2. Búsqueda difusa (Fuse.js)
-  let fuzzyResult = new Set();
+  const baseSet = new Set(baseFeatures);
+  const exactFeatures = [...exactResult]
+    .filter(feature => baseSet.has(feature))
+    .sort((a, b) => getExactFieldPriority(a, tokens) - getExactFieldPriority(b, tokens));
+  const exactFeatureSet = new Set(exactFeatures);
+
+  // 2. Búsqueda difusa (Fuse.js), ordenada por campo y luego por similitud.
+  let fuzzyFeatures = [];
   try {
     if (fuseIndex) {
       // Descarta candidatos cuyo score supera el umbral para evitar falsos positivos.
-      const fuseResults = fuseIndex.search(query)
+      const fuzzyResults = fuseIndex.search(query)
         .filter(result => result.score <= FUZZY_SEARCH_THRESHOLD)
-        .map(result => result.item.id);
-      fuzzyResult = new Set(
-        campusGeoJSON.features.filter(f => fuseResults.includes(f.properties.idnum))
-      );
+        .sort((a, b) => getFuzzyFieldPriority(a) - getFuzzyFieldPriority(b) || a.score - b.score);
+      fuzzyFeatures = fuzzyResults
+        .map(result => featuresById.get(result.item.id))
+        .filter(feature => feature && baseSet.has(feature) && !exactFeatureSet.has(feature));
     }
   } catch (e) {
     console.error("Error en búsqueda difusa:", e);
-    // Si falla, fuzzyResult sigue siendo un Set vacío
+    // Si Fuse falla, fuzzyFeatures sigue vacío y se conservan los resultados exactos.
   }
 
-  // 3. Combinar resultados (priorizar exactos)
-  const combinedResult = new Set([...exactResult, ...fuzzyResult]);
-
-  // 4. Filtrar por features base (filtros activos)
-  const baseSet = new Set(baseFeatures);
-  const finalResult = new Set([...combinedResult].filter(f => baseSet.has(f)));
-
-  return Array.from(finalResult);
+  // 3. Los exactos se mantienen delante de los difusos.
+  return [...exactFeatures, ...fuzzyFeatures];
 }
 
 // ================= FILTRADO =================
