@@ -334,8 +334,9 @@ function initMap() {
   });
 
   // =============== CAPAS VISIBLES EN EL MAPA ===============
-  function updateLayers() {
-    const visibles = new Set(getFilteredFeatures());
+  function updateLayers(features) {
+    // Se reutilizan los resultados ya calculados y solo se alterna la visibilidad de los marcadores existentes.
+    const visibles = new Set(features);
 
     for (const tipo in layersByTipo) {
       layersByTipo[tipo].eachLayer(marker => {
@@ -386,13 +387,13 @@ function initMap() {
     });
   }
 
-  function performSearch() {
+  function performSearch(filtered = getFilteredFeatures()) {
     const query = searchInput.value;
 
-    const filtered = getFilteredFeatures(); // respeta filtros
     const results = searchFeatures(query, filtered);
 
     renderSearchResults(results);
+    updateLayers(results);
   }
 
   // Buscar al escribir (con debounce)
@@ -450,9 +451,8 @@ function initMap() {
   // ================= UPDATE =================
   function update(){
     const feats = getFilteredFeatures();
-    updateLayers(); // Mapa
     renderSidebar(feats); // Sidebar
-    performSearch();
+    performSearch(feats);
   }
   
   // ================= CAMBIO DE FILTROS =================
