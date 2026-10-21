@@ -26,27 +26,6 @@
       "type": "Feature",
       "properties": {
         "clase": "espacio",
-        "nombre": "Gran Teatro Falla",
-        "descrip": "Aquí se celebra el COAC",
-        "enlace": "",
-        "tipo": "salon",
-        "planta": "baja",
-        "edificio": "Desconocido",
-        "campus": "Cádiz",
-        "idnum": "000101002"
-      },
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -6.302357,
-          36.53383
-        ]
-      }
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "clase": "espacio",
         "nombre": "Facultad de Enfermería y Fisioterapia ",
         "descrip": "",
         "enlace": "",
@@ -110,6 +89,27 @@
       "type": "Feature",
       "properties": {
         "clase": "espacio",
+        "nombre": "Cafetería del CASEM",
+        "descrip": "",
+        "enlace": "",
+        "tipo": "cafete",
+        "planta": "baja",
+        "edificio": "Centro Andaluz Superior de Estudios Marinos (CASEM)",
+        "campus": "Puerto Real",
+        "idnum": "308100501"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -6.212144,
+          36.529935
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "clase": "espacio",
         "nombre": "Complejo Deportivo del Campus de Puerto Real",
         "descrip": "",
         "enlace": "",
@@ -166,27 +166,6 @@
         "coordinates": [
           -6.201557,
           36.53753
-        ]
-      }
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "clase": "espacio",
-        "nombre": "Pasillo",
-        "descrip": "",
-        "enlace": "",
-        "tipo": "emergencia",
-        "planta": "baja",
-        "edificio": "Escuela Superior de Ingeniería (ESI)",
-        "campus": "Puerto Real",
-        "idnum": "328100901"
-      },
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          -6.201603,
-          36.537509
         ]
       }
     },
@@ -479,27 +458,6 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          -6.211168,
-          36.531241
-        ]
-      }
-    },
-    {
-      "type": "Feature",
-      "properties": {
-        "clase": "espacio",
-        "nombre": "Fuente de agua",
-        "descrip": "",
-        "enlace": "",
-        "tipo": "cafete",
-        "planta": "baja",
-        "edificio": "Facultad de Ciencias",
-        "campus": "Puerto Real",
-        "idnum": "330100502"
-      },
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
           -6.212052,
           36.531812
         ]
@@ -530,7 +488,28 @@
       "type": "Feature",
       "properties": {
         "clase": "espacio",
-        "nombre": "Sala de Grados 1",
+        "nombre": "Delegación de Estudiantes de la Facultad de Ciencias",
+        "descrip": "",
+        "enlace": "",
+        "tipo": "repre",
+        "planta": "baja",
+        "edificio": "Facultad de Ciencias",
+        "campus": "Puerto Real",
+        "idnum": "330100801"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -6.211567,
+          36.531396
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "clase": "espacio",
+        "nombre": "Salón de Actos",
         "descrip": "",
         "enlace": "",
         "tipo": "salon",
@@ -538,6 +517,27 @@
         "edificio": "Facultad de Ciencias",
         "campus": "Puerto Real",
         "idnum": "330101001"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -6.211818,
+          36.530945
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "clase": "espacio",
+        "nombre": "Sala de Grados 1",
+        "descrip": "",
+        "enlace": "",
+        "tipo": "salon",
+        "planta": "baja",
+        "edificio": "Facultad de Ciencias",
+        "campus": "Puerto Real",
+        "idnum": "330101002"
       },
       "geometry": {
         "type": "Point",
