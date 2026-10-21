@@ -86,6 +86,7 @@ function buildFuseIndex(features) {
     includeScore: true,
     threshold: 0.4, // Umbral de similitud (0 = exacto, 1 = muy difuso)
     minMatchCharLength: 2, // Mínimo de caracteres para coincidencia
+    ignoreLocation: true, // Permite coincidencias parciales aunque aparezcan al final del texto.
   });
 }
 
