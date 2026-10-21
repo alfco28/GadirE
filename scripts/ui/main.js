@@ -48,7 +48,10 @@ function updateTitleBar(icon) {
   if (icon.id === 'toggle-sidebar') {
     titleBar.textContent = getTranslation('t-search-title');
   } else if (icon.id === 'map-icon') {
-    titleBar.textContent = 'Mapa'; //Hay que agregar la traducción para el título del mapa, pero deja de funcionar si se hace ¿?
+    const translatedTitle = typeof getTranslation === 'function'
+      ? getTranslation('t-map-title')
+      : 'Mapa';
+    titleBar.textContent = translatedTitle === 't-map-title' ? 'Mapa' : translatedTitle;
   } else if (icon.id === 'home-icon') {
     titleBar.textContent = getTranslation('t-home-title');
   } else if (icon.id === 'calendar-icon') {
@@ -59,6 +62,25 @@ function updateTitleBar(icon) {
     titleBar.textContent = getTranslation('t-settings-title');
   }
 }
+
+function refreshTitleBar() {
+  const visibleScreen = document.querySelector('.fullscreen-content.visible');
+  if (visibleScreen?.id === 'home-tile-screen') return;
+
+  const iconByScreen = {
+    'home-screen': 'home-icon',
+    'calendar-screen': 'calendar-icon',
+    'notifications-screen': 'notifications-icon',
+    'settings-screen': 'settings-icon'
+  };
+  const activeIcon = visibleScreen
+    ? document.getElementById(iconByScreen[visibleScreen.id])
+    : document.querySelector('.dock-icon.active');
+
+  if (activeIcon) updateTitleBar(activeIcon);
+}
+
+window.refreshTitleBar = refreshTitleBar;
       
 // Función para establecer el icono activo y actualizar el título
 function setActiveIcon(activeIcon) {

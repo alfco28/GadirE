@@ -28,8 +28,7 @@ async function changeLanguage(language) {
             element.textContent = translations[translationKey];
         }
     });
-    // Actualizar el título de la barra de título
-    document.getElementById('title-bar').textContent = getTranslation('t-settings-title');
+    window.refreshTitleBar?.();
 
     appConfig.set('localeLang', language); // Guardar el idioma seleccionado en localStorage
 }
