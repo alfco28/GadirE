@@ -23,6 +23,7 @@
     --z-index-filters: 200;
     --z-index-filter-pair: 210;
     --z-index-geolocate: 220;
+    --z-index-filter-options: 1000;
     --z-index-sidebar: 300;
     --z-index-fullscreen-background: 400;
     --z-indez-fullscreen-content: 500;

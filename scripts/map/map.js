@@ -492,6 +492,8 @@ function initMap() {
 
   // ================= Evento para detectar clicks en el mapa =================
   map.on('click', function(e) {
+    if (!document.getElementById("filter-options-popup").hidden) return;
+
     const { lat, lng } = e.latlng;
     let markerFound = false;
 

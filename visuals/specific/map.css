@@ -30,6 +30,78 @@
   flex-shrink: 0;
 }
 
+.filter-pair [hidden] {
+  display: none !important;
+}
+
+.filter-trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  max-width: min(65vw, 280px);
+  padding: 2px 4px;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+}
+
+.filter-trigger-label {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.filter-trigger i {
+  flex-shrink: 0;
+  font-size: 10px;
+}
+
+.filter-trigger:hover,
+.filter-option[aria-selected="true"] {
+  color: var(--color-enfasis);
+}
+
+.filter-trigger:focus-visible,
+.filter-option:focus-visible {
+  outline: 2px solid var(--color-enfasis);
+  outline-offset: 2px;
+}
+
+.filter-options {
+  position: fixed;
+  z-index: var(--z-index-filter-options);
+  box-sizing: border-box;
+  width: min(320px, calc(100vw - 24px));
+  min-width: min(200px, calc(100vw - 24px));
+  max-height: min(55dvh, 420px);
+  padding: 8px;
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.filter-option {
+  display: block;
+  width: 100%;
+  padding: 9px 12px;
+  border: 0;
+  border-radius: calc(var(--radio-borde) / 2);
+  background: transparent;
+  color: var(--color-texto-primario);
+  font: inherit;
+  line-height: 1.35;
+  text-align: left;
+  white-space: normal;
+  cursor: pointer;
+}
+
+.filter-option:hover,
+.filter-option[aria-selected="true"] {
+  background: var(--color-fondo-elementos-hover);
+}
+
 /* Geolocate button */
 #geolocate-button {
   visibility: visible;
