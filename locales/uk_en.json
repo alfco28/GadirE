@@ -5,6 +5,8 @@
     "t-calendar-title": "Calendar",
     "t-notifications-title": "Notifications",
     "t-settings-title": "Settings",
+    "t-map-follow-location": "Follow my location",
+    "t-map-stop-following-location": "Stop following my location",
     
     
     "t-settings-privacy-title": "Privacy",

@@ -453,30 +453,171 @@ function initMap() {
   };
   
   // ================= GEOLOCALIZACIÓN =================
-  document.getElementById('geolocate-button').addEventListener('click', () => {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          const { latitude, longitude } = position.coords;
-          if (userLocationMarker) {
-            map.removeLayer(userLocationMarker);
-          }
-          userLocationMarker = L.marker([latitude, longitude], {
-            icon: L.divIcon({
-              html: `<div style="background:#3b82f6;width:16px;height:16px;border-radius:50%;border:2px solid white"></div>`,
-              className: 'user-location-icon'
-            })
-          }).addTo(map);
-          map.flyTo([latitude, longitude], 18);
-        },
-        (error) => {
-          alert("No se pudo obtener tu ubicación. Por favor, asegúrate de que la geolocalización esté activada.");
-        }
-      );
-    } else {
-      alert("Tu navegador no soporta geolocalización.");
-    }
+  const geolocateButton = document.getElementById('geolocate-button');
+  let locationWatchId = null;
+  let isFollowingLocation = false;
+  let hasCenteredOnUser = false;
+  let isOrientationListening = false;
+  let deviceHeading = null;
+
+  const userLocationIcon = L.divIcon({
+    className: 'user-location-icon',
+    html: '<span class="user-location-direction"></span><span class="user-location-dot"></span>',
+    iconSize: [28, 28],
+    iconAnchor: [14, 14]
   });
+
+  function updateGeolocateButtonLabel() {
+    const key = isFollowingLocation
+      ? 't-map-stop-following-location'
+      : 't-map-follow-location';
+    const fallback = isFollowingLocation
+      ? 'Dejar de seguir mi ubicación'
+      : 'Seguir mi ubicación';
+    const translated = typeof getTranslation === 'function' ? getTranslation(key) : key;
+    const label = translated === key ? fallback : translated;
+
+    geolocateButton.setAttribute('aria-label', label);
+    geolocateButton.setAttribute('aria-pressed', String(isFollowingLocation));
+    geolocateButton.title = label;
+    geolocateButton.classList.toggle('is-tracking', isFollowingLocation);
+  }
+
+  window.updateGeolocateButtonLabel = updateGeolocateButtonLabel;
+
+  function setUserLocationHeading(heading) {
+    const markerElement = userLocationMarker?.getElement();
+    if (!markerElement) return;
+
+    if (!Number.isFinite(heading) || heading < 0) {
+      markerElement.classList.remove('has-heading');
+      return;
+    }
+
+    const normalisedHeading = ((heading % 360) + 360) % 360;
+    markerElement.style.setProperty('--location-heading', `${normalisedHeading}deg`);
+    markerElement.classList.add('has-heading');
+  }
+
+  function handleDeviceOrientation(event) {
+    let heading = event.webkitCompassHeading;
+
+    if (!Number.isFinite(heading) && event.absolute && Number.isFinite(event.alpha)) {
+      const screenAngle = window.screen.orientation?.angle || 0;
+      heading = 360 - event.alpha + screenAngle;
+    }
+
+    if (Number.isFinite(heading)) {
+      deviceHeading = heading;
+      setUserLocationHeading(heading);
+    }
+  }
+
+  function startOrientationTracking() {
+    const orientationApi = window.DeviceOrientationEvent;
+    if (!orientationApi || isOrientationListening) return;
+
+    const listenForOrientation = () => {
+      if (!isFollowingLocation || isOrientationListening) return;
+
+      window.addEventListener('deviceorientation', handleDeviceOrientation, true);
+      window.addEventListener('deviceorientationabsolute', handleDeviceOrientation, true);
+      isOrientationListening = true;
+    };
+
+    if (typeof orientationApi.requestPermission !== 'function') {
+      listenForOrientation();
+      return;
+    }
+
+    try {
+      orientationApi.requestPermission()
+        .then(permission => {
+          if (permission === 'granted') listenForOrientation();
+        })
+        .catch(() => {});
+    } catch (error) {
+      console.warn('No se pudo activar la orientación del dispositivo:', error);
+    }
+  }
+
+  function stopOrientationTracking() {
+    if (!isOrientationListening) return;
+
+    window.removeEventListener('deviceorientation', handleDeviceOrientation, true);
+    window.removeEventListener('deviceorientationabsolute', handleDeviceOrientation, true);
+    isOrientationListening = false;
+  }
+
+  function stopLocationTracking() {
+    if (locationWatchId !== null) {
+      navigator.geolocation.clearWatch(locationWatchId);
+      locationWatchId = null;
+    }
+
+    isFollowingLocation = false;
+    stopOrientationTracking();
+    updateGeolocateButtonLabel();
+  }
+
+  function updateUserLocation(position) {
+    if (!isFollowingLocation) return;
+
+    const { latitude, longitude, heading } = position.coords;
+    const coordinates = [latitude, longitude];
+
+    if (!userLocationMarker) {
+      userLocationMarker = L.marker(coordinates, { icon: userLocationIcon }).addTo(map);
+    } else {
+      userLocationMarker.setLatLng(coordinates);
+    }
+
+    if (!hasCenteredOnUser) {
+      map.flyTo(coordinates, 18);
+      hasCenteredOnUser = true;
+    } else {
+      map.panTo(coordinates, { animate: true });
+    }
+
+    // GPS heading representa el rumbo de movimiento y sirve como fallback al compas.
+    if (deviceHeading === null && Number.isFinite(heading) && heading >= 0) {
+      setUserLocationHeading(heading);
+    }
+  }
+
+  function handleLocationError(error) {
+    if (!isFollowingLocation) return;
+
+    stopLocationTracking();
+    alert("No se pudo obtener tu ubicación. Por favor, asegúrate de que la geolocalización esté activada.");
+  }
+
+  geolocateButton.addEventListener('click', () => {
+    if (isFollowingLocation) {
+      stopLocationTracking();
+      return;
+    }
+
+    if (!navigator.geolocation) {
+      alert("Tu navegador no soporta geolocalización.");
+      return;
+    }
+
+    isFollowingLocation = true;
+    hasCenteredOnUser = false;
+    deviceHeading = null;
+    setUserLocationHeading(null);
+    updateGeolocateButtonLabel();
+    startOrientationTracking();
+
+    locationWatchId = navigator.geolocation.watchPosition(
+      updateUserLocation,
+      handleLocationError,
+      { enableHighAccuracy: true, maximumAge: 1000, timeout: 15000 }
+    );
+  });
+
+  window.addEventListener('pagehide', stopLocationTracking, { once: true });
   
   // ================= UPDATE =================
   function update(){

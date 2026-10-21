@@ -46,7 +46,7 @@ También puedes pulsar una zona vacía del mapa para abrir el formulario de repo
 
 ## Geolocalización
 
-El botón de ubicación solicita permiso al navegador y muestra la posición aproximada del dispositivo en el mapa. La posición no se guarda en el proyecto ni se envía a GadirE.
+Pulsa el botón de ubicación para iniciar el seguimiento: el punto y el mapa se actualizan mientras siga activo. Pulsa de nuevo para detenerlo. Cuando el dispositivo proporciona orientación, una pequeña marca junto al punto indica hacia dónde apunta; si no hay sensor disponible, se muestra la dirección de movimiento cuando el GPS la proporciona. La posición no se guarda ni se envía a GadirE.
 
 La geolocalización depende del permiso del navegador, del dispositivo y de que la página se sirva mediante HTTPS.
 

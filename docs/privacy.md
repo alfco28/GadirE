@@ -10,7 +10,7 @@ La opción de incluir datos personales al exportar aparece en la interfaz, pero 
 
 ## Geolocalización
 
-La posición se solicita mediante la API de geolocalización del navegador únicamente cuando el usuario pulsa el botón correspondiente. El código muestra un marcador temporal en el mapa y no implementa almacenamiento ni envío de la posición a un backend propio.
+La posición se solicita mediante la API de geolocalización del navegador cuando el usuario activa el botón de seguimiento. Mientras está activo, el navegador proporciona actualizaciones de ubicación y el mapa mantiene el marcador centrado; al pulsar el botón de nuevo se detiene el seguimiento. La posición solo se mantiene en memoria durante la sesión y no se guarda ni se envía a un backend propio. La orientación del dispositivo se solicita por separado cuando el navegador lo requiere, únicamente para orientar el indicador del marcador.
 
 El permiso efectivo lo controla el navegador y puede revocarse desde sus ajustes.
 

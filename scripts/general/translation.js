@@ -29,6 +29,7 @@ async function changeLanguage(language) {
         }
     });
     window.refreshTitleBar?.();
+    window.updateGeolocateButtonLabel?.();
 
     appConfig.set('localeLang', language); // Guardar el idioma seleccionado en localStorage
 }

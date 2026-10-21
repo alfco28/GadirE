@@ -116,12 +116,71 @@
   align-items: center;
   justify-content: center;
   z-index: var(--z-index-geolocate);
+  border: 1px solid var(--color-borde-flotante);
+  color: var(--color-texto-primario);
+  font: inherit;
+  line-height: 1;
+  cursor: pointer;
+  -webkit-appearance: none;
+  appearance: none;
 }
 
 #geolocate-button:hover {
     transform: scale(1.2);
     transition: all var(--duracion-transicion) ease-in-out;
     cursor: pointer;
+}
+
+#geolocate-button.is-tracking {
+  border-color: var(--color-enfasis);
+  color: var(--color-enfasis);
+}
+
+.user-location-icon {
+  position: relative;
+  border: 0;
+  background: transparent;
+}
+
+.user-location-direction {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  pointer-events: none;
+  transform: rotate(var(--location-heading, 0deg));
+  transform-origin: center;
+  transition: transform 0.18s linear, opacity 0.18s ease;
+}
+
+.user-location-icon.has-heading .user-location-direction {
+  opacity: 1;
+}
+
+.user-location-direction::before {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-right: 6px solid transparent;
+  border-bottom: 13px solid rgba(59, 130, 246, 0.35);
+  border-left: 6px solid transparent;
+  filter: drop-shadow(0 1px 2px rgba(15, 23, 42, 0.28));
+  content: "";
+  transform: translateX(-50%);
+}
+
+.user-location-dot {
+  position: absolute;
+  top: 6px;
+  left: 6px;
+  z-index: 1;
+  width: 16px;
+  height: 16px;
+  border: 2px solid white;
+  border-radius: 50%;
+  background: #3b82f6;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.35);
 }
 
 /* Sidebar */
