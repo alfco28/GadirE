@@ -1,4 +1,4 @@
-const CACHE_NAME = 'pwa-cache-v14';
+const CACHE_NAME = 'pwa-cache-v15';
 
 const CACHE_GROUPS = {
   // Recursos necesarios para abrir y utilizar la aplicación sin conexión
@@ -83,6 +83,15 @@ const CACHE_GROUPS = {
     //'/data/agenda_publica_presidencia_CEUCA.ics',
     //'/data/festivos_Espana.ics',
     //'/data/notifications.xml'
+  ],
+
+  // Datos que pueden cambiar: disponibles sin conexión,
+  // pero actualizándose en segundo plano en cada visita
+  backgroundAssets: [
+    '/data/map_data.geojson',
+    '/data/agenda_publica_presidencia_CEUCA.ics',
+    '/data/festivos_Espana.ics',
+    '/data/notifications.xml'
   ]
 };
 
@@ -91,6 +100,7 @@ self.addEventListener('install', (event) => {
   event.waitUntil(
     caches.open(CACHE_NAME)
       .then((cache) => cache.addAll(CACHE_GROUPS.staticAssets))
+      .then(() => cache.addAll(CACHE_GROUPS.backgroundAssets))
       .then(() => self.skipWaiting())
   );
 });
@@ -136,6 +146,38 @@ self.addEventListener('fetch', (event) => {
         .catch(() => caches.match(event.request))
     );
 
+    return;
+  }
+
+  const isBackgroundAsset = CACHE_GROUPS.backgroundAssets.includes(pathname);
+
+  // Datos: se responde al instante con la caché y, en paralelo,
+  // la red actualiza la caché en segundo plano
+  if (isBackgroundAsset) {
+    event.respondWith(
+      caches.open(CACHE_NAME).then((cache) =>
+        cache.match(event.request).then((cachedResponse) => {
+          if (cachedResponse) {
+            // Con caché: se sirve ya; la versión nueva se guarda de fondo,
+            // sin bloquear (el usuario no nota la red)
+            fetch(event.request).then((response) => {
+              if (response.ok) {
+                // clone() antes de guardar: el body solo puede consumirse una vez
+                cache.put(event.request, response.clone());
+              }
+            }).catch(() => { /* sin conexión: la caché sigue siendo válida */ });
+            return cachedResponse;
+          }
+          // Sin caché (primera visita): red primero y se guarda la respuesta
+          return fetch(event.request).then((response) => {
+            if (response.ok) {
+              cache.put(event.request, response.clone());
+            }
+            return response;
+          });
+        })
+      )
+    );
     return;
   }
 
