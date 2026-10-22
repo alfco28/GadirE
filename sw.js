@@ -20,11 +20,6 @@ const CACHE_GROUPS = {
     '/locales/es_es.json',
     '/locales/uk_en.json',
 
-    '/data/map_data.geojson',
-    '/data/agenda_publica_presidencia_CEUCA.ics',
-    '/data/festivos_Espana.ics',
-    '/data/notifications.xml',
-
     '/univ/menu.html',
     '/univ/agenda.html',
     '/univ/menu.js',
