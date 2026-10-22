@@ -1,4 +1,4 @@
-const CACHE_NAME = 'pwa-cache-v15';
+const CACHE_NAME = 'pwa-cache-v16';
 
 const CACHE_GROUPS = {
   // Recursos necesarios para abrir y utilizar la aplicación sin conexión
@@ -74,15 +74,6 @@ const CACHE_GROUPS = {
 
   // Datos que pueden actualizarse, pero deben estar disponibles sin conexión
   dynamicAssets: [
-    //'/data/map_data.geojson',
-    //'/data/agenda_publica_presidencia_CEUCA.ics',
-    //'/data/festivos_Espana.ics',
-    //'/data/notifications.xml'
-  ],
-
-  // Datos que pueden cambiar: disponibles sin conexión,
-  // pero actualizándose en segundo plano en cada visita
-  backgroundAssets: [
     '/data/map_data.geojson',
     '/data/agenda_publica_presidencia_CEUCA.ics',
     '/data/festivos_Espana.ics',
@@ -95,7 +86,7 @@ self.addEventListener('install', (event) => {
   event.waitUntil(
     caches.open(CACHE_NAME)
       .then((cache) => cache.addAll(CACHE_GROUPS.staticAssets))
-      .then(() => cache.addAll(CACHE_GROUPS.backgroundAssets))
+      .then(() => cache.addAll(CACHE_GROUPS.dynamicAssets))
       .then(() => self.skipWaiting())
   );
 });
@@ -116,39 +107,9 @@ self.addEventListener('fetch', (event) => {
   const isStaticAsset = CACHE_GROUPS.staticAssets.includes(pathname);
   const isDynamicAsset = CACHE_GROUPS.dynamicAssets.includes(pathname);
 
+  // Código: se responde al instante con la caché y, en paralelo,
+  // la red actualiza la caché en segundo plano (stale-while-revalidate)
   if (isStaticAsset) {
-    event.respondWith(
-      caches.match(event.request)
-        .then((cachedResponse) => {
-          return cachedResponse || fetch(event.request);
-        })
-    );
-
-    return;
-  }
-
-  if (isDynamicAsset) {
-    event.respondWith(
-      fetch(event.request)
-        .then((response) => {
-          const responseToCache = response.clone();
-
-          caches.open(CACHE_NAME)
-            .then((cache) => cache.put(event.request, responseToCache));
-
-          return response;
-        })
-        .catch(() => caches.match(event.request))
-    );
-
-    return;
-  }
-
-  const isBackgroundAsset = CACHE_GROUPS.backgroundAssets.includes(pathname);
-
-  // Datos: se responde al instante con la caché y, en paralelo,
-  // la red actualiza la caché en segundo plano
-  if (isBackgroundAsset) {
     event.respondWith(
       caches.open(CACHE_NAME).then((cache) =>
         cache.match(event.request).then((cachedResponse) => {
@@ -163,7 +124,7 @@ self.addEventListener('fetch', (event) => {
             }).catch(() => { /* sin conexión: la caché sigue siendo válida */ });
             return cachedResponse;
           }
-          // Sin caché (primera visita): red primero y se guarda la respuesta
+          // Sin caché (primera visita): red y se guarda la respuesta
           return fetch(event.request).then((response) => {
             if (response.ok) {
               cache.put(event.request, response.clone());
@@ -172,6 +133,25 @@ self.addEventListener('fetch', (event) => {
           });
         })
       )
+    );
+    return;
+  }
+
+  // Datos: red primero (siempre frescos con conexión); la respuesta válida
+  // se guarda en caché, que actúa de respaldo sin conexión
+  if (isDynamicAsset) {
+    event.respondWith(
+      fetch(event.request)
+        .then((response) => {
+          if (response.ok) {
+            // clone() antes de guardar: el body solo puede consumirse una vez
+            const responseToCache = response.clone();
+            caches.open(CACHE_NAME)
+              .then((cache) => cache.put(event.request, responseToCache));
+          }
+          return response;
+        })
+        .catch(() => caches.match(event.request))
     );
     return;
   }
