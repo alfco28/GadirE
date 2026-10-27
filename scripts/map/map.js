@@ -404,8 +404,12 @@ function initMap() {
   }
 
   const clusterGroup = L.markerClusterGroup({
-    disableClusteringAtZoom: 17, // From z17 every point stands on its own; only identical coordinates stay grouped.
+    // Clustering runs at EVERY zoom level (up to the map's maxZoom, 19), so points
+    // that stay visually superimposed at max zoom keep clustering and clicking
+    // their cluster fans them out with legs (spiderfy).
+    maxClusterRadius: (zoom) => zoom >= 17 ? 24 : 80, // 80 px: groups buildings at far zooms; 24 px: only overlapping dots at close zooms.
     showCoverageOnHover: false,  // Do not draw the cluster bounds polygon on hover.
+    spiderfyOnMaxZoom: true,     // Clicking a tight cluster at max zoom fans its points out with legs (plugin default, made explicit).
     iconCreateFunction: clusterIcon
   });
   clusterGroup.addTo(map);
