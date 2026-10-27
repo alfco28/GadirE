@@ -293,7 +293,7 @@ function initMap() {
   ).addTo(map);
   */
 
-  L.tileLayer(
+  const baseLayer = L.tileLayer(
     'https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
     maxZoom:19.85, // Si se pone maxZoom:20, las teselas se vuelven grises al hacer zoom al máximo
     attribution: '&copy; Map data from <a href="https://openstreetmap.org/copyright">OpenStreetMap</a>.',
@@ -301,7 +301,7 @@ function initMap() {
   }
   ).addTo(map);
 
-    // ================= TILE PREFETCH =================
+  // ================= TILE PREFETCH =================
   // Warms the browser HTTP cache with tiles around the visible view (pan) and
   // one zoom level ahead (zoom), so small movements render without grey gaps.
   const PREFETCH_RING = 1; // Tile rows/columns warmed around the view.
@@ -329,7 +329,7 @@ function initMap() {
   }
 
   function prefetchTiles() {
-    const layerMax = baseLayer.options.maxZoom; // 18 by default for tile layers.
+    const layerMax = Math.floor(baseLayer.options.maxZoom); // 19.85 -> 19: the deepest level OSM actually serves.
     const zoom = Math.min(Math.round(map.getZoom()), layerMax);
 
     // 1) Pan warm-up: ring of tiles just outside the visible range.
