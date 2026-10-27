@@ -295,9 +295,75 @@ function initMap() {
 
   L.tileLayer(
     'https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    maxZoom:19.85, attribution: '&copy; Map data from <a href="https://openstreetmap.org/copyright">OpenStreetMap</a>.' // Si se pone maxZoom:20, las teselas se vuelven grises al hacer zoom al máximo
-    }
+    maxZoom:19.85, // Si se pone maxZoom:20, las teselas se vuelven grises al hacer zoom al máximo
+    attribution: '&copy; Map data from <a href="https://openstreetmap.org/copyright">OpenStreetMap</a>.',
+    keepBuffer: 4 // Retains already-loaded tiles around the view so panning back is instant.
+  }
   ).addTo(map);
+
+    // ================= TILE PREFETCH =================
+  // Warms the browser HTTP cache with tiles around the visible view (pan) and
+  // one zoom level ahead (zoom), so small movements render without grey gaps.
+  const PREFETCH_RING = 1; // Tile rows/columns warmed around the view.
+
+  // Fetches a single tile into the browser cache; Leaflet will later serve it instantly.
+  function warmTile(x, y, z) {
+    const count = 2 ** z;
+    x = ((x % count) + count) % count; // Horizontal wrap, like Leaflet's own tiles.
+    if (y < 0 || y >= count) return;   // Vertical tiles do not wrap: skip.
+    const img = new Image();
+    img.src = `https://tile.openstreetmap.org/${z}/${x}/${y}.png`;
+  }
+
+  // Tile range covering the current view at an integer zoom level.
+  function tileRangeAt(zoom) {
+    const bounds = map.getBounds();
+    const southWest = map.project(bounds.getSouthWest(), zoom);
+    const northEast = map.project(bounds.getNorthEast(), zoom);
+    return {
+      minX: Math.floor(southWest.x / 256),
+      maxX: Math.floor(northEast.x / 256),
+      minY: Math.floor(northEast.y / 256), // North is the top edge (smaller y).
+      maxY: Math.floor(southWest.y / 256)
+    };
+  }
+
+  function prefetchTiles() {
+    const layerMax = baseLayer.options.maxZoom; // 18 by default for tile layers.
+    const zoom = Math.min(Math.round(map.getZoom()), layerMax);
+
+    // 1) Pan warm-up: ring of tiles just outside the visible range.
+    const view = tileRangeAt(zoom);
+    for (let x = view.minX - PREFETCH_RING; x <= view.maxX + PREFETCH_RING; x++) {
+      for (let y = view.minY - PREFETCH_RING; y <= view.maxY + PREFETCH_RING; y++) {
+        // Visible tiles are skipped: Leaflet already loads those.
+        if (x >= view.minX && x <= view.maxX && y >= view.minY && y <= view.maxY) continue;
+        warmTile(x, y, zoom);
+      }
+    }
+
+    // 2) Zoom-in warm-up: 4x4 block at zoom+1 around the view centre.
+    if (zoom < layerMax) {
+      const centre = map.project(map.getCenter(), zoom + 1).divideBy(256).floor();
+      for (let dx = -1; dx <= 2; dx++) {
+        for (let dy = -1; dy <= 2; dy++) {
+          warmTile(centre.x + dx, centre.y + dy, zoom + 1);
+        }
+      }
+    }
+
+    // 3) Zoom-out warm-up: parents of the current view plus one ring, one level up.
+    if (zoom > 0) {
+      const parent = tileRangeAt(zoom - 1);
+      for (let x = parent.minX - 1; x <= parent.maxX + 1; x++) {
+        for (let y = parent.minY - 1; y <= parent.maxY + 1; y++) {
+          warmTile(x, y, zoom - 1);
+        }
+      }
+    }
+  }
+
+  map.on('moveend', prefetchTiles);
 
   // ================= CAPAS PERSISTENTES =================
   const layersByTipo = {
