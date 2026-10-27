@@ -283,6 +283,7 @@ function processGeoJSON(data) {
 function initMap() {
   const map = L.map('map', {
     zoomControl: false,
+    maxZoom: 19 // Real deepest zoom: aligns with FLY_ZOOM, blocks the grey zone past the tile layer, and lets the cluster plugin detect the true max zoom for spiderfy.
   }).setView([36.5297, -6.2118], 16);
 
   /* //Ahora CARTO requiere API key
@@ -365,24 +366,49 @@ function initMap() {
 
   map.on('moveend', prefetchTiles);
 
-  // ================= CAPAS PERSISTENTES =================
-  const layersByTipo = {
-    descanso: L.layerGroup(),
-    aseo: L.layerGroup(),
-    aula: L.layerGroup(),
-    biblio: L.layerGroup(),
-    cafete: L.layerGroup(),
-    despacho: L.layerGroup(),
-    lab: L.layerGroup(),
-    repre: L.layerGroup(),
-    salon: L.layerGroup(),
-    transporte: L.layerGroup(),
-    unidad: L.layerGroup(),
-    emergencia: L.layerGroup()
-  };
+  // ================= CLUSTER GLOBAL DE MARCADORES =================
+  // All markers live in a single cluster group, so points of different types
+  // in the same area merge into one cluster (decision by Alfonso, 27-10-2026).
+  // Known types: markers with an unknown type are skipped, like the old per-type layers did.
+  const KNOWN_TIPOS = new Set([
+    'descanso', 'aseo', 'aula', 'biblio', 'cafete', 'despacho',
+    'lab', 'repre', 'salon', 'transporte', 'unidad', 'emergencia'
+  ]);
 
-  // Añadimos TODAS las capas al mapa inicialmente
-  Object.values(layersByTipo).forEach(l => l.addTo(map));
+  // Cluster icon: a pie chart with the colours of the types it contains, plus the total count.
+  // COLOURS is declared further below: that is fine, this runs only when the map renders.
+  function clusterIcon(cluster) {
+    const markers = cluster.getAllChildMarkers();
+    const total = markers.length;
+    const counts = {};
+    markers.forEach(marker => {
+      const tipo = marker.feature?.properties?.tipo;
+      counts[tipo] = (counts[tipo] || 0) + 1;
+    });
+
+    // Build the pie slices as a conic-gradient from the running proportions.
+    let accumulated = 0;
+    const slices = Object.entries(counts).map(([tipo, n]) => {
+      const start = (accumulated / total) * 360;
+      accumulated += n;
+      const end = (accumulated / total) * 360;
+      return `${COLOURS[tipo] || '#6b7280'} ${start}deg ${end}deg`;
+    });
+
+    return L.divIcon({
+      className: 'gadire-cluster-icon', // Replaces the default 'leaflet-div-icon' box, same idea as gadire-map-marker.
+      html: `<div class="gadire-cluster" style="background: conic-gradient(${slices.join(', ')})" role="img" aria-label="${total} lugares"><span>${total}</span></div>`,
+      iconSize: [40, 40],
+      iconAnchor: [20, 20]
+    });
+  }
+
+  const clusterGroup = L.markerClusterGroup({
+    disableClusteringAtZoom: 17, // From z17 every point stands on its own; only identical coordinates stay grouped.
+    showCoverageOnHover: false,  // Do not draw the cluster bounds polygon on hover.
+    iconCreateFunction: clusterIcon
+  });
+  clusterGroup.addTo(map);
   let userLocationMarker = null;
   
   // ================= ICONOS =================
@@ -415,7 +441,7 @@ function initMap() {
 
   campusGeoJSON.features.forEach(f => {
     const tipo = f.properties.tipo;
-    if (!layersByTipo[tipo]) return;
+    if (!KNOWN_TIPOS.has(tipo)) return;
 
     const marker = L.marker(
       [f.geometry.coordinates[1], f.geometry.coordinates[0]],
@@ -446,23 +472,21 @@ function initMap() {
       }, 50);
     });
 
-    layersByTipo[tipo].addLayer(marker);
+    clusterGroup.addLayer(marker);
     const key = featureKey(f);
     markersByKey[key] = marker;
   });
 
-  // =============== CAPAS VISIBLES EN EL MAPA ===============
+  // =============== MARCADORES VISIBLES EN EL MAPA ===============
   function updateLayers(features) {
-    // Se reutilizan los resultados ya calculados y solo se alterna la visibilidad de los marcadores existentes.
+    // Se reutilizan los resultados ya calculados y solo se alterna la pertenencia de cada
+    // marcador al grupo de clustering; el plugin re-agrupa solos los que quedan dentro.
     const visibles = new Set(features);
 
-    for (const tipo in layersByTipo) {
-      layersByTipo[tipo].eachLayer(marker => {
-        const visible = visibles.has(marker.feature);
-        if (visible) marker.addTo(map);
-        else map.removeLayer(marker);
-      });
-    }
+    Object.values(markersByKey).forEach(marker => {
+      if (visibles.has(marker.feature)) clusterGroup.addLayer(marker);
+      else clusterGroup.removeLayer(marker);
+    });
   }
   
   // ================= SIDEBAR =================
@@ -532,8 +556,14 @@ function initMap() {
     const marker = markersByKey[key];
     if (!marker) return;
 
-    map.flyTo(marker.getLatLng(), FLY_ZOOM);
-    marker.openPopup();
+    if (clusterGroup.getVisibleParent(marker) === marker) {
+      // Already on screen: the same flight as always (z19 is beyond the clustering threshold).
+      map.flyTo(marker.getLatLng(), FLY_ZOOM);
+      marker.openPopup();
+    } else {
+      // Hidden inside a cluster: the plugin reveals it (zooms in or fans it out), then opens the popup.
+      clusterGroup.zoomToShowLayer(marker, () => marker.openPopup());
+    }
 
     if (isMobile()) {
       sidebar.classList.remove('visible');
@@ -746,8 +776,11 @@ function initMap() {
     const { lat, lng } = e.latlng;
     let markerFound = false;
 
-    // Comprueba si hay algún marcador en las coordenadas del click
-    map.eachLayer(function(layer) {
+    // Comprueba si hay algún marcador en las coordenadas del click.
+    // Los marcadores viven dentro del grupo de clustering (ya no son capas directas del
+    // mapa), así que hay que recorrer también sus miembros, además de las capas del mapa
+    // (los clusters y el marcador de ubicación siguen siendo hijos directos).
+    const checkLayer = function(layer) {
       if (layer instanceof L.Marker) {
         const markerLatLng = layer.getLatLng();
         // Compara las coordenadas con un margen pequeño para evitar problemas de precisión
@@ -758,7 +791,9 @@ function initMap() {
           markerFound = true;
         }
       }
-    });
+    };
+    map.eachLayer(checkLayer);
+    clusterGroup.eachLayer(checkLayer);
 
     // Si no hay marcador, muestra el popup personalizado
     if (!markerFound) {

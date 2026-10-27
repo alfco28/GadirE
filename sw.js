@@ -46,6 +46,8 @@ const CACHE_GROUPS = {
     '/libraries/leafletjs/images/marker-icon-2x.png',
     '/libraries/leafletjs/images/marker-icon.png',
     '/libraries/leafletjs/images/marker-shadow.png',
+    '/libraries/markercluster/MarkerCluster.css',
+    '/libraries/markercluster/leaflet.markercluster.js',
 
     '/scripts/calendar/calendar.js',
     '/scripts/general/config.js',
