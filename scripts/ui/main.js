@@ -144,7 +144,8 @@ calendarIcon.addEventListener('click', () => {
 });
 
 notificationsIcon.addEventListener('click', () => {
-  cargarFeedsSeleccionados();
+  // No refresh on open: feeds already load at startup and every 5 minutes;
+  // the refresh button inside the screen remains the manual trigger.
   showFullscreenScreen(
     notificationsScreen,
     notificationsIcon,
