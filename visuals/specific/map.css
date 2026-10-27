@@ -457,6 +457,7 @@
 .sidebar-header {
   padding: 10px;
   flex-shrink: 0;
+  transition: padding var(--duracion-transicion) ease-in-out;
 }
 
 .sidebar-body {
@@ -471,6 +472,18 @@
   margin-right: auto;
   width: 90%;
   max-width: 300px;
+  transition: width var(--duracion-transicion) ease-in-out, max-width var(--duracion-transicion) ease-in-out;
+}
+
+/* Shrunk logo while the list or the search results are scrolled down:
+   the logo gives up vertical space and grows back at the very top. */
+#sidebar.logo-shrunk .sidebar-header {
+  padding: 4px 10px;
+}
+
+#sidebar.logo-shrunk .sidebar-logo-gadire {
+  width: 55%;
+  max-width: 180px;
 }
 
 /* Mapa */

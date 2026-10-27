@@ -58,3 +58,30 @@ if (searchInput) {
 
 // Llamar a la función al cargar la página para establecer el estado inicial
 document.addEventListener('DOMContentLoaded', toggleSidebarVisibility);
+
+// ================= SHRINK THE LOGO WHILE THE SIDEBAR LIST IS SCROLLED =================
+// Scrolling the list or the search results shrinks the sidebar logo so it takes
+// up less room; back at the very top it grows to its normal size again.
+const SIDEBAR_LOGO_SCROLL_THRESHOLD = 4; // px of tolerance so hairline scrolls trigger nothing.
+
+const sidebarEl = document.getElementById('sidebar');
+const sidebarBodies = [
+  document.getElementById('sidebar-content'),
+  document.getElementById('sidebar-search-results')
+];
+
+function updateSidebarLogoShrink() {
+  // Only the visible pane decides (results while searching, the list otherwise).
+  const scrolled = sidebarBodies.some(
+    body => body.offsetParent !== null && body.scrollTop > SIDEBAR_LOGO_SCROLL_THRESHOLD
+  );
+  sidebarEl.classList.toggle('logo-shrunk', scrolled);
+}
+
+// React to scrolling in either pane (passive: the handler never calls preventDefault).
+sidebarBodies.forEach(body => {
+  body.addEventListener('scroll', updateSidebarLogoShrink, { passive: true });
+});
+
+// React to the pane swap too: the visible pane may sit at a different scroll position.
+searchInput.addEventListener('input', updateSidebarLogoShrink);
