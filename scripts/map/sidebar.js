@@ -34,20 +34,17 @@ function setupSidebar(map, markersByKey, featureKey) {
 }
 
 // ================= ALTERNAR VISIBILIDAD CONTENT/SEARCH RESULTS =================
-function toggleSidebarVisibility() {
-    const searchInput = document.getElementById('sidebar-search-bar');
-    const searchResults = document.getElementById('sidebar-search-results');
-    const sidebarContent = document.getElementById('sidebar-content');
-
-    if (searchInput.value.trim() === '') {
-        // Si el input está vacío
-        searchResults.style.display = 'none';
-        sidebarContent.style.display = 'block';
-    } else {
-        // Si el input tiene texto
-        searchResults.style.display = 'block';
-        sidebarContent.style.display = 'none';
+function toggleSidebarVisib() {
+    // Second tap with the sidebar already open: jump straight to the search bar
+    // instead of closing it (focus also brings the keyboard up on touch devices).
+    if (sidebar.classList.contains('visible')) {
+        document.getElementById('sidebar-search-bar')?.focus();
+        return;
     }
+
+    hideAllScreens();
+    sidebar.classList.add('visible');
+    setActiveIcon(toggleSidebar);
 }
 
 // Escuchar el evento 'input' en el buscador
