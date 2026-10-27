@@ -757,6 +757,15 @@ function initMap() {
   let popupIsOpen = false;
   let popupWasOpenBeforeMapClick = false;
 
+  // Spiderfy state mirrored from the plugin's own events: a map click that
+  // closes an open spiderfy must not also open the report popup. The plugin's
+  // 'unspiderfied' event lands ~200 ms after the closing click (leg folding
+  // animation), so the live flag is snapshotted in 'preclick' first.
+  let spiderfyOpen = false;
+  clusterGroup.on('spiderfied', () => { spiderfyOpen = true; });
+  clusterGroup.on('unspiderfied', () => { spiderfyOpen = false; });
+  let spiderfyWasOpenBeforeMapClick = false;
+
   map.on('popupopen', () => {
     popupIsOpen = true;
   });
@@ -767,11 +776,18 @@ function initMap() {
   // Leaflet cierra el popup durante el click; preclick conserva el estado previo.
   map.on('preclick', () => {
     popupWasOpenBeforeMapClick = popupIsOpen;
+    spiderfyWasOpenBeforeMapClick = spiderfyOpen;
   });
 
   map.on('click', function(e) {
     if (popupWasOpenBeforeMapClick) {
       popupWasOpenBeforeMapClick = false;
+      return;
+    }
+
+    // This click just folds the spiderfy legs back: it should do nothing else.
+    if (spiderfyWasOpenBeforeMapClick) {
+      spiderfyWasOpenBeforeMapClick = false;
       return;
     }
 
