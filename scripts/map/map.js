@@ -338,7 +338,10 @@ function initMap() {
   function icon(tipo){
     const colour = COLOURS[tipo] || "#6b7280";
     return L.divIcon({
-      html: `<div style="background:${colour};width:14px;height:14px;border-radius:50%"></div>`
+      className: 'gadire-map-marker', // Replaces Leaflet's default 'leaflet-div-icon' class, whose white background and grey border drew the little square behind each dot.
+      html: `<div style="background:${colour};width:14px;height:14px;border-radius:50%"></div>`,
+      iconSize: [14, 14], // Container matches the dot size...
+      iconAnchor: [7, 7]  // ...so the dot sits exactly centred on the feature coordinates.
     });
   }
 
