@@ -1,12 +1,14 @@
 function toggleSidebarVisib() {
-  hideAllScreens();
-  sidebar.classList.toggle('visible');
-  if (!sidebar.classList.contains('visible')) {
-    // Si el sidebar se oculta, selecciona el mapIcon como activo
-    setActiveIcon(mapIcon);
-  } else {
-    setActiveIcon(toggleSidebar);
+  // Second tap with the sidebar already open: jump straight to the search bar
+  // instead of closing it (focus also brings the keyboard up on touch devices).
+  if (sidebar.classList.contains('visible')) {
+    document.getElementById('sidebar-search-bar')?.focus();
+    return;
   }
+
+  hideAllScreens();
+  sidebar.classList.add('visible');
+  setActiveIcon(toggleSidebar);
 }
 
 // Mostrar/ocultar al hacer click en su icono

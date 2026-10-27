@@ -1,4 +1,4 @@
-const CACHE_NAME = 'pwa-cache-v16';
+const CACHE_NAME = 'pwa-cache-v17';
 
 const CACHE_GROUPS = {
   // Recursos necesarios para abrir y utilizar la aplicación sin conexión
@@ -7,7 +7,7 @@ const CACHE_GROUPS = {
     '/index.html',
     '/manifest.json',
 
-    '/LICENSE',
+    '/LICENCE',
     '/README.md',
     '/CONTRIBUTING.md',
 

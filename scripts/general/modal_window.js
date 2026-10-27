@@ -97,7 +97,7 @@ gadireTrigger.addEventListener("click", () => {
 });
 
 softwareTrigger.addEventListener("click", () => {
-    openMarkdownDocumentModal(softwareTrigger, "/LICENSE");
+    openMarkdownDocumentModal(softwareTrigger, "/LICENCE");
 });
 
 contributeTrigger.addEventListener("click", () => {
