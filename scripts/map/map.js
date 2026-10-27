@@ -714,7 +714,83 @@ function initMap() {
     alert("No se pudo obtener tu ubicación. Por favor, asegúrate de que la geolocalización esté activada.");
   }
 
+  // ================= REPORT FROM MY LOCATION (long press) =================
+  // Holding the geolocate button down offers to report a missing place at
+  // the user's current coordinates (live tracking fix if available, one-shot
+  // fix otherwise). A short tap still toggles tracking.
+  const LONG_PRESS_MS = 600;          // Hold time that counts as a long press.
+  const LONG_PRESS_TOLERANCE_PX = 10; // Small drift allowed before the press cancels.
+  let longPressTimer = null;
+  let longPressStart = null;
+  let longPressFired = false;
+
+  function cancelLongPress() {
+    clearTimeout(longPressTimer);
+    longPressTimer = null;
+    longPressStart = null;
+  }
+
+  function offerReportAtLocation(lat, lng) {
+    // Ask before opening the form; the OK click is what authorises the new tab.
+    const message = `¿Quieres reportar un lugar que falta en tu ubicación actual (${lat.toFixed(5)}, ${lng.toFixed(5)})?`;
+    if (confirm(message)) {
+      window.open(`https://docs.google.com/forms/d/e/1FAIpQLSdgbuxXkLoHbwkBDh5i6TF-OzIHC7WK_Y6LDy4tCTiSR3Sg5Q/viewform?usp=pp_url&entry.339440483=${lat}&entry.736856326=${lng}`);
+    }
+  }
+
+  function reportCurrentLocation() {
+    // While tracking, reuse the live marker position; no extra GPS request.
+    if (isFollowingLocation && userLocationMarker) {
+      const { lat, lng } = userLocationMarker.getLatLng();
+      offerReportAtLocation(lat, lng);
+      return;
+    }
+
+    if (!navigator.geolocation) {
+      alert("Tu navegador no soporta geolocalización.");
+      return;
+    }
+
+    navigator.geolocation.getCurrentPosition(
+      (position) => offerReportAtLocation(position.coords.latitude, position.coords.longitude),
+      () => alert("No se pudo obtener tu ubicación. Por favor, asegúrate de que la geolocalización esté activada."),
+      { enableHighAccuracy: true, timeout: 15000 }
+    );
+  }
+
+  geolocateButton.addEventListener('pointerdown', (event) => {
+    longPressFired = false;
+    longPressStart = { x: event.clientX, y: event.clientY };
+    longPressTimer = setTimeout(() => {
+      longPressTimer = null;
+      longPressFired = true;
+      reportCurrentLocation();
+    }, LONG_PRESS_MS);
+  });
+
+  geolocateButton.addEventListener('pointermove', (event) => {
+    if (!longPressStart) return;
+    // A real move cancels the press; a tiny drift is tolerated.
+    if (Math.hypot(event.clientX - longPressStart.x, event.clientY - longPressStart.y) > LONG_PRESS_TOLERANCE_PX) {
+      cancelLongPress();
+    }
+  });
+
+  geolocateButton.addEventListener('pointerup', cancelLongPress);
+  geolocateButton.addEventListener('pointercancel', cancelLongPress);
+  geolocateButton.addEventListener('pointerleave', cancelLongPress);
+
+  // Mobile browsers may raise a context menu on a held touch: this hold is
+  // a gesture of its own.
+  geolocateButton.addEventListener('contextmenu', (event) => event.preventDefault());
+
   geolocateButton.addEventListener('click', () => {
+    if (longPressFired) {
+      // The long press just handled the gesture: do not toggle tracking.
+      longPressFired = false;
+      return;
+    }
+
     if (isFollowingLocation) {
       stopLocationTracking();
       return;

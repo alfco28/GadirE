@@ -151,6 +151,13 @@
   color: var(--color-enfasis);
 }
 
+/* Long-press on the geolocate button reports a place: block the touch
+   callout and text selection so the hold is not hijacked by the browser. */
+#geolocate-button {
+  -webkit-touch-callout: none;
+  user-select: none;
+}
+
 .user-location-icon {
   position: relative;
   border: 0;
