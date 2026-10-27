@@ -295,7 +295,7 @@ function initMap() {
 
   L.tileLayer(
     'https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution: '&copy; Map data from <a href="https://openstreetmap.org/copyright">OpenStreetMap</a>.'
+    maxZoom:19.85, attribution: '&copy; Map data from <a href="https://openstreetmap.org/copyright">OpenStreetMap</a>.' // Si se pone maxZoom:20, las teselas se vuelven grises al hacer zoom al máximo
     }
   ).addTo(map);
 
