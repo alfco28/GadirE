@@ -303,15 +303,27 @@ function initMap() {
   ).addTo(map);
 
   // ================= TILE PREFETCH =================
-  // Warms the browser HTTP cache with tiles around the visible view (pan) and
-  // one zoom level ahead (zoom), so small movements render without grey gaps.
-  const PREFETCH_RING = 1; // Tile rows/columns warmed around the view.
+  // Warms the browser HTTP cache with tiles around the visible view so pans
+  // and zooms render without grey gaps: a wide ring at the current zoom plus
+  // several levels above and below it, each with its own surroundings.
+  const PREFETCH_RING = 2;         // Tiles warmed around the view at the current zoom.
+  const PREFETCH_RING_NEAR = 1;    // Ring warmed around the neighbouring zoom levels.
+  const PREFETCH_LEVELS_ABOVE = 2; // How many zoom-in levels are warmed ahead.
+  const PREFETCH_LEVELS_BELOW = 2; // How many zoom-out levels are warmed behind.
+  const PREFETCH_BUDGET = isMobile() ? 200 : 300; // Max tiles per moveend: keeps the burst polite.
+  const warmedTiles = new Set();   // 'z/x/y' already fetched: later moveends never re-request.
+  let prefetchBudgetLeft = 0;
 
   // Fetches a single tile into the browser cache; Leaflet will later serve it instantly.
   function warmTile(x, y, z) {
     const count = 2 ** z;
     x = ((x % count) + count) % count; // Horizontal wrap, like Leaflet's own tiles.
     if (y < 0 || y >= count) return;   // Vertical tiles do not wrap: skip.
+    if (prefetchBudgetLeft <= 0) return; // Budget exhausted: skip the rest of this pass.
+    const key = `${z}/${x}/${y}`;
+    if (warmedTiles.has(key)) return; // Already warm from an earlier moveend.
+    warmedTiles.add(key);
+    prefetchBudgetLeft--;
     const img = new Image();
     img.src = `https://tile.openstreetmap.org/${z}/${x}/${y}.png`;
   }
@@ -329,38 +341,45 @@ function initMap() {
     };
   }
 
-  function prefetchTiles() {
-    const layerMax = Math.floor(baseLayer.options.maxZoom); // 19.85 -> 19: the deepest level OSM actually serves.
-    const zoom = Math.min(Math.round(map.getZoom()), layerMax);
-
-    // 1) Pan warm-up: ring of tiles just outside the visible range.
-    const view = tileRangeAt(zoom);
-    for (let x = view.minX - PREFETCH_RING; x <= view.maxX + PREFETCH_RING; x++) {
-      for (let y = view.minY - PREFETCH_RING; y <= view.maxY + PREFETCH_RING; y++) {
-        // Visible tiles are skipped: Leaflet already loads those.
-        if (x >= view.minX && x <= view.maxX && y >= view.minY && y <= view.maxY) continue;
+  // Warms a whole range at one level; ring = extra tiles around it on every side.
+  // skipVisible leaves the range itself out (Leaflet already loads what it shows).
+  function warmRange(range, zoom, ring, skipVisible) {
+    for (let x = range.minX - ring; x <= range.maxX + ring; x++) {
+      for (let y = range.minY - ring; y <= range.maxY + ring; y++) {
+        if (skipVisible &&
+            x >= range.minX && x <= range.maxX &&
+            y >= range.minY && y <= range.maxY) continue;
         warmTile(x, y, zoom);
       }
     }
+  }
 
-    // 2) Zoom-in warm-up: 4x4 block at zoom+1 around the view centre.
-    if (zoom < layerMax) {
-      const centre = map.project(map.getCenter(), zoom + 1).divideBy(256).floor();
-      for (let dx = -1; dx <= 2; dx++) {
-        for (let dy = -1; dy <= 2; dy++) {
-          warmTile(centre.x + dx, centre.y + dy, zoom + 1);
-        }
+  function prefetchTiles() {
+    const layerMax = Math.floor(baseLayer.options.maxZoom); // 19.85 -> 19: the deepest level OSM actually serves.
+    const zoom = Math.min(Math.round(map.getZoom()), layerMax);
+    prefetchBudgetLeft = PREFETCH_BUDGET;
+
+    // 1) Pan warm-up: a wide ring around the visible view, at the current level.
+    warmRange(tileRangeAt(zoom), zoom, PREFETCH_RING, true);
+
+    // 2) Zoom-in warm-up: one level ahead, the whole view plus a ring (covers
+    //    zooming anywhere on screen); two levels ahead, a centred block plus a
+    //    ring (the tile count quadruples, so the cover is only partial).
+    for (let above = 1; above <= PREFETCH_LEVELS_ABOVE; above++) {
+      if (zoom + above > layerMax) break;
+      if (above === 1) {
+        warmRange(tileRangeAt(zoom + above), zoom + above, PREFETCH_RING_NEAR, false);
+      } else {
+        const centre = map.project(map.getCenter(), zoom + above).divideBy(256).floor();
+        warmRange({ minX: centre.x - 2, maxX: centre.x + 1, minY: centre.y - 2, maxY: centre.y + 1 }, zoom + above, PREFETCH_RING_NEAR, false);
       }
     }
 
-    // 3) Zoom-out warm-up: parents of the current view plus one ring, one level up.
-    if (zoom > 0) {
-      const parent = tileRangeAt(zoom - 1);
-      for (let x = parent.minX - 1; x <= parent.maxX + 1; x++) {
-        for (let y = parent.minY - 1; y <= parent.maxY + 1; y++) {
-          warmTile(x, y, zoom - 1);
-        }
-      }
+    // 3) Zoom-out warm-up: one and two levels behind, the view as it will look
+    //    plus a small ring (cheap: each level back has a quarter of the tiles).
+    for (let below = 1; below <= PREFETCH_LEVELS_BELOW; below++) {
+      if (zoom - below < 0) break;
+      warmRange(tileRangeAt(zoom - below), zoom - below, below === 1 ? PREFETCH_RING_NEAR : 0, false);
     }
   }
 
