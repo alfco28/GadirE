@@ -874,6 +874,34 @@ function initMap() {
     spiderfyWasOpenBeforeMapClick = spiderfyOpen;
   });
 
+  // Armed by the mobile long-press; consumed by the click that ends it.
+  let mapLongPressFired = false;
+
+  // Report popup shared by the desktop map click and the mobile long-press.
+  function openReportPopup(lat, lng) {
+    const popupContent = `
+      <div class="popup-card popup-report-card">
+        <h4>¿Falta algún lugar aquí?</h4>
+        <p>Puedes reportarlo aquí:</p>
+        <button class="popup-report-action" onclick="window.open('https://docs.google.com/forms/d/e/1FAIpQLSdgbuxXkLoHbwkBDh5i6TF-OzIHC7WK_Y6LDy4tCTiSR3Sg5Q/viewform?usp=pp_url&entry.339440483=${lat}&entry.736856326=${lng}')">
+          Reportar falta de lugar
+        </button>
+      </div>
+    `;
+
+    L.popup({
+      className: 'gadire-map-popup',
+      closeOnClick: true,
+      maxWidth: 360,
+      minWidth: 230,
+      autoPanPaddingTopLeft: [20, 50],
+      autoPanPaddingBottomRight: [20, 175]
+    })
+      .setLatLng([lat, lng])
+      .setContent(popupContent)
+      .openOn(map);
+  }
+
   map.on('click', function(e) {
     if (popupWasOpenBeforeMapClick) {
       popupWasOpenBeforeMapClick = false;
@@ -887,6 +915,16 @@ function initMap() {
     }
 
     if (!document.getElementById("filter-options-popup").hidden) return;
+
+    // Mobile: the release of a completed long-press opens the report popup
+    // at the pressed point; a plain tap never does.
+    if (isMobile()) {
+      if (mapLongPressFired) {
+        mapLongPressFired = false;
+        openReportPopup(e.latlng.lat, e.latlng.lng);
+      }
+      return;
+    }
 
     const { lat, lng } = e.latlng;
     let markerFound = false;
@@ -912,29 +950,56 @@ function initMap() {
 
     // Si no hay marcador, muestra el popup personalizado
     if (!markerFound) {
-      const popupContent = `
-        <div class="popup-card popup-report-card">
-          <h4>¿Falta algún lugar aquí?</h4>
-          <p>Puedes reportarlo aquí:</p>
-          <button class="popup-report-action" onclick="window.open('https://docs.google.com/forms/d/e/1FAIpQLSdgbuxXkLoHbwkBDh5i6TF-OzIHC7WK_Y6LDy4tCTiSR3Sg5Q/viewform?usp=pp_url&entry.339440483=${lat}&entry.736856326=${lng}')">
-            Reportar falta de lugar
-          </button>
-        </div>
-      `;
-
-      L.popup({
-        className: 'gadire-map-popup',
-        closeOnClick: true,
-        maxWidth: 360,
-        minWidth: 230,
-        autoPanPaddingTopLeft: [20, 50],
-        autoPanPaddingBottomRight: [20, 175]
-      })
-        .setLatLng([lat, lng])
-        .setContent(popupContent)
-        .openOn(map);
+      openReportPopup(lat, lng);
     }
   });
+
+    // ================= LONG-PRESS REPORT ON THE MAP (mobile) =================
+  // On mobile a plain map tap no longer opens the report popup: holding the
+  // map down (same constants as the geolocate button) arms the report, and
+  // the popup opens where the press happened when the finger is released.
+  if (isMobile()) {
+    let mapPressTimer = null;
+    let mapPressStart = null;
+
+    function cancelMapPress() {
+      clearTimeout(mapPressTimer);
+      mapPressTimer = null;
+      mapPressStart = null;
+    }
+
+    // Presses that start on markers, clusters, popups or controls never report.
+    function isMapPressInvalid(target) {
+      return !target || target.closest('.leaflet-marker-icon, .leaflet-marker-cluster, .leaflet-popup, .leaflet-control');
+    }
+
+    map.getContainer().addEventListener('pointerdown', (event) => {
+      // The second finger of a pinch zoom is not a report press.
+      if (!event.isPrimary || isMapPressInvalid(event.target)) return;
+      mapLongPressFired = false;
+      mapPressStart = { x: event.clientX, y: event.clientY };
+      mapPressTimer = setTimeout(() => {
+        mapPressTimer = null;
+        mapLongPressFired = true; // Consumed by the click at finger release.
+      }, LONG_PRESS_MS);
+    });
+
+    map.getContainer().addEventListener('pointermove', (event) => {
+      if (!mapPressStart) return;
+      // Panning is not a press: a real move cancels it (tiny drift tolerated).
+      if (Math.hypot(event.clientX - mapPressStart.x, event.clientY - mapPressStart.y) > LONG_PRESS_TOLERANCE_PX) {
+        mapLongPressFired = false;
+        cancelMapPress();
+      }
+    });
+
+    map.getContainer().addEventListener('pointerup', cancelMapPress);
+    map.getContainer().addEventListener('pointercancel', cancelMapPress);
+
+    // The browser would hijack a held touch on a tile with its own context
+    // menu; the hold is a gesture of the app instead.
+    map.getContainer().addEventListener('contextmenu', (event) => event.preventDefault());
+  }
 }
 
 // ================= BUSCAR CON COMMAND + K =================

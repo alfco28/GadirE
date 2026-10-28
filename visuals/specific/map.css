@@ -117,6 +117,13 @@
   background: var(--color-fondo-elementos-hover);
 }
 
+/* Long-press on the map reports a missing place (mobile): stop the browser
+   from claiming the hold with its image callout on the tiles. */
+.leaflet-container .leaflet-tile {
+  -webkit-touch-callout: none;
+  user-select: none;
+}
+
 /* Geolocate button */
 #geolocate-button {
   visibility: visible;
