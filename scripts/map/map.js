@@ -954,7 +954,7 @@ function initMap() {
     }
   });
 
-    // ================= LONG-PRESS REPORT ON THE MAP (mobile) =================
+  // ================= LONG-PRESS REPORT ON THE MAP (mobile) =================
   // On mobile a plain map tap no longer opens the report popup: holding the
   // map down (same constants as the geolocate button) arms the report, and
   // the popup opens where the press happened when the finger is released.
@@ -994,7 +994,11 @@ function initMap() {
     });
 
     map.getContainer().addEventListener('pointerup', cancelMapPress);
-    map.getContainer().addEventListener('pointercancel', cancelMapPress);
+    map.getContainer().addEventListener('pointercancel', () => {
+      // The browser cancelled the hold after arming: the next tap must stay plain.
+      mapLongPressFired = false;
+      cancelMapPress();
+    });
 
     // The browser would hijack a held touch on a tile with its own context
     // menu; the hold is a gesture of the app instead.
