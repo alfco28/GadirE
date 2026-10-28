@@ -954,6 +954,107 @@ function initMap() {
     }
   });
 
+  // ================= DOUBLE-TAP-AND-DRAG ZOOM (mobile) =================
+  // Google-Maps style one-finger zoom: tap twice and hold the second tap,
+  // then drag up to zoom in / down to zoom out. Releasing without dragging
+  // stays a plain double tap (Leaflet's own zoom-in keeps working).
+  // NOTE: this section must sit ABOVE the long-press one below: its
+  // pointerdown listener runs first and marks the held second tap so the
+  // report popup never arms for it.
+  let doubleTapSecondTapActive = false; // Shared with the long-press section.
+  if (isMobile()) {
+    const DOUBLE_TAP_MS = 300;          // Max time between the two taps.
+    const DOUBLE_TAP_RADIUS_PX = 40;    // Max distance between the two taps.
+    const DOUBLE_TAP_ZOOM_STEP_PX = 60; // Drag distance that equals one zoom level.
+    let lastQuickTap = null;  // The last clean quick tap (candidate first tap).
+    let currentTap = null;    // The ongoing touch, until it moves or ends.
+    let doubleTapZoom = null; // Armed while the held second tap is down.
+
+    map.getContainer().addEventListener('pointerdown', (event) => {
+      if (!event.isPrimary) {
+        // A second finger joins (pinch): abandon any armed double-tap drag.
+        if (doubleTapZoom) { map.dragging.enable(); doubleTapZoom = null; }
+        currentTap = null;
+        return;
+      }
+      currentTap = { time: event.timeStamp, x: event.clientX, y: event.clientY };
+      if (lastQuickTap &&
+          event.timeStamp - lastQuickTap.time <= DOUBLE_TAP_MS &&
+          Math.hypot(event.clientX - lastQuickTap.x, event.clientY - lastQuickTap.y) <= DOUBLE_TAP_RADIUS_PX) {
+        // Second tap: from here on the gesture belongs to the zoom.
+        map.dragging.disable(); // Any drag must zoom, not pan.
+        map.doubleClickZoom.disable(); // Swallow the trailing dblclick on release.
+        doubleTapSecondTapActive = true;
+        doubleTapZoom = {
+          startClientY: event.clientY,
+          anchor: map.mouseEventToLatLng(event),
+          startZoom: map.getZoom(),
+          lastAppliedZoom: map.getZoom(),
+          moved: false
+        };
+        currentTap = null;
+      } else {
+        doubleTapZoom = null;
+      }
+    });
+
+    map.getContainer().addEventListener('pointermove', (event) => {
+      // A touch that really moves is not a tap any more.
+      if (currentTap && Math.hypot(event.clientX - currentTap.x, event.clientY - currentTap.y) > LONG_PRESS_TOLERANCE_PX) {
+        currentTap = null;
+      }
+      if (!doubleTapZoom || !event.isPrimary) return;
+      // Until the finger truly moves this can still end as a plain double tap.
+      if (!doubleTapZoom.moved) {
+        if (Math.abs(event.clientY - doubleTapZoom.startClientY) <= LONG_PRESS_TOLERANCE_PX) return;
+        doubleTapZoom.moved = true;
+      }
+      // Dragging up zooms in, dragging down zooms out; one level per step.
+      const target = Math.round(doubleTapZoom.startZoom + (doubleTapZoom.startClientY - event.clientY) / DOUBLE_TAP_ZOOM_STEP_PX);
+      const layerMax = Math.floor(baseLayer.options.maxZoom); // 19.85 -> 19.
+      const clamped = Math.max(0, Math.min(layerMax, target));
+      if (clamped !== doubleTapZoom.lastAppliedZoom) {
+        doubleTapZoom.lastAppliedZoom = clamped;
+        map.setZoomAround(doubleTapZoom.anchor, clamped, { animate: false });
+      }
+    });
+
+    map.getContainer().addEventListener('pointerup', (event) => {
+      if (!event.isPrimary) return;
+      // A quick clean touch becomes the candidate first tap of a double.
+      if (currentTap && event.timeStamp - currentTap.time <= DOUBLE_TAP_MS) {
+        lastQuickTap = currentTap;
+      } else {
+        lastQuickTap = null;
+      }
+      currentTap = null;
+      if (doubleTapZoom) {
+        map.dragging.enable();
+        doubleTapSecondTapActive = false;
+        lastQuickTap = null;
+        if (doubleTapZoom.moved) {
+          // The zoom already happened: keep Leaflet's double-click zoom off
+          // for a moment so the trailing dblclick adds no extra zoom-in.
+          setTimeout(() => map.doubleClickZoom.enable(), 400);
+        } else {
+          // Plain double tap: Leaflet's own zoom-in must handle the dblclick.
+          map.doubleClickZoom.enable();
+        }
+        doubleTapZoom = null;
+      }
+    });
+
+    map.getContainer().addEventListener('pointercancel', () => {
+      currentTap = null;
+      if (doubleTapZoom) {
+        map.dragging.enable();
+        map.doubleClickZoom.enable(); // No dblclick follows a cancelled touch.
+        doubleTapSecondTapActive = false;
+        doubleTapZoom = null;
+      }
+    });
+  }
+
   // ================= LONG-PRESS REPORT ON THE MAP (mobile) =================
   // On mobile a plain map tap no longer opens the report popup: holding the
   // map down (same constants as the geolocate button) arms the report, and
@@ -976,6 +1077,12 @@ function initMap() {
     map.getContainer().addEventListener('pointerdown', (event) => {
       // The second finger of a pinch zoom is not a report press.
       if (!event.isPrimary || isMapPressInvalid(event.target)) return;
+      // The held second tap of a double tap zooms (section above): cancel
+      // the pending timer of the first tap and never arm a report.
+      if (doubleTapSecondTapActive) {
+        cancelMapPress();
+        return;
+      }
       mapLongPressFired = false;
       mapPressStart = { x: event.clientX, y: event.clientY };
       mapPressTimer = setTimeout(() => {
