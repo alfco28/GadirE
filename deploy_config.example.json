@@ -1,0 +1,7 @@
+{
+    "host": "your.server.example.com",
+    "user": "your_ssh_user",
+    "staging_dir": "/home/your_ssh_user/Gadire",
+    "web_root": "/var/www/Gadire",
+    "port": 22
+}
