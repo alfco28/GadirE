@@ -1,27 +1,27 @@
-# Documentación de GadirE
+# GadirE documentation
 
-GadirE es un mapa interactivo de la Universidad de Cádiz impulsado por el Consejo de Estudiantes. Permite localizar espacios universitarios, consultar información del campus, acceder a recursos frecuentes, visualizar calendarios y leer noticias mediante una aplicación web instalable como PWA.
+GadirE is an interactive map of the University of Cádiz driven by the Student Council. It makes it possible to locate university spaces, consult campus information, reach frequently used resources, view calendars and read the news, all inside a web app installable as a PWA.
 
-## Documentos
+## Documents
 
-- [Guía de usuario](user.md): uso del mapa, búsqueda, filtros, calendario, noticias y configuración.
-- [Guía de administración](admin.md): actualización de contenidos y fuentes de datos sin modificar el código.
-- [Guía de desarrollo](develop.md): arquitectura, módulos, dependencias y flujo de ejecución.
-- [Modelo de datos](data.md): estructura del GeoJSON, configuración institucional, calendarios y feeds.
-- [Despliegue y mantenimiento](deploy.md): publicación, caché, comprobaciones y resolución de incidencias.
-- [Privacidad y licencias](privacy.md): almacenamiento local, servicios externos y obligaciones de terceros.
-- [Tiles de inicio](home.md): referencia específica para configurar los accesos de la pantalla de inicio.
+- User guide: using the map, search, filters, calendar, notifications and settings.
+- Administration guide: updating contents and data sources without touching the code.
+- Development guide: architecture, modules, dependencies and execution flow.
+- Data model: structure of the GeoJSON, institutional configuration, calendars and feeds.
+- Deployment and maintenance: the deployment tool, publication, the service worker cache, checks and incident resolution.
+- Privacy and licences: local storage, external services and third-party obligations.
+- Home tiles: specific reference for configuring the home-screen shortcuts.
 
-## Estado del proyecto
+## State of the project
 
-La versión actual es una versión preliminar. El contenido del mapa puede contener errores u omisiones y debe mantenerse mediante las fuentes y procedimientos descritos en esta documentación.
+The current version is a preliminary release. The map contents may contain mistakes or omissions and must be maintained through the sources and procedures described in this documentation.
 
-## Perfiles
+## Profiles
 
-- **Usuario:** consulta el mapa y personaliza la experiencia desde el navegador.
-- **Administrador o responsable de contenidos:** actualiza el GeoJSON, los accesos, los calendarios y los feeds.
-- **Desarrollador:** mantiene la interfaz, los módulos JavaScript, los estilos, las dependencias y el service worker.
+- **User:** consults the map and personalises the experience from the browser.
+- **Administrator or content maintainer:** updates the GeoJSON, the shortcuts, the calendars and the feeds.
+- **Developer:** maintains the interface, the JavaScript modules, the styles, the dependencies and the service worker.
 
-## Principio de funcionamiento
+## How it works
 
-La aplicación no dispone de backend propio. El servidor entrega archivos estáticos y el navegador carga los datos, ejecuta JavaScript y guarda las preferencias en `localStorage`. Por ello, cualquier cambio de contenido requiere actualizar los archivos del proyecto y publicarlos de nuevo.
+The application has no backend of its own. The server delivers static files and the browser loads the data, runs the JavaScript and saves the preferences in `localStorage`. Therefore, any content change means updating the project's files and publishing them again — with the deployment tool described in , which never touches the served data folder.

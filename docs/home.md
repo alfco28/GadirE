@@ -1,34 +1,33 @@
-## Configuración de las tiles de inicio
+# Home tiles configuration
 
-Las tiles de la pantalla de inicio se configuran desde `config/univ.json`, dentro de la propiedad `homeTiles`.
+The home-screen tiles are configured from `config/univ.json`, inside the `homeTiles` property.
 
-### Configuración para administradores
+## Configuration for administrators
 
-Cada tile admite los siguientes campos:
+Every tile accepts the following fields:
+   Field | Required | Description |
+ |---|---|---|
+ | `id` | Yes | Identifier of the tile in `index.html`. |
+ | `image` | No | Path of an image (preferably kept inside `assets`). |
+ | `icon` | No | Font Awesome icon classes. |
+ | `text` | Yes | Text shown under the image or icon. |
+ | `alt` | Recommended | Alternative text for accessibility. |
+ | `url` | No | Address the tile navigates to. |
+ | `openAs` | No | How the HTML opens: `modal` or `fullscreen`. |
+ | `html` | No | Absolute path to the HTML document, e.g. `/univ/menu.html`. |
 
-| Campo | Obligatorio | Descripción |
-|---|---:|---|
-| `id` | Sí | Identificador de la tile en `index.html`. |
-| `image` | No | Ruta de una imagen (es deseable que se guarden dentro de `assets`). |
-| `icon` | No | Clases del icono de Font Awesome. |
-| `text` | Sí | Texto mostrado debajo de la imagen o icono. |
-| `alt` | Recomendado | Texto alternativo para accesibilidad. |
-| `url` | No | Dirección a la que se navega al pulsar la tile. |
-| `openAs` | No | Tipo de apertura del HTML: `modal` o `fullscreen`. |
-| `html` | No | Ruta absoluta al documento HTML, por ejemplo `/univ/menu.html`. |
+`image` and `icon` are mutually exclusive: only one of the two must be configured (the other must be `null`).
+For `tile-0`, the application reserves the content for the user's local personal data. For the other tiles, `openAs` together with `html` opens a custom document; if not configured, `url` keeps the current navigation.
 
-`image` e `icon` son excluyentes: debe configurarse únicamente una de las dos (la otra debe ser `null`).
-Para `tile-0`, la aplicación reserva el contenido para los datos personales locales del usuario. En las demás tiles, `openAs` junto con `html` abre un documento propio; si no se configura, `url` conserva la navegación actual.
+## Custom HTML and JavaScript
 
-### HTML y JavaScript propios
+Keep the tiles' HTML documents and their scripts in `univ/`. It is good practice because every university can keep its own contents there, separated from the shared resources of `assets/`.
 
-Guarda los documentos HTML de las tiles y sus scripts en `univ/`. Es una buena práctica porque cada universidad puede mantener allí sus propios contenidos, separados de los recursos compartidos de `assets/`.
+Every HTML must be a complete document and include a `<title>`, which is used in the modal header or the `title-bar` for fullscreen. Local scripts can be loaded with paths relative to the document, for example `<script defer src="./menu.js"></script>`. For GadirE to read the title and sync the theme, the files must be served from the same origin as the application.
 
-Cada HTML debe ser un documento completo e incluir `<title>`, que se utiliza en el encabezado de la modal o en `title-bar` para fullscreen. Los scripts locales pueden cargarse con rutas relativas al documento, por ejemplo `<script defer src="./menu.js"></script>`. Para que GadirE pueda leer el título y sincronizar el tema, los archivos deben servirse desde el mismo origen que la aplicación.
+The views load in an `iframe`, so their JavaScript runs as in a normal document. The loader applies the GadirE font, shares the tokens `--color-enfasis`, `--color-fondo-primario`, `--color-texto-primario` and `--color-texto-secundario`, and copies the dark state as the `html.dark` class. A custom rule with `font-family: ... !important` can define an exception. To take advantage of the theme, use the CSS variables, for example `color: var(--color-texto-primario)` or `background: var(--color-enfasis)`.
 
-Las vistas se cargan en un `iframe`, por lo que su JavaScript se ejecuta como en un documento normal. El cargador aplica la fuente de GadirE, comparte los tokens `--color-enfasis`, `--color-fondo-primario`, `--color-texto-primario` y `--color-texto-secundario`, y copia el estado oscuro como clase `html.dark`. Una regla propia con `font-family: ... !important` puede definir una excepción. Para aprovechar el tema, usa las variables CSS, por ejemplo `color: var(--color-texto-primario)` o `background: var(--color-enfasis)`.
-
-Las entradas de prueba que hay en `config/univ.json` apuntan a estas dos vistas:
+The test entries in `config/univ.json` point to these two views:
 
 ```json
 {
@@ -54,11 +53,11 @@ Las entradas de prueba que hay en `config/univ.json` apuntan a estas dos vistas:
 }
 ```
 
-Para probarlas, abre Inicio y pulsa la tile correspondiente. El menú permite mostrar u ocultar una lista y la agenda cambia de día. Ambas muestran el modo, la fuente y el acento recibidos, además de una línea tipográfica marcada con `!important`.
+To try them, open Home and press the corresponding tile. The menu shows or hides a list and the agenda changes day. Both display the mode, the font and the accent they received, plus a typographic line marked with `!important`.
 
-Los HTML y scripts ejecutan código activo: configura únicamente archivos propios y de confianza. Los recursos de `univ/` no están incluidos actualmente en la caché estática del service worker; para usarlos sin conexión, incorpóralos a `staticAssets` en `sw.js` junto con los recursos que carguen.
+The HTML and scripts run active code: configure only your own, trusted files. The current `univ/` pages (`menu.html`, `agenda.html` and `menu.js`) are already part of the service worker's `staticAssets`, so they work offline; a new tile page must be added to `staticAssets` in `sw.js` together with the resources it loads, or it will need a connection.
 
-Ejemplo:
+Example:
 
 ```json
 {
@@ -81,3 +80,4 @@ Ejemplo:
     }
   ]
 }
+```
