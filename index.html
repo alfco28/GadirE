@@ -86,21 +86,26 @@
     <div id="filters" class="filters">
       <div class="filter-pair elemento-flotante">
         <label>Tipo:</label>
+        <!-- fTipo = ÚNICO sitio del frontend donde se definen los tipos: cada
+            <option> lleva el código corto (value, el mismo "corto" que TIPOS
+            en dedup.py del backend), el nombre visible y su color
+            (data-colour); map.js lo deriva TODO de aquí (KNOWN_TIPOS,
+            COLOURS y las etiquetas de los popups) -->
         <select id="fTipo">
           <option value="todos">Todos</option>
-          <option value="accesib">Accesibilidad</option>
-          <option value="descanso">Área de descanso</option>
-          <option value="aseo">Aseo o vestuario</option>
-          <option value="aula">Aula</option>
-          <option value="biblio">Biblioteca o sala de estudio</option>
-          <option value="cafete">Cafetería, fuente o máquina</option>
-          <option value="despacho">Despacho</option>
-          <option value="lab">Laboratorio o taller</option>
-          <option value="repre">Representación de estudiantes</option>
-          <option value="emergencia">Salida de emergencia o punto de encuentro</option>
-          <option value="salon">Salón</option>
-          <option value="transporte">Transporte</option>
-          <option value="unidad">Unidades o servicios</option>
+          <option value="accesib" data-colour="#06b6d4">Accesibilidad</option>
+          <option value="descanso" data-colour="#facc15">Área de descanso</option>
+          <option value="aseo" data-colour="#64748b">Aseo o vestuario</option>
+          <option value="aula" data-colour="#0284c7">Aula</option>
+          <option value="biblio" data-colour="#2563eb">Biblioteca o sala de estudio</option>
+          <option value="cafete" data-colour="#ea580c">Cafetería, fuente o máquina</option>
+          <option value="despacho" data-colour="#0f766e">Despacho</option>
+          <option value="lab" data-colour="#dc2626">Laboratorio o taller</option>
+          <option value="repre" data-colour="#7c3aed">Representación de estudiantes</option>
+          <option value="emergencia" data-colour="#db2777">Salida de emergencia o punto de encuentro</option>
+          <option value="salon" data-colour="#9333ea">Salón</option>
+          <option value="transporte" data-colour="#16a34a">Transporte</option>
+          <option value="unidad" data-colour="#334155">Unidades o servicios</option>
         </select>
       </div>
       <div class="filter-pair elemento-flotante">
@@ -486,7 +491,7 @@
           <hr class="separador">
           <div class="two-sided-opt">
             <p id="t-settings-aboutGadirE-version"></p>
-            <p>0.5.233</p>
+            <p>0.5.234</p>
           </div>
         </div>
         <h3 id="t-settings-moreFromTheSU-title" style="padding-bottom: 0; margin-bottom: 0;"></h3>

@@ -395,11 +395,14 @@ function initMap() {
 
   // ================= CLUSTER GLOBAL DE MARCADORES =================
   // All markers live in a single cluster group, so points of different types
-  // in the same area merge into one cluster (decision by Alfonso, 27-10-2026).
-  // Known types: markers with an unknown type are skipped, like the old per-type layers did.
-  const KNOWN_TIPOS = new Set([
-    'accesib', 'descanso', 'aseo', 'aula', 'biblio', 'cafete', 'despacho', 'lab', 'repre', 'salon', 'transporte', 'unidad', 'emergencia'
-  ]);
+  // in the same area merge into one cluster.
+
+  // Known types, DERIVED from the single source of truth in the frontend: the
+  // fTipo <option>s in index.html (value + data-colour). "Todos" carries no
+  // colour, so it stays out naturally. A new type is ONE <option> line there,
+  // nothing else here (the popup type labels read the same options, v0.5.233).
+  const typeOptions = Array.from(document.querySelectorAll('#fTipo option')).filter(o => o.dataset.colour);
+  const KNOWN_TIPOS = new Set(typeOptions.map(o => o.value));
 
   // Cluster icon: a pie chart with the colours of the types it contains, plus the total count.
   // COLOURS is declared further below: that is fine, this runs only when the map renders.
@@ -442,21 +445,9 @@ function initMap() {
   let userLocationMarker = null;
   
   // ================= ICONOS =================
-  const COLOURS = {
-    accesib: "#06b6d4",
-    aula: "#0284c7",
-    cafete: "#ea580c",
-    biblio: "#2563eb",
-    repre: "#7c3aed",
-    lab: "#dc2626",
-    despacho: "#0f766e",
-    descanso: "#facc15",
-    aseo: "#64748b",
-    salon: "#9333ea",
-    transporte: "#16a34a",
-    unidad: "#334155",
-    emergencia: "#db2777"
-  };
+  // Marker colours, also DERIVED from the fTipo options (data-colour): the same
+  // single source of truth as KNOWN_TIPOS and the popup type labels
+  const COLOURS = Object.fromEntries(typeOptions.map(o => [o.value, o.dataset.colour]));
 
   function icon(tipo){
     const colour = COLOURS[tipo] || "#6b7280";
