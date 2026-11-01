@@ -37,7 +37,7 @@ The deployment tool keeps its private details (SSH host, user, paths) in `deploy
 
 ## Licence of the project
 
-The main licence and the redistribution conditions are in [LICENSE](../LICENSE). Distribution must respect the licences of the third-party components and keep their notices.
+The main licence and the redistribution conditions are in [LICENCE](../LICENCE). Distribution must respect the licences of the third-party components and keep their notices.
 
 Among the dependencies and sources indicated by the project:
 

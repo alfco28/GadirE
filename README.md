@@ -35,4 +35,10 @@ Puedes contribuir al mapa de diferentes formas:
 
 ---
 
+## 📚 Documentación
+
+La documentación técnica del proyecto (en inglés) vive en la carpeta [`docs/`](docs/general.md): guía de usuario, administración, desarrollo, modelo de datos, despliegue, privacidad y licencias, y configuración de los accesos directos de la pantalla de inicio.
+
+---
+
 > ⚠️ **Nota importante:** Téngase en cuenta que el mapa disponible actualmente es una **versión preliminar** y contiene errores, pero su despliegue temprano es imprescindible para su buen desarrollo.
