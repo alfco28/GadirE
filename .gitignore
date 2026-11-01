@@ -1,3 +1,4 @@
 .DS_Store
 /context.md
 deploy_config.json
+deploy_logs/
