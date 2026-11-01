@@ -123,9 +123,11 @@ def main():
                  "(deploying only what is pushed keeps every deploy recoverable).")
 
     # 2) Staging: exact mirror of the working tree MINUS data/ (the server
-    #    owns it) and the junk. --delete keeps the staging from accumulating
-    rsync = ["rsync", "-a", "--delete",
-             "--exclude=.git/", "--exclude=.DS_Store", "--exclude=data/"]
+    #    owns it), the junk and deploy_config.json (the PRIVATE config with
+    #    the host and user: gitignored, so it is untracked but PRESENT here —
+    #    without this exclude rsync would publish it to the web). --delete
+    #    keeps the staging from accumulating
+    rsync = ["rsync", "-a", "--delete", "--exclude=.git/", "--exclude=.DS_Store", "--exclude=data/", "--exclude=deploy_config.json"]
     if port != 22:
         rsync += ["-e", f"ssh -p {port}"]
     rsync += [f"{repo}/", f"{host}:{staging}/"]
