@@ -7,7 +7,9 @@
 #      always backed up on GitHub first);
 #   2) rsync the working tree to a staging folder on the server, EXCLUDING
 #      data/ (the live geojson and ICS live there and must never be clobbered
-#      by the repo copies) and all the junk (.git, .DS_Store);
+#      by the repo copies), deploy_logs/ (this run's log is FULL of private
+#      details — host, user, paths: it must never reach the web) and all the
+#      junk (.git, .DS_Store);
 #   3) clean the staging leftovers (an old data/ clone, .DS_Store) and
 #      sudo-copy staging over the web root — data/ never travels;
 #   4) verify what the web actually serves (the version badge) and that the
@@ -212,18 +214,25 @@ def main():
         say(f"Checked: the tree is clean and pushed ({local_head[:8]} on GitHub).")
 
         # 2) Staging: exact mirror of the working tree MINUS data/ (the server
-        #    owns it), the junk and deploy_config.json (the PRIVATE config with
-        #    the host and user: gitignored, so it is untracked but PRESENT here —
-        #    without this exclude rsync would publish it to the web). --delete
-        #    keeps the staging from accumulating
-        rsync = ["rsync", "-a", "--delete", "--exclude=.git/", "--exclude=.DS_Store", "--exclude=data/", "--exclude=deploy_config.json"]
+        #    owns it), the junk, deploy_config.json (the PRIVATE config with
+        #    the host and user: gitignored, so it is untracked but PRESENT
+        #    here), deploy_logs/ (this run's own log — it contains the host,
+        #    user and paths, so it must NEVER be published) and the deploy
+        #    tooling itself (deploy.py and its example: dev files, not web
+        #    files; without the exclude rsync would serve them publicly).
+        #    --delete keeps the staging from accumulating
+        rsync = ["rsync", "-a", "--delete", "--exclude=.git/", "--exclude=.DS_Store", "--exclude=data/", "--exclude=deploy_config.json", "--exclude=deploy_logs/", "--exclude=deploy.py", "--exclude=deploy_config.example.json"]
         if port != 22:
             rsync += ["-e", f"ssh -p {port}"]
         rsync += [f"{repo}/", f"{host}:{staging}/"]
 
-        # 3) Clean the staging leftovers (an old data/ from the manual clone
-        #    days, stray .DS_Store) so the copy step can NEVER reach production data
-        cleanup = f"rm -rf {staging}/data && find {staging} -name .DS_Store -delete"
+        # 3) Clean the staging leftovers: an old data/ from the manual clone
+        #    days, the deploy files older deploys left there (rsync --delete
+        #    does NOT remove excluded files) and stray .DS_Store — so the
+        #    copy step can NEVER reach production data or publish dev files
+        cleanup = (f"rm -rf {staging}/data {staging}/deploy_logs && "
+                   f"rm -f {staging}/deploy.py {staging}/deploy_config.example.json && "
+                   f"find {staging} -name .DS_Store -delete")
 
         # 4) The copy itself: the glob skips dotfiles and the staging has no
         #    data/, so only the app files travel; the find sweeps any .DS_Store
