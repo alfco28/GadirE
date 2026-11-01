@@ -390,8 +390,7 @@ function initMap() {
   // in the same area merge into one cluster (decision by Alfonso, 27-10-2026).
   // Known types: markers with an unknown type are skipped, like the old per-type layers did.
   const KNOWN_TIPOS = new Set([
-    'descanso', 'aseo', 'aula', 'biblio', 'cafete', 'despacho',
-    'lab', 'repre', 'salon', 'transporte', 'unidad', 'emergencia'
+    'accesib', 'descanso', 'aseo', 'aula', 'biblio', 'cafete', 'despacho', 'lab', 'repre', 'salon', 'transporte', 'unidad', 'emergencia'
   ]);
 
   // Cluster icon: a pie chart with the colours of the types it contains, plus the total count.
@@ -436,6 +435,7 @@ function initMap() {
   
   // ================= ICONOS =================
   const COLOURS = {
+    accesib: "#06b6d4",
     aula: "#0284c7",
     cafete: "#ea580c",
     biblio: "#2563eb",
