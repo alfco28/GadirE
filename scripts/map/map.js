@@ -193,6 +193,10 @@ function popupHTML(p) {
   const currentUrl = window.location.href.split('#')[0]; // Obtiene la URL sin hash
   const shareUrl = `${currentUrl}#${p.idnum}`; // Crea la URL con el hash
   const buttonId = `shareButton_${p.idnum}`; // Identificador único para el botón
+  // The type label reuses the text of the filter's own <option> for that tipo, so
+  // the popup and the tipo filter always name it the same way (raw code as fallback).
+  const tipoLabel = Array.from(document.querySelectorAll('#fTipo option'))
+    .find(option => option.value === p.tipo)?.textContent || p.tipo;
 
   return `
       <div class="popup-card">
@@ -209,6 +213,10 @@ function popupHTML(p) {
         </div>
         <p class="popup-description">${p.descrip}</p>
         <div class="popup-meta">
+          <div class="popup-meta-row">
+            <i class="fa-solid fa-shapes" aria-hidden="true"></i>
+            <span>${tipoLabel}</span>
+          </div>
           <div class="popup-meta-row">
             <i class="fa-solid fa-layer-group" aria-hidden="true"></i>
             <span>Planta ${p.planta}</span>
